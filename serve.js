@@ -53,6 +53,23 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(PORT, '127.0.0.1', () => {
-  console.log(`Portfolio local server running at http://localhost:${PORT}/`);
+const os = require('os');
+
+function getLocalIp() {
+  const interfaces = os.networkInterfaces();
+  for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name]) {
+      if (iface.family === 'IPv4' && !iface.internal) {
+        return iface.address;
+      }
+    }
+  }
+  return '127.0.0.1';
+}
+
+server.listen(PORT, '0.0.0.0', () => {
+  const localIp = getLocalIp();
+  console.log(`Portfolio server running on:`);
+  console.log(`  - Local:   http://localhost:${PORT}/`);
+  console.log(`  - Mobile:  http://${localIp}:${PORT}/`);
 });
