@@ -29,9 +29,15 @@
           <div class="avatar">AA</div>
         </div>
 
-        <div class="status-badge">
-          <span class="status-dot"></span>
-          <span>Disponible pour échanger & projets</span>
+        <div style="display: flex; gap: 0.5rem; align-items: center; justify-content: center; flex-wrap: wrap;">
+          <div class="status-badge">
+            <span class="status-dot"></span>
+            <span>Disponible pour échanger & projets</span>
+          </div>
+          <button class="cmd-trigger-btn" id="openCmdBtn">
+            <span>Recherche</span>
+            <span class="cmd-kbd-badge">⌘K</span>
+          </button>
         </div>
 
         <div class="profile-info">
@@ -107,6 +113,33 @@
           </button>
         </div>
       </header>
+
+      <!-- Pinned Highlight: Parcours & Impact -->
+      <a
+        href="/about"
+        class="link-card"
+        style="border-color: rgba(94, 106, 210, 0.4); background: linear-gradient(180deg, rgba(94, 106, 210, 0.08) 0%, rgba(255, 255, 255, 0.015) 100%);"
+      >
+        <div class="link-card-top">
+          <div class="link-card-identity">
+            <div class="link-icon-box" style="background: rgba(94, 106, 210, 0.15); border-color: rgba(94, 106, 210, 0.4);">📊</div>
+            <div class="link-title-wrapper">
+              <span class="link-title">
+                Parcours Professionnel & Chiffres Clés
+                <span class="link-badge" style="background: rgba(94, 106, 210, 0.2); color: #c7d2fe;">8+ ans &bull; 4 postes</span>
+              </span>
+            </div>
+          </div>
+          <div class="link-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 17L17 7M17 7H7M17 7V17" />
+            </svg>
+          </div>
+        </div>
+        <p class="link-description">
+          Découvrez mon historique d'architecte QA (kodehyve, Raja, Enablon, Capgemini), métriques d'impact (-90% temps manuel) et certifications (ISTQB, CSM).
+        </p>
+      </a>
 
       <!-- Category Filter Tabs -->
       <nav class="category-filter-nav" aria-label="Filtrer les catégories">
@@ -363,11 +396,9 @@
           </div>
 
           <div class="links-list">
-            <!-- YouTube Training Playlist -->
+            <!-- Formations Dédiées Page -->
             <a
-              href="https://youtube.com/playlist?list=PL4BtVtsdnzadpYqpzXNrArRKXiG1MI6nH&si=esxQyFSGFNbqq2zQ"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/formations"
               class="link-card"
             >
               <div class="link-card-top">
@@ -376,7 +407,7 @@
                   <div class="link-title-wrapper">
                     <span class="link-title">
                       Formation SDET & BDD (Cucumber / Selenium)
-                      <span class="link-badge video">Playlist YouTube</span>
+                      <span class="link-badge video">● Espace Dédié & Vidéos</span>
                     </span>
                   </div>
                 </div>
@@ -387,13 +418,13 @@
                 </div>
               </div>
               <p class="link-description">
-                Cours vidéo complet et gratuit pas-à-pas pour maîtriser l'architecture de tests automatisés basée sur le comportement (BDD) avec Cucumber, Gherkin et Selenium.
+                Espace de formation complet avec lecteur vidéo YouTube intégré, programme modulaire étape par étape et bonnes pratiques BDD.
               </p>
               <div class="link-tags">
-                <span class="tag-pill">YouTube Free Course</span>
+                <span class="tag-pill">Lecteur Vidéo Intégré</span>
                 <span class="tag-pill">BDD / Gherkin</span>
                 <span class="tag-pill">Selenium WebDriver</span>
-                <span class="tag-pill">Mentoring</span>
+                <span class="tag-pill">100% Gratuit</span>
               </div>
             </a>
           </div>
@@ -411,13 +442,145 @@
       </footer>
     </main>
 
+    <!-- Linear Command Palette Modal -->
+    <div id="cmdPalette" class="cmd-palette-backdrop">
+      <div class="cmd-palette-modal">
+        <div class="cmd-search-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input
+            type="text"
+            id="cmdSearchInput"
+            class="cmd-search-input"
+            placeholder="Rechercher une page, un projet ou une action..."
+            autocomplete="off"
+          />
+          <span class="cmd-kbd-badge">ESC</span>
+        </div>
+
+        <div class="cmd-palette-body" id="cmdResultsList">
+          <div class="cmd-group-label">Navigation & Pages</div>
+          <a href="/" class="cmd-item selected">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">🏠</span>
+              <div>
+                <span class="cmd-item-title">Accueil (Linktree)</span>
+                <span class="cmd-item-subtitle">Vue d'ensemble et réseaux</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Aller ↵</span>
+          </a>
+
+          <a href="/about" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">📊</span>
+              <div>
+                <span class="cmd-item-title">Parcours & Impact</span>
+                <span class="cmd-item-subtitle">Métriques, 4 postes & certifications</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Aller ↵</span>
+          </a>
+
+          <a href="/formations" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">🎥</span>
+              <div>
+                <span class="cmd-item-title">Espace Formations Vidéo</span>
+                <span class="cmd-item-subtitle">Lecteur vidéo & programme BDD</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Aller ↵</span>
+          </a>
+
+          <div class="cmd-group-label">Projets & Outils</div>
+          <a href="https://github.com/anassasrir/cypress-tests" target="_blank" rel="noopener noreferrer" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">⚡</span>
+              <div>
+                <span class="cmd-item-title">Enterprise Cypress Framework</span>
+                <span class="cmd-item-subtitle">Automatisation UI / API CI/CD</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">GitHub ↗</span>
+          </a>
+
+          <a href="https://github.com/anassasrir/selenium-framework" target="_blank" rel="noopener noreferrer" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">🎯</span>
+              <div>
+                <span class="cmd-item-title">Selenium WebDriver & C#</span>
+                <span class="cmd-item-subtitle">Architecture POM .NET</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">GitHub ↗</span>
+          </a>
+
+          <a href="https://jolipas-app.pages.dev/" target="_blank" rel="noopener noreferrer" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">🎨</span>
+              <div>
+                <span class="cmd-item-title">Jolipas — Jeu Éducatif</span>
+                <span class="cmd-item-subtitle">PWA interactive pour enfants</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Live App ↗</span>
+          </a>
+
+          <a href="https://equier-momes.fr" target="_blank" rel="noopener noreferrer" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">🏫</span>
+              <div>
+                <span class="cmd-item-title">Les Équier'Mômes</span>
+                <span class="cmd-item-subtitle">Portail associatif Next.js & Postgres</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Site Web ↗</span>
+          </a>
+
+          <div class="cmd-group-label">Actions Rapides</div>
+          <div class="cmd-item" id="cmdCopyEmail">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">✉️</span>
+              <div>
+                <span class="cmd-item-title">Copier l'adresse Email</span>
+                <span class="cmd-item-subtitle">asrir.anass@hotmail.fr</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Copier ↵</span>
+          </div>
+
+          <a href="https://linkedin.com/in/anassasrir" target="_blank" rel="noopener noreferrer" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">💼</span>
+              <div>
+                <span class="cmd-item-title">Ouvrir LinkedIn</span>
+                <span class="cmd-item-subtitle">anassasrir</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Ouvrir ↗</span>
+          </a>
+        </div>
+
+        <div class="cmd-footer">
+          <span>Navigation : flèches ↑ / ↓</span>
+          <div class="cmd-footer-keys">
+            <span class="cmd-footer-key"><span class="cmd-kbd-badge">↵</span> Sélectionner</span>
+            <span class="cmd-footer-key"><span class="cmd-kbd-badge">ESC</span> Fermer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Interactive Copy Toast -->
     <div id="toast" class="toast-notice" role="status" aria-live="polite">
       <span>✓</span>
       <span id="toastMsg">Email copié dans le presse-papier !</span>
     </div>
 
-    <!-- Interactive Scripts: Filtering, Copy Toast, Spotlight Effect -->
+    <!-- Interactive Scripts: Filtering, Copy Toast, Spotlight Effect, Command Palette -->
     <script>
       // Current year in footer
       document.getElementById("currentYear").textContent = new Date().getFullYear();
@@ -458,7 +621,6 @@
             await navigator.clipboard.writeText(email);
             showToast("Email copié : " + email);
           } catch (err) {
-            // Fallback to mailto
             window.location.href = "mailto:" + email;
           }
         });
@@ -485,6 +647,63 @@
           card.style.setProperty("--mouse-y", `${y}px`);
         });
       });
+
+      // Command Palette Logic
+      const cmdPalette = document.getElementById("cmdPalette");
+      const cmdInput = document.getElementById("cmdSearchInput");
+      const openCmdBtn = document.getElementById("openCmdBtn");
+
+      function openPalette() {
+        cmdPalette.classList.add("active");
+        cmdInput.value = "";
+        filterCmdItems("");
+        setTimeout(() => cmdInput.focus(), 50);
+      }
+
+      function closePalette() {
+        cmdPalette.classList.remove("active");
+      }
+
+      if (openCmdBtn) openCmdBtn.addEventListener("click", openPalette);
+
+      window.addEventListener("keydown", (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+          e.preventDefault();
+          if (cmdPalette.classList.contains("active")) {
+            closePalette();
+          } else {
+            openPalette();
+          }
+        }
+        if (e.key === "Escape" && cmdPalette.classList.contains("active")) {
+          closePalette();
+        }
+      });
+
+      cmdPalette.addEventListener("click", (e) => {
+        if (e.target === cmdPalette) closePalette();
+      });
+
+      cmdInput.addEventListener("input", (e) => {
+        filterCmdItems(e.target.value.toLowerCase().trim());
+      });
+
+      function filterCmdItems(query) {
+        const items = document.querySelectorAll("#cmdResultsList .cmd-item");
+        items.forEach((item) => {
+          const text = item.textContent.toLowerCase();
+          item.style.display = text.includes(query) ? "flex" : "none";
+        });
+      }
+
+      const cmdCopyEmail = document.getElementById("cmdCopyEmail");
+      if (cmdCopyEmail) {
+        cmdCopyEmail.addEventListener("click", async () => {
+          await navigator.clipboard.writeText("asrir.anass@hotmail.fr");
+          closePalette();
+          showToast("Email copié : asrir.anass@hotmail.fr");
+        });
+      }
     </script>
   </body>
 </html>
