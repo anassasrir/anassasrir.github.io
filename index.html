@@ -126,7 +126,7 @@
             <div class="link-title-wrapper">
               <span class="link-title">
                 Parcours Professionnel & Chiffres Clés
-                <span class="link-badge" style="background: rgba(94, 106, 210, 0.2); color: #c7d2fe;">8+ ans &bull; 4 postes</span>
+                <span class="link-badge" style="background: rgba(94, 106, 210, 0.2); color: #c7d2fe;" data-dynamic-years-text="{years} &bull; 4 postes">10+ ans &bull; 4 postes</span>
               </span>
             </div>
           </div>
@@ -608,102 +608,9 @@
           });
         });
       });
-
-      // Email Copy Button & Toast
-      const copyEmailBtn = document.getElementById("copyEmailBtn");
-      const toast = document.getElementById("toast");
-      let toastTimeout = null;
-
-      if (copyEmailBtn) {
-        copyEmailBtn.addEventListener("click", async () => {
-          const email = copyEmailBtn.getAttribute("data-email");
-          try {
-            await navigator.clipboard.writeText(email);
-            showToast("Email copié : " + email);
-          } catch (err) {
-            window.location.href = "mailto:" + email;
-          }
-        });
-      }
-
-      function showToast(message) {
-        if (!toast) return;
-        document.getElementById("toastMsg").textContent = message;
-        toast.classList.add("show");
-        if (toastTimeout) clearTimeout(toastTimeout);
-        toastTimeout = setTimeout(() => {
-          toast.classList.remove("show");
-        }, 3000);
-      }
-
-      // Linear Card Spotlight Cursor Effect
-      const cards = document.querySelectorAll(".link-card");
-      cards.forEach((card) => {
-        card.addEventListener("mousemove", (e) => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          card.style.setProperty("--mouse-x", `${x}px`);
-          card.style.setProperty("--mouse-y", `${y}px`);
-        });
-      });
-
-      // Command Palette Logic
-      const cmdPalette = document.getElementById("cmdPalette");
-      const cmdInput = document.getElementById("cmdSearchInput");
-      const openCmdBtn = document.getElementById("openCmdBtn");
-
-      function openPalette() {
-        cmdPalette.classList.add("active");
-        cmdInput.value = "";
-        filterCmdItems("");
-        setTimeout(() => cmdInput.focus(), 50);
-      }
-
-      function closePalette() {
-        cmdPalette.classList.remove("active");
-      }
-
-      if (openCmdBtn) openCmdBtn.addEventListener("click", openPalette);
-
-      window.addEventListener("keydown", (e) => {
-        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
-          e.preventDefault();
-          if (cmdPalette.classList.contains("active")) {
-            closePalette();
-          } else {
-            openPalette();
-          }
-        }
-        if (e.key === "Escape" && cmdPalette.classList.contains("active")) {
-          closePalette();
-        }
-      });
-
-      cmdPalette.addEventListener("click", (e) => {
-        if (e.target === cmdPalette) closePalette();
-      });
-
-      cmdInput.addEventListener("input", (e) => {
-        filterCmdItems(e.target.value.toLowerCase().trim());
-      });
-
-      function filterCmdItems(query) {
-        const items = document.querySelectorAll("#cmdResultsList .cmd-item");
-        items.forEach((item) => {
-          const text = item.textContent.toLowerCase();
-          item.style.display = text.includes(query) ? "flex" : "none";
-        });
-      }
-
-      const cmdCopyEmail = document.getElementById("cmdCopyEmail");
-      if (cmdCopyEmail) {
-        cmdCopyEmail.addEventListener("click", async () => {
-          await navigator.clipboard.writeText("asrir.anass@hotmail.fr");
-          closePalette();
-          showToast("Email copié : asrir.anass@hotmail.fr");
-        });
-      }
     </script>
+
+    <!-- Core Shared Utilities (Dynamic Experience, Command Palette, Spotlight, Toast) -->
+    <script src="shared.js"></script>
   </body>
 </html>

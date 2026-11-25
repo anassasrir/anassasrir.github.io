@@ -252,73 +252,7 @@
       <span id="toastMsg">Email copié dans le presse-papier !</span>
     </div>
 
-    <script>
-      document.getElementById("currentYear").textContent = new Date().getFullYear();
-
-      // Command Palette Logic
-      const cmdPalette = document.getElementById("cmdPalette");
-      const cmdInput = document.getElementById("cmdSearchInput");
-      const openCmdBtn = document.getElementById("openCmdBtn");
-      const toast = document.getElementById("toast");
-
-      function openPalette() {
-        cmdPalette.classList.add("active");
-        cmdInput.value = "";
-        filterCmdItems("");
-        setTimeout(() => cmdInput.focus(), 50);
-      }
-
-      function closePalette() {
-        cmdPalette.classList.remove("active");
-      }
-
-      if (openCmdBtn) openCmdBtn.addEventListener("click", openPalette);
-
-      window.addEventListener("keydown", (e) => {
-        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
-          e.preventDefault();
-          if (cmdPalette.classList.contains("active")) {
-            closePalette();
-          } else {
-            openPalette();
-          }
-        }
-        if (e.key === "Escape" && cmdPalette.classList.contains("active")) {
-          closePalette();
-        }
-      });
-
-      cmdPalette.addEventListener("click", (e) => {
-        if (e.target === cmdPalette) closePalette();
-      });
-
-      cmdInput.addEventListener("input", (e) => {
-        filterCmdItems(e.target.value.toLowerCase().trim());
-      });
-
-      function filterCmdItems(query) {
-        const items = document.querySelectorAll("#cmdResultsList .cmd-item");
-        items.forEach((item) => {
-          const text = item.textContent.toLowerCase();
-          item.style.display = text.includes(query) ? "flex" : "none";
-        });
-      }
-
-      const cmdCopyEmail = document.getElementById("cmdCopyEmail");
-      if (cmdCopyEmail) {
-        cmdCopyEmail.addEventListener("click", async () => {
-          await navigator.clipboard.writeText("asrir.anass@hotmail.fr");
-          closePalette();
-          showToast("Email copié : asrir.anass@hotmail.fr");
-        });
-      }
-
-      function showToast(message) {
-        if (!toast) return;
-        document.getElementById("toastMsg").textContent = message;
-        toast.classList.add("show");
-        setTimeout(() => toast.classList.remove("show"), 3000);
-      }
-    </script>
+    <!-- Core Shared Utilities (Dynamic Experience, Command Palette, Spotlight, Toast) -->
+    <script src="shared.js"></script>
   </body>
 </html>

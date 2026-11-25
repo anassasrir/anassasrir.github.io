@@ -1,0 +1,176 @@
+{
+  "profile": {
+    "name": "Anass Asrir",
+    "role": "Senior SDET Architect & Builder",
+    "careerStartDate": "2016-08-01",
+    "status": "Disponible pour échanger & projets",
+    "email": "asrir.anass@hotmail.fr",
+    "bio": "Stratégie Shift-Left, Industrialisation CI/CD & Création d'applications web modernes et performantes.",
+    "socials": {
+      "linkedin": "https://linkedin.com/in/anassasrir",
+      "github": "https://github.com/anassasrir",
+      "youtube": "https://youtube.com/playlist?list=PL4BtVtsdnzadpYqpzXNrArRKXiG1MI6nH&si=esxQyFSGFNbqq2zQ"
+    },
+    "metrics": {
+      "manualTestTimeSaved": "-90%",
+      "projectsDelivered": "30+",
+      "criticalDefectsAvoided": "2 500+",
+      "certifications": [
+        "ISTQB® Certified Tester",
+        "Certified ScrumMaster® (CSM®)",
+        "Shift-Left Testing",
+        "BDD (Behavior-Driven Development)",
+        "Q-KPIs & Power BI Analytics"
+      ]
+    }
+  },
+  "experiences": [
+    {
+      "id": "kodehyve",
+      "role": "Quality Assurance Manager / SDET Architect",
+      "company": "kodehyve",
+      "period": "Depuis 07/2023",
+      "startDate": "2023-07-01",
+      "bullets": [
+        "Socle Qualité : Définition et déploiement du processus global de qualité logicielle (Shift-Left), garantissant la robustesse des livrables de la plateforme.",
+        "Architecture d'Automatisation : Conception d'un framework Cypress / TypeScript intégré au processus de Pull Request pour une validation immédiate.",
+        "Intégration Continue : Industrialisation des workflows GitHub Actions pour raccourcir les boucles de rétroaction (-90% de temps sur les tests critiques).",
+        "Données de Test : Automatisation de la génération et du nettoyage des jeux de données API via SQL / PostgreSQL."
+      ]
+    },
+    {
+      "id": "raja",
+      "role": "Quality Assurance Lead (CI/CD Industrialization)",
+      "company": "Raja",
+      "period": "05/2021 – 07/2023",
+      "startDate": "2021-05-01",
+      "endDate": "2023-07-01",
+      "bullets": [
+        "Domaines Critiques : Référent automatisation garantissant la couverture QA des parcours d'achat et tunnels de paiement à haute disponibilité.",
+        "Azure DevOps & Cypress : Intégration avancée dans Azure DevOps Services garantissant 100% de validation automatisée avant mise en production.",
+        "Visual Testing : Implémentation de Percy pour la détection des régressions d'interface (-15% d'anomalies UI en production)."
+      ]
+    },
+    {
+      "id": "enablon",
+      "role": "Quality Assurance Engineer (Strategy & Frameworks)",
+      "company": "Enablon",
+      "period": "04/2018 – 05/2021",
+      "startDate": "2018-04-01",
+      "endDate": "2021-05-01",
+      "bullets": [
+        "Harmonisation Multi-Squads : Pilotage de la stratégie QA transverse et harmonisation des outils d'automatisation (Selenium C#, Ranorex, Appium).",
+        "Q-KPIs & Décision : Mise en place de tableaux de bord Power BI basés sur les données d'exécution de tests pour guider le management produit.",
+        "Maintenabilité : Augmentation de 30% de la maintenabilité des suites de tests suite à la standardisation des architectures."
+      ]
+    },
+    {
+      "id": "capgemini",
+      "role": "Test Analyst",
+      "company": "Capgemini",
+      "period": "08/2016 – 03/2018",
+      "startDate": "2016-08-01",
+      "endDate": "2018-03-01",
+      "bullets": [
+        "Migration Open-Source : Transition réussie d'outils propriétaires payants (HP UFT) vers une suite open-source basée sur Selenium WebDriver.",
+        "Framework BDD : Développement d'un framework Java + Cucumber / Gherkin permettant aux testeurs fonctionnels d'automatiser leurs scénarios.",
+        "Selenium Grid & Jenkins : Déploiement de l'exécution parallèle distribuée et automatisation des builds nocturnes sous Jenkins."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "category": "qa",
+      "title": "Enterprise Cypress E2E & API",
+      "badge": "Open Source",
+      "icon": "⚡",
+      "url": "https://github.com/anassasrir/cypress-tests",
+      "description": "Framework d'automatisation UI & API complet, pensé pour les pipelines CI/CD haute vélocité avec exécution en pull request.",
+      "tags": ["Cypress", "JavaScript / TS", "API Testing", "CI/CD Validation"]
+    },
+    {
+      "category": "qa",
+      "title": "Selenium WebDriver & C# Architecture",
+      "badge": "Framework",
+      "icon": "🎯",
+      "url": "https://github.com/anassasrir/selenium-framework",
+      "description": "Architecture Page Object Model (POM) hautement structurée sous l'écosystème .NET pour des tests d'entreprise fiables et maintenables.",
+      "tags": ["C# / .NET", "Selenium WebDriver", "xUnit / MSTest", "POM Pattern"]
+    },
+    {
+      "category": "qa",
+      "title": "GEMAT — Generic QA Automation Engine",
+      "badge": "Tool",
+      "icon": "🔧",
+      "url": "https://github.com/anassasrir/GEMAT",
+      "description": "Outil et utilitaire dédié à l'automatisation des tâches répétitives : génération de données de test, health checks d'environnements et nettoyage BDD/API.",
+      "tags": ["Data Management", "API & DB Integration", "Shell / PowerShell"]
+    },
+    {
+      "category": "qa",
+      "title": "Cross-Platform Mobile Testing (Appium)",
+      "badge": "Mobile QA",
+      "icon": "📱",
+      "url": "https://github.com/anassasrir/Appium",
+      "description": "Framework modulaire pour applications mobiles natives, hybrides et web pour iOS et Android basé sur le protocole unifié WebDriver.",
+      "tags": ["Appium", "iOS & Android", "WebDriver Protocol"]
+    },
+    {
+      "category": "dev",
+      "title": "Jolipas — Jeu Éducatif Interactif",
+      "badge": "● En ligne",
+      "badgeType": "live",
+      "icon": "🎨",
+      "url": "https://jolipas-app.pages.dev/",
+      "description": "Application web progressive (PWA) conçue pour l'éveil et l'apprentissage ludique des enfants : univers visuel captivant, animations fluides et réactivité tactile.",
+      "tags": ["PWA / Web App", "EdTech", "Interactive", "Cloudflare Pages"]
+    },
+    {
+      "category": "dev",
+      "title": "Les Équier'Mômes — Plateforme Associative",
+      "badge": "● En ligne",
+      "badgeType": "live",
+      "icon": "🏫",
+      "url": "https://equier-momes.fr",
+      "description": "Portail complet pour l'association de parents d'élèves : inscriptions en temps réel aux événements, planification des créneaux bénévoles et espace élus sécurisé.",
+      "tags": ["Next.js", "TypeScript", "PostgreSQL Neon", "Resend API"]
+    },
+    {
+      "category": "video",
+      "title": "Formation SDET & BDD (Cucumber / Selenium)",
+      "badge": "● Espace Dédié & Vidéos",
+      "badgeType": "video",
+      "icon": "🎬",
+      "url": "/formations",
+      "description": "Espace de formation complet avec lecteur vidéo YouTube intégré, programme modulaire étape par étape et bonnes pratiques BDD.",
+      "tags": ["Lecteur Vidéo Intégré", "BDD / Gherkin", "Selenium WebDriver", "100% Gratuit"]
+    }
+  ],
+  "curriculum": [
+    {
+      "number": "01",
+      "title": "Principes du Behavior-Driven Development (BDD)",
+      "description": "Comprendre la philosophie BDD, les 3 Amigos (Product, Dev, QA) et comment la clarté des spécifications évite les anomalies dès l'origine."
+    },
+    {
+      "number": "02",
+      "title": "Syntaxe Gherkin & Rédaction de Scénarios",
+      "description": "Maîtriser les mots-clés Given, When, Then, Scenario Outline et tables de données (Examples) compréhensibles par tous."
+    },
+    {
+      "number": "03",
+      "title": "Architecture Page Object Model (POM)",
+      "description": "Structuration modulaire et découplage strict entre les sélecteurs graphiques, les actions utilisateurs et les assertions de test."
+    },
+    {
+      "number": "04",
+      "title": "Step Definitions & Liaisons Selenium",
+      "description": "Implémentation propre du code d'automatisation, synchronisation dynamique (Explicit Waits) et gestion des états de session."
+    },
+    {
+      "number": "05",
+      "title": "Rapports d'Exécution & Bonnes Pratiques",
+      "description": "Génération de rapports visuels détaillés (Cucumber HTML Reports), capture d'écrans automatique sur échec et exécution en pipeline CI."
+    }
+  ]
+}
