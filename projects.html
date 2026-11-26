@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projets Personnels & Dev — Anass Asrir</title>
+    <meta
+      name="description"
+      content="Frameworks d'automatisation QA, outils d'ingénierie et applications web conçues par Anass Asrir."
+    />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="apple-touch-icon" href="favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Ambient Glow & Grid -->
+    <div class="ambient-glow"></div>
+    <div class="ambient-grid"></div>
+
+    <main class="layout-wrapper">
+      <!-- Subpage Top Navigation -->
+      <nav class="subpage-top-nav">
+        <a href="/" class="back-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          <span>Accueil</span>
+        </a>
+
+        <button class="cmd-trigger-btn" id="openCmdBtn">
+          <span>Recherche</span>
+          <span class="cmd-kbd-badge">⌘ / Ctrl K</span>
+        </button>
+      </nav>
+
+      <!-- Page Header -->
+      <header class="page-title-section">
+        <div class="page-badge">● Réalisations & Open Source</div>
+        <h1 class="page-main-title">Projets Personnels & Dev</h1>
+        <p class="page-subtitle">
+          Frameworks de test automatisés, outils d'ingénierie logicielle et applications web développées de bout en bout.
+        </p>
+      </header>
+
+      <!-- Category Filter Tabs -->
+      <nav class="category-filter-nav" aria-label="Filtrer les catégories">
+        <button class="filter-btn active" data-filter="all">
+          <span>Tous</span>
+          <span class="filter-count">7</span>
+        </button>
+        <button class="filter-btn" data-filter="qa">
+          <span>🧪 QA & Outils</span>
+          <span class="filter-count">4</span>
+        </button>
+        <button class="filter-btn" data-filter="dev">
+          <span>💻 Dev & Apps</span>
+          <span class="filter-count">2</span>
+        </button>
+        <button class="filter-btn" data-filter="video">
+          <span>🎥 Vidéo & Tuto</span>
+          <span class="filter-count">1</span>
+        </button>
+      </nav>
+
+      <!-- Categorized Content Container -->
+      <div class="categories-container">
+        <!-- 1. Catégorie QA: Outils & Frameworks -->
+        <section class="category-group" data-category="qa" id="section-qa">
+          <div class="category-header">
+            <span class="category-header-icon">🧪</span>
+            <h2 class="category-title">Architecture QA & Frameworks</h2>
+            <div class="category-divider"></div>
+          </div>
+
+          <div class="links-list">
+            <!-- Cypress Framework -->
+            <a
+              href="https://github.com/anassasrir/cypress-tests"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="link-card"
+            >
+              <div class="link-card-top">
+                <div class="link-card-identity">
+                  <div class="link-icon-box">⚡</div>
+                  <div class="link-title-wrapper">
+                    <span class="link-title">
+                      Enterprise Cypress E2E & API
+                      <span class="link-badge">Open Source</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="link-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" />
+                  </svg>
+                </div>
+              </div>
+              <p class="link-description">
+                Framework d'automatisation UI & API complet, pensé pour les pipelines CI/CD haute vélocité avec exécution en pull request.
+              </p>
+              <div class="link-tags">
+                <span class="tag-pill">Cypress</span>
+                <span class="tag-pill">JavaScript / TS</span>
+                <span class="tag-pill">API Testing</span>
+                <span class="tag-pill">CI/CD Validation</span>
+              </div>
+            </a>
+
+            <!-- Selenium & C# -->
+            <a
+              href="https://github.com/anassasrir/selenium-framework"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="link-card"
+            >
+              <div class="link-card-top">
+                <div class="link-card-identity">
+                  <div class="link-icon-box">🎯</div>
+                  <div class="link-title-wrapper">
+                    <span class="link-title">
+                      Selenium WebDriver & C# Architecture
+                      <span class="link-badge">Framework</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="link-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" />
+                  </svg>
+                </div>
+              </div>
+              <p class="link-description">
+                Architecture Page Object Model (POM) hautement structurée sous l'écosystème .NET pour des tests d'entreprise fiables et maintenables.
+              </p>
+              <div class="link-tags">
+                <span class="tag-pill">C# / .NET</span>
+                <span class="tag-pill">Selenium WebDriver</span>
+                <span class="tag-pill">xUnit / MSTest</span>
+                <span class="tag-pill">POM Pattern</span>
+              </div>
+            </a>
+
+            <!-- GEMAT -->
+            <a
+              href="https://github.com/anassasrir/GEMAT"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="link-card"
+            >
+              <div class="link-card-top">
+                <div class="link-card-identity">
+                  <div class="link-icon-box">🔧</div>
+                  <div class="link-title-wrapper">
+                    <span class="link-title">
+                      GEMAT — Generic QA Automation Engine
+                      <span class="link-badge">Tool</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="link-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" />
+                  </svg>
+                </div>
+              </div>
+              <p class="link-description">
+                Outil et utilitaire dédié à l'automatisation des tâches répétitives : génération de données de test, health checks d'environnements et nettoyage BDD/API.
+              </p>
+              <div class="link-tags">
+                <span class="tag-pill">Data Management</span>
+                <span class="tag-pill">API & DB Integration</span>
+                <span class="tag-pill">Shell / PowerShell</span>
+              </div>
+            </a>
+
+            <!-- Appium Mobile -->
+            <a
+              href="https://github.com/anassasrir/Appium"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="link-card"
+            >
+              <div class="link-card-top">
+                <div class="link-card-identity">
+                  <div class="link-icon-box">📱</div>
+                  <div class="link-title-wrapper">
+                    <span class="link-title">
+                      Cross-Platform Mobile Testing (Appium)
+                      <span class="link-badge">Mobile QA</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="link-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" />
+                  </svg>
+                </div>
+              </div>
+              <p class="link-description">
+                Framework modulaire pour applications mobiles natives, hybrides et web pour iOS et Android basé sur le protocole unifié WebDriver.
+              </p>
+              <div class="link-tags">
+                <span class="tag-pill">Appium</span>
+                <span class="tag-pill">iOS & Android</span>
+                <span class="tag-pill">WebDriver Protocol</span>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <!-- 2. Catégorie Dev: Applications & Projets -->
+        <section class="category-group" data-category="dev" id="section-dev">
+          <div class="category-header">
+            <span class="category-header-icon">💻</span>
+            <h2 class="category-title">Développement & Applications Web</h2>
+            <div class="category-divider"></div>
+          </div>
+
+          <div class="links-list">
+            <!-- Jolipas App -->
+            <a
+              href="https://jolipas-app.pages.dev/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="link-card"
+            >
+              <div class="link-card-top">
+                <div class="link-card-identity">
+                  <div class="link-icon-box">🎨</div>
+                  <div class="link-title-wrapper">
+                    <span class="link-title">
+                      Jolipas — Jeu Éducatif Interactif
+                      <span class="link-badge live">● En ligne</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="link-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" />
+                  </svg>
+                </div>
+              </div>
+              <p class="link-description">
+                Application web progressive (PWA) conçue pour l'éveil et l'apprentissage ludique des enfants : univers visuel captivant, animations fluides et réactivité tactile.
+              </p>
+              <div class="link-tags">
+                <span class="tag-pill">PWA / Web App</span>
+                <span class="tag-pill">EdTech</span>
+                <span class="tag-pill">Interactive</span>
+                <span class="tag-pill">Cloudflare Pages</span>
+              </div>
+            </a>
+
+            <!-- Equier-Mômes -->
+            <a
+              href="https://equier-momes.fr"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="link-card"
+            >
+              <div class="link-card-top">
+                <div class="link-card-identity">
+                  <div class="link-icon-box">🏫</div>
+                  <div class="link-title-wrapper">
+                    <span class="link-title">
+                      Les Équier'Mômes — Plateforme Associative
+                      <span class="link-badge live">● En ligne</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="link-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" />
+                  </svg>
+                </div>
+              </div>
+              <p class="link-description">
+                Portail complet pour l'association de parents d'élèves : inscriptions en temps réel aux événements, planification des créneaux bénévoles et espace élus sécurisé.
+              </p>
+              <div class="link-tags">
+                <span class="tag-pill">Next.js</span>
+                <span class="tag-pill">TypeScript</span>
+                <span class="tag-pill">PostgreSQL Neon</span>
+                <span class="tag-pill">Resend API</span>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <!-- 3. Catégorie Vidéo: Mentoring & Formation -->
+        <section class="category-group" data-category="video" id="section-video">
+          <div class="category-header">
+            <span class="category-header-icon">🎥</span>
+            <h2 class="category-title">Vidéos & Formations</h2>
+            <div class="category-divider"></div>
+          </div>
+
+          <div class="links-list">
+            <!-- Formations Dédiées Page -->
+            <a
+              href="/formations"
+              class="link-card"
+            >
+              <div class="link-card-top">
+                <div class="link-card-identity">
+                  <div class="link-icon-box">🎬</div>
+                  <div class="link-title-wrapper">
+                    <span class="link-title">
+                      Formation SDET & BDD (Cucumber / Selenium)
+                      <span class="link-badge video">● Espace Dédié & Vidéos</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="link-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" />
+                  </svg>
+                </div>
+              </div>
+              <p class="link-description">
+                Espace de formation complet avec lecteur vidéo YouTube intégré, programme modulaire étape par étape et bonnes pratiques BDD.
+              </p>
+              <div class="link-tags">
+                <span class="tag-pill">Lecteur Vidéo Intégré</span>
+                <span class="tag-pill">BDD / Gherkin</span>
+                <span class="tag-pill">Selenium WebDriver</span>
+                <span class="tag-pill">100% Gratuit</span>
+              </div>
+            </a>
+          </div>
+        </section>
+      </div>
+
+      <!-- Footer -->
+      <footer class="page-footer">
+        <p class="footer-text">
+          &copy; <span id="currentYear"></span> Anass Asrir
+        </p>
+      </footer>
+    </main>
+
+    <!-- Global Command Palette Modal (⌘K / Ctrl+K) -->
+    <div id="cmdPalette" class="cmd-palette-backdrop" role="dialog" aria-modal="true" aria-label="Palette de commande">
+      <div class="cmd-palette-modal">
+        <div class="cmd-search-input-wrapper">
+          <svg class="cmd-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input
+            type="text"
+            id="cmdSearchInput"
+            class="cmd-search-input"
+            placeholder="Rechercher une page, un projet ou une action..."
+            autocomplete="off"
+          />
+          <span class="cmd-kbd-badge">ESC</span>
+        </div>
+
+        <div class="cmd-palette-body" id="cmdResultsList">
+          <div class="cmd-group-label">Navigation & Pages</div>
+          <a href="/" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">🏠</span>
+              <div>
+                <span class="cmd-item-title">Accueil (Linktree)</span>
+                <span class="cmd-item-subtitle">Vue d'ensemble et réseaux</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Aller ↵</span>
+          </a>
+
+          <a href="/about" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">📊</span>
+              <div>
+                <span class="cmd-item-title">Parcours & Impact</span>
+                <span class="cmd-item-subtitle">Métriques, 4 postes & certifications</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Aller ↵</span>
+          </a>
+
+          <a href="/projects" class="cmd-item selected">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">💻</span>
+              <div>
+                <span class="cmd-item-title">Projets Personnels & Dev</span>
+                <span class="cmd-item-subtitle">Frameworks QA, tools & apps web</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Aller ↵</span>
+          </a>
+
+          <a href="/formations" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">🎥</span>
+              <div>
+                <span class="cmd-item-title">Espace Formations Vidéo</span>
+                <span class="cmd-item-subtitle">Lecteur vidéo & programme BDD</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Aller ↵</span>
+          </a>
+
+          <div class="cmd-group-label">Projets & Outils</div>
+          <a href="https://github.com/anassasrir/cypress-tests" target="_blank" rel="noopener noreferrer" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">⚡</span>
+              <div>
+                <span class="cmd-item-title">Enterprise Cypress Framework</span>
+                <span class="cmd-item-subtitle">Automatisation UI / API CI/CD</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">GitHub ↗</span>
+          </a>
+
+          <a href="https://github.com/anassasrir/selenium-framework" target="_blank" rel="noopener noreferrer" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">🎯</span>
+              <div>
+                <span class="cmd-item-title">Selenium WebDriver & C#</span>
+                <span class="cmd-item-subtitle">Architecture POM .NET</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">GitHub ↗</span>
+          </a>
+
+          <a href="https://jolipas-app.pages.dev/" target="_blank" rel="noopener noreferrer" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">🎨</span>
+              <div>
+                <span class="cmd-item-title">Jolipas — Jeu Éducatif</span>
+                <span class="cmd-item-subtitle">PWA interactive pour enfants</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Live App ↗</span>
+          </a>
+
+          <a href="https://equier-momes.fr" target="_blank" rel="noopener noreferrer" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">🏫</span>
+              <div>
+                <span class="cmd-item-title">Les Équier'Mômes</span>
+                <span class="cmd-item-subtitle">Portail associatif Next.js & Postgres</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Site Web ↗</span>
+          </a>
+
+          <div class="cmd-group-label">Actions Rapides</div>
+          <div class="cmd-item" id="cmdOpenContact" data-open-contact>
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">✉️</span>
+              <div>
+                <span class="cmd-item-title">Envoyer un message</span>
+                <span class="cmd-item-subtitle">Formulaire de contact direct</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Écrire ↵</span>
+          </div>
+
+          <a href="https://linkedin.com/in/anassasrir" target="_blank" rel="noopener noreferrer" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">💼</span>
+              <div>
+                <span class="cmd-item-title">Ouvrir LinkedIn</span>
+                <span class="cmd-item-subtitle">anassasrir</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Ouvrir ↗</span>
+          </a>
+        </div>
+
+        <div class="cmd-footer">
+          <span>Navigation : flèches ↑ / ↓</span>
+          <div class="cmd-footer-keys">
+            <span class="cmd-footer-key"><span class="cmd-kbd-badge">↵</span> Sélectionner</span>
+            <span class="cmd-footer-key"><span class="cmd-kbd-badge">ESC</span> Fermer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Copy Toast -->
+    <div id="toast" class="toast-notice" role="status" aria-live="polite">
+      <span>✓</span>
+      <span id="toastMsg">Email copié dans le presse-papier !</span>
+    </div>
+
+    <!-- Interactive Scripts: Filtering & Category Tabs -->
+    <script>
+      // Current year in footer
+      document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+      // Category filter tabs
+      const filterBtns = document.querySelectorAll(".filter-btn");
+      const categoryGroups = document.querySelectorAll(".category-group");
+
+      filterBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const filter = btn.getAttribute("data-filter");
+
+          // Update active button
+          filterBtns.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          // Filter groups
+          categoryGroups.forEach((group) => {
+            const category = group.getAttribute("data-category");
+            if (filter === "all" || filter === category) {
+              group.classList.remove("hidden");
+            } else {
+              group.classList.add("hidden");
+            }
+          });
+        });
+      });
+    </script>
+
+    <!-- Core Shared Utilities (Dynamic Experience, Command Palette, Spotlight, Toast) -->
+    <script src="shared.js"></script>
+  </body>
+</html>
