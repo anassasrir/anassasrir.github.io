@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Comparatif Visuel des Pass Apple Wallet — Anass Asrir</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #090a0f;
+      color: #f8fafc;
+      font-family: 'Inter', -apple-system, sans-serif;
+      padding: 40px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .main-title {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+      text-align: center;
+      background: linear-gradient(180deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .main-sub {
+      color: #64748b;
+      font-size: 16px;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 380px);
+      gap: 30px;
+      justify-content: center;
+      max-width: 1220px;
+    }
+
+    .pass-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .pass-badge-rec {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-star {
+      background: rgba(34, 197, 94, 0.15);
+      color: #22c55e;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+    .badge-alt {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .pass-type-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 6px;
+    }
+    .pass-type-desc {
+      font-size: 13px;
+      color: #94a3b8;
+      text-align: center;
+      margin-bottom: 20px;
+      height: 38px;
+      line-height: 1.4;
+    }
+
+    /* Apple Wallet Card Shell */
+    .apple-wallet-pass {
+      width: 375px;
+      background: #121319;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 255, 255, 0.03);
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Pass Header (Common) */
+    .wallet-header {
+      padding: 18px 20px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .wallet-logo-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .wallet-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #000;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      object-fit: cover;
+    }
+    .wallet-brand-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+    .wallet-header-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.1);
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    /* PASS 1: GÉNÉRIQUE (Pure & Clean) */
+    .wallet-body-generic {
+      padding: 24px 22px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .primary-field-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #64748b;
+      margin-bottom: 2px;
+    }
+    .primary-field-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    .secondary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4px;
+    }
+    .sec-field {
+      display: flex;
+      flex-direction: column;
+    }
+    .sec-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 2px;
+    }
+    .sec-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: #e2e8f0;
+    }
+
+    /* PASS 2: TICKET ÉVÉNEMENT / GRAND VISUEL */
+    .wallet-strip-banner {
+      width: 100%;
+      height: 140px;
+      background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 60%, #0284c7 100%);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+    .strip-text {
+      z-index: 2;
+    }
+    .strip-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+    }
+    .strip-sub {
+      font-size: 12px;
+      color: #38bdf8;
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 4px;
+    }
+    .strip-photo {
+      height: 125px;
+      object-fit: contain;
+      object-position: bottom;
+      z-index: 2;
+      filter: drop-shadow(0 10px 15px rgba(0,0,0,0.7));
+    }
+    .strip-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 20px 20px;
+      z-index: 1;
+    }
+
+    /* PASS 3: CARTE MAGASIN (STORE CARD) */
+    .wallet-store-strip {
+      width: 100%;
+      height: 100px;
+      background: linear-gradient(90deg, #1e293b 0%, #0f172a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+    }
+    .store-badge-big {
+      font-size: 16px;
+      font-weight: 700;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 8px 18px;
+      border-radius: 9999px;
+    }
+
+    /* QR Code Barcode Area (Bottom of Wallet Pass) */
+    .wallet-qr-section {
+      margin-top: auto;
+      padding: 18px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.25);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .wallet-qr-box {
+      background: #ffffff;
+      padding: 10px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+      margin-bottom: 8px;
+    }
+    .wallet-qr-box img {
+      width: 140px;
+      height: 140px;
+      display: block;
+    }
+    .wallet-qr-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #94a3b8;
+      letter-spacing: 0.02em;
+    }
+
+    /* Cutout effect on boarding/event pass */
+    .wallet-notch {
+      position: relative;
+    }
+    .wallet-notch::before {
+      content: '';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 12px;
+      background: #090a0f;
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="main-title">Comparatif des Rendu Apple Wallet</h1>
+  <p class="main-sub">Visualisez exactement à quoi ressemble chaque type de pass Pass2U une fois créé sur votre iPhone</p>
+
+  <div class="comparison-grid">
+
+    <!-- COL 1: GÉNÉRIQUE (Recommandé) -->
+    <div class="pass-col">
+      <div class="pass-badge-rec badge-star">★ Recommandé (Option 1)</div>
+      <h3 class="pass-type-name">Type : « Générique »</h3>
+      <p class="pass-type-desc">Le standard carte de visite. Le QR Code est grand et ultra-rapide à flasher.</p>
+
+      <div class="apple-wallet-pass">
+        <div class="wallet-header">
+          <div class="wallet-logo-group">
+            <img src="../anass-bw-transparent.png" class="wallet-avatar" alt="Avatar">
+            <span class="wallet-brand-name">Anass Asrir</span>
+          </div>
+          <span class="wallet-header-tag">SDET</span>
+        </div>
+
+        <div class="wallet-body-generic">
+          <div>
+            <div class="primary-field-label">Poste Actuel</div>
+            <div class="primary-field-value">Senior QA Engineer</div>
+          </div>
+
+          <div class="secondary-row">
+            <div class="sec-field">
+              <span class="sec-label">Spécialité</span>
+              <span class="sec-val">Test Automation</span>
+            </div>
+            <div class="sec-field" style="text-align: right;">
+              <span class="sec-label">Portfolio</span>
+              <span class="sec-val" style="color: #38bdf8;">github.io</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="wallet-qr-section">
+          <div class="wallet-qr-box">
+            <img src="qrcode-light.png" alt="QR">
+          </div>
+          <span class="wallet-qr-label">anassasrir.github.io</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 2: PASS GRAND VISUEL / TICKET -->
+    <div class="pass-col">
+      <div class="pass-badge-rec badge-alt">Option Visuelle (Option 2)</div>
+      <h3 class="pass-type-name">Type : « Pass grand visuel »</h3>
+      <p class="pass-type-desc">Intègre une grande bannière visuelle avec votre portrait au-dessus du QR code.</p>
+
+      <div class="apple-wallet-pass wallet-notch">
+        <div class="wallet-header">
+          <div class="wallet-logo-group">
+            <span class="wallet-brand-name">Anass Asrir</span>
+          </div>
+          <span class="wallet-header-tag">PORTFOLIO</span>
+        </div>
+
+        <!-- Grande Bannière Visuelle -->
+        <div class="wallet-strip-banner">
+          <div class="strip-grid-bg"></div>
+          <div class="strip-text">
+            <div class="strip-title">Senior QA<br>Engineer</div>
+            <div class="strip-sub">Test Automation</div>
+          </div>
+          <img src="../anass-bw-transparent.png" class="strip-photo" alt="Anass">
+        </div>
+
+        <div class="wallet-body-generic" style="padding-top: 14px; padding-bottom: 6px;">
+          <div class="secondary-row">
+            <div class="sec-field">
+              <span class="sec-label">Domaine</span>
+              <span class="sec-val">Shift-Left Quality</span>
+            </div>
+            <div class="sec-field" style="text-align: right;">
+              <span class="sec-label">Site Web</span>
+              <span class="sec-val" style="color: #38bdf8;">anassasrir.github.io</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="wallet-qr-section" style="padding-top: 12px;">
+          <div class="wallet-qr-box">
+            <img src="qrcode-light.png" alt="QR">
+          </div>
+          <span class="wallet-qr-label">Flashez pour ouvrir</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 3: CARTE MAGASIN -->
+    <div class="pass-col">
+      <div class="pass-badge-rec badge-alt">Option Carte (Option 3)</div>
+      <h3 class="pass-type-name">Type : « Carte magasin »</h3>
+      <p class="pass-type-desc">Format carte de membre tech avec bandeau central et QR code en bas.</p>
+
+      <div class="apple-wallet-pass">
+        <div class="wallet-header">
+          <div class="wallet-logo-group">
+            <img src="../anass-bw-transparent.png" class="wallet-avatar" alt="Avatar">
+            <span class="wallet-brand-name">Anass Asrir</span>
+          </div>
+          <span class="wallet-header-tag">MEMBER</span>
+        </div>
+
+        <div class="wallet-store-strip">
+          <div class="store-badge-big">
+            <span>⚡</span>
+            <span>QA Architecture & CI/CD</span>
+          </div>
+        </div>
+
+        <div class="wallet-body-generic" style="padding-top: 14px; padding-bottom: 6px;">
+          <div>
+            <div class="primary-field-label">Expertise</div>
+            <div class="primary-field-value" style="font-size: 18px;">Senior QA Engineer</div>
+          </div>
+        </div>
+
+        <div class="wallet-qr-section" style="padding-top: 12px;">
+          <div class="wallet-qr-box">
+            <img src="qrcode-light.png" alt="QR">
+          </div>
+          <span class="wallet-qr-label">anassasrir.github.io</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

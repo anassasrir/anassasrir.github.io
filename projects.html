@@ -342,7 +342,7 @@
       <!-- Footer -->
       <footer class="page-footer">
         <p class="footer-text">
-          &copy; <span id="currentYear"></span> Anass Asrir
+          &copy; <span id="currentYear" data-current-year>2026</span> Anass Asrir
         </p>
       </footer>
     </main>
@@ -498,9 +498,6 @@
 
     <!-- Interactive Scripts: Filtering & Category Tabs -->
     <script>
-      // Current year in footer
-      document.getElementById("currentYear").textContent = new Date().getFullYear();
-
       // Category filter tabs
       const filterBtns = document.querySelectorAll(".filter-btn");
       const categoryGroups = document.querySelectorAll(".category-group");

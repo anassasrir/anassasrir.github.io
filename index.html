@@ -19,17 +19,30 @@
       rel="stylesheet"
     />
   </head>
-  <body>
+  <body class="home-page">
     <!-- Linear Ambient Glow & Grid -->
     <div class="ambient-glow"></div>
     <div class="ambient-grid"></div>
 
-    <main class="layout-wrapper">
+    <main class="layout-wrapper layout-wrapper-home">
       <!-- Floating Hero Section (2-Column Side-by-Side: Text Left, Shadow Portrait Right) -->
       <!-- Floating Hero Section -->
       <header class="editorial-hero">
         <!-- Top Bar (Both Desktop & Mobile): Search Button Right -->
         <div class="site-top-bar">
+          <button class="cmd-trigger-btn qr-trigger-btn" id="openQrBtn" title="QR Code du portfolio">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+              <path d="M14 14h3v3h-3z"></path>
+              <path d="M20 14v3h-3"></path>
+              <path d="M14 20h3"></path>
+              <path d="M20 20h.01"></path>
+            </svg>
+            <span>QR Code</span>
+          </button>
+
           <button class="cmd-trigger-btn" id="openCmdBtn">
             <span>Recherche</span>
             <span class="cmd-kbd-badge">⌘ / Ctrl K</span>
@@ -43,6 +56,7 @@
               <span class="linear-gradient-text">Anass</span><br />
               <span class="linear-gradient-text">Asrir</span>
             </h1>
+            <p class="hero-profession">Senior QA Engineer | Test Automation</p>
           </div>
 
           <!-- Large B&W Photo with Transparent Background and Bottom Shadow Fade -->
@@ -97,38 +111,110 @@
                 <span>GitHub</span>
               </a>
 
-              <a
-                href="https://youtube.com/playlist?list=PL4BtVtsdnzadpYqpzXNrArRKXiG1MI6nH&si=esxQyFSGFNbqq2zQ"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="social-button"
-                title="YouTube"
-              >
-                <svg viewBox="0 0 24 24">
-                  <path
-                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
-                  />
-                </svg>
-                <span>YouTube</span>
-              </a>
+              <div class="yt-preview-wrapper" id="ytPreviewWrapper">
+                <a
+                  href="https://youtube.com/playlist?list=PL4BtVtsdnzadpYqpzXNrArRKXiG1MI6nH&si=esxQyFSGFNbqq2zQ"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="social-button"
+                  title="Chaîne & Playlist YouTube"
+                  id="youtubeLink"
+                >
+                  <svg viewBox="0 0 24 24">
+                    <path
+                      d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+                    />
+                  </svg>
+                  <span>YouTube</span>
+                </a>
+
+                <!-- Hover Mini-Window Video Preview -->
+                <div class="yt-mini-window" id="ytMiniWindow" role="tooltip" aria-hidden="true">
+                  <div class="yt-mini-header">
+                    <div class="yt-mini-badge">
+                      <span class="yt-red-dot">●</span>
+                      <span>Vidéos & Playlist YouTube</span>
+                    </div>
+                    <span class="yt-mini-count">4 Modules</span>
+                  </div>
+
+                  <div class="yt-mini-banner">
+                    <div class="yt-mini-thumb-bg">
+                      <div class="yt-play-bubble">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                    </div>
+                    <div class="yt-mini-title-wrap">
+                      <h4 class="yt-mini-course-title">Formation SDET & BDD</h4>
+                      <p class="yt-mini-course-desc">Selenium WebDriver • Cucumber Java • POM Architecture</p>
+                    </div>
+                  </div>
+
+                  <div class="yt-mini-modules">
+                    <div class="yt-mini-module">
+                      <span class="yt-mod-num">01</span>
+                      <div class="yt-mod-text">
+                        <span class="yt-mod-title">Fondations BDD & 3 Amigos</span>
+                        <span class="yt-mod-sub">Spécifications vivantes & alignement</span>
+                      </div>
+                    </div>
+                    <div class="yt-mini-module">
+                      <span class="yt-mod-num">02</span>
+                      <div class="yt-mod-text">
+                        <span class="yt-mod-title">Syntaxe Gherkin & Exemples</span>
+                        <span class="yt-mod-sub">Given / When / Then & Scenarios</span>
+                      </div>
+                    </div>
+                    <div class="yt-mini-module">
+                      <span class="yt-mod-num">03</span>
+                      <div class="yt-mod-text">
+                        <span class="yt-mod-title">Framework Page Object Model</span>
+                        <span class="yt-mod-sub">Automatisation Selenium & Bonnes pratiques</span>
+                      </div>
+                    </div>
+                    <div class="yt-mini-module">
+                      <span class="yt-mod-num">04</span>
+                      <div class="yt-mod-text">
+                        <span class="yt-mod-title">Reporting & Intégration CI</span>
+                        <span class="yt-mod-sub">Exécution continue et valorisation</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="yt-mini-footer">
+                    <a href="/formations" class="yt-mini-link secondary">
+                      <span>Espace Formation</span>
+                      <span class="yt-mini-arrow">↵</span>
+                    </a>
+                    <a
+                      href="https://youtube.com/playlist?list=PL4BtVtsdnzadpYqpzXNrArRKXiG1MI6nH&si=esxQyFSGFNbqq2zQ"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="yt-mini-link primary"
+                    >
+                      <span>Lancer sur YouTube</span>
+                      <span class="yt-mini-arrow">↗</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <!-- Row 2: Parcours et chiffre clé -->
-            <div class="hero-btn-row">
+            <!-- Row 2: Parcours & Projets Perso (sur la même ligne) -->
+            <div class="hero-btn-row hero-nav-dual-row">
               <a
                 href="/about"
                 class="social-button highlight"
-                title="Parcours et chiffre clé"
+                title="Parcours et chiffres clés"
               >
                 <svg viewBox="0 0 24 24">
                   <path d="M4 19h16v2H4v-2zm2-8h3v6H6v-6zm5-6h3v12h-3V5zm5 4h3v8h-3V9z"/>
                 </svg>
-                <span>Parcours et chiffre clé</span>
+                <span>Parcours</span>
               </a>
-            </div>
 
-            <!-- Row 3: Projets personnels et dev -->
-            <div class="hero-btn-row">
               <a
                 href="/projects"
                 class="social-button highlight"
@@ -137,15 +223,83 @@
                 <svg viewBox="0 0 24 24">
                   <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
                 </svg>
-                <span>Projets personnels et dev</span>
+                <span>Projets Perso</span>
               </a>
             </div>
 
-            <!-- Row 4: Contact (Ouvre le modal formulaire) -->
+            <!-- Row 4: Catch My Stack (Page dédiée interactive) -->
             <div class="hero-btn-row">
+              <a
+                href="/catch-my-stack"
+                class="social-button highlight"
+                title="Catch My Stack — Terrain de jeu interactif des technologies"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                </svg>
+                <span>Catch My Stack</span>
+                <span class="btn-badge-live">● Interactif</span>
+              </a>
+            </div>
+
+            <!-- Row 5: Télécharger CV (FR / EN) ou Me Contacter -->
+            <div class="hero-btn-row hero-actions-dual-row">
+              <div class="cv-dropdown-wrapper" id="cvDropdownWrapper">
+                <button
+                  type="button"
+                  class="social-button cv-main-btn"
+                  id="cvDropdownBtn"
+                  title="Télécharger mon CV (Français & Anglais)"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                  <span class="cv-btn-label-desktop">Télécharger mon CV</span>
+                  <span class="cv-btn-label-mobile">Mon CV</span>
+                  <span class="cv-badge-group">
+                    <span class="cv-badge-lang" data-dl-lang="fr" title="Télécharger le CV en Français">FR</span>
+                    <span class="cv-badge-lang" data-dl-lang="en" title="Download Resume in English">EN</span>
+                  </span>
+                </button>
+
+                <!-- Dropdown Popover for Language Selection -->
+                <div class="cv-menu-popover" id="cvMenuPopover" role="menu" aria-label="Choisir la langue du CV">
+                  <div class="cv-menu-header">
+                    <span class="cv-menu-header-dot">●</span>
+                    <span>Sélectionner la version (PDF)</span>
+                  </div>
+                  <a
+                    href="cv-anass-asrir-fr.pdf"
+                    download="CV-Anass-Asrir-FR.pdf"
+                    class="cv-menu-item"
+                    role="menuitem"
+                  >
+                    <img src="icons/flag-fr.svg" alt="Drapeau France" class="cv-menu-flag-img" width="22" height="15" />
+                    <span class="cv-menu-title">Version Française</span>
+                    <span class="cv-menu-action">PDF ↵</span>
+                  </a>
+                  <a
+                    href="cv-anass-asrir-en.pdf"
+                    download="CV-Anass-Asrir-EN.pdf"
+                    class="cv-menu-item"
+                    role="menuitem"
+                  >
+                    <img src="icons/flag-gb.svg" alt="Drapeau Royaume-Uni" class="cv-menu-flag-img" width="22" height="15" />
+                    <span class="cv-menu-title">English Version</span>
+                    <span class="cv-menu-action">PDF ↵</span>
+                  </a>
+                </div>
+              </div>
+
+              <span class="hero-btn-separator">ou</span>
+
               <button
                 id="openContactBtn"
-                class="social-button"
+                class="social-button highlight"
                 title="Me contacter"
                 data-open-contact
               >
@@ -154,7 +308,7 @@
                     d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
                   />
                 </svg>
-                <span>Contact</span>
+                <span>Me Contacter</span>
               </button>
             </div>
           </div>
@@ -164,7 +318,7 @@
       <!-- Footer -->
       <footer class="page-footer">
         <p class="footer-text">
-          &copy; <span id="currentYear"></span> Anass Asrir
+          &copy; <span id="currentYear" data-current-year>2026</span> Anass Asrir
         </p>
       </footer>
     </main>
@@ -420,13 +574,7 @@
       <span id="toastMsg">Email copié dans le presse-papier !</span>
     </div>
 
-    <!-- Interactive Scripts: Current Year, Copy Toast, Spotlight Effect, Command Palette -->
-    <script>
-      // Current year in footer
-      document.getElementById("currentYear").textContent = new Date().getFullYear();
-    </script>
-
-    <!-- Core Shared Utilities (Dynamic Experience, Command Palette, Spotlight, Toast) -->
+    <!-- Core Shared Utilities (Dynamic Experience, Dynamic Year, Command Palette, Spotlight, Toast) -->
     <script src="shared.js"></script>
   </body>
 </html>

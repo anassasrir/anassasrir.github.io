@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Guide des Champs Pass2U — Résolution Coupure & Contraste</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #08090d;
+      color: #f8fafc;
+      font-family: 'Inter', -apple-system, sans-serif;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    p.subtitle {
+      font-size: 14px;
+      color: #94a3b8;
+    }
+
+    .container {
+      display: flex;
+      gap: 35px;
+      max-width: 1050px;
+      align-items: flex-start;
+    }
+
+    /* Pass Mockup with annotations */
+    .pass-wrapper {
+      position: relative;
+      width: 400px;
+      flex-shrink: 0;
+    }
+    .wallet-card {
+      width: 100%;
+      background: #000000;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+      padding: 16px 20px 24px;
+    }
+
+    /* Annotated zones */
+    .zone {
+      position: relative;
+      border: 2px dashed;
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin-bottom: 12px;
+      transition: all 0.2s;
+    }
+    .zone-badge {
+      position: absolute;
+      top: -10px;
+      right: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    /* Zone 1: Header Row */
+    .zone-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.05);
+    }
+    .zone-header-row .zone-badge {
+      background: #38bdf8;
+      color: #000;
+    }
+    .logo-side {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .avatar-img {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #000;
+      border: 1px solid #475569;
+    }
+    .logo-text-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .header-field-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.15);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    /* Zone 2: Primary Field */
+    .zone-primary {
+      border-color: #22c55e;
+      background: rgba(34, 197, 94, 0.05);
+      margin-top: 14px;
+    }
+    .zone-primary .zone-badge {
+      background: #22c55e;
+      color: #000;
+    }
+    .lbl {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #94a3b8;
+      letter-spacing: 0.05em;
+      margin-bottom: 2px;
+    }
+    .val-primary {
+      font-size: 22px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+
+    /* Zone 3: Secondary Fields */
+    .zone-secondary {
+      border-color: #eab308;
+      background: rgba(234, 179, 8, 0.05);
+      display: flex;
+      justify-content: space-between;
+    }
+    .zone-secondary .zone-badge {
+      background: #eab308;
+      color: #000;
+    }
+    .val-sec {
+      font-size: 13px;
+      font-weight: 600;
+      color: #f1f5f9;
+    }
+
+    /* Zone 4: QR Code Barcode */
+    .zone-qr {
+      border-color: #a855f7;
+      background: rgba(168, 85, 247, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px;
+      margin-top: 10px;
+      margin-bottom: 0;
+    }
+    .zone-qr .zone-badge {
+      background: #a855f7;
+      color: #fff;
+    }
+    .qr-box-inner {
+      background: #ffffff;
+      padding: 8px;
+      border-radius: 10px;
+      margin-bottom: 6px;
+    }
+    .qr-box-inner img {
+      width: 130px;
+      height: 130px;
+      display: block;
+    }
+    .qr-subtext {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    /* Right column: Explanations */
+    .guide-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .guide-card {
+      background: #12141a;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 18px 20px;
+    }
+    .guide-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .color-swatches {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .swatch {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+    .swatch-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      margin: 0 auto 6px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .swatch-name {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+    .swatch-hex {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .steps-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+    .steps-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .num-pill {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    strong.hl {
+      color: #38bdf8;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Résolution : Nom coupé & Contraste dans Pass2U</h1>
+    <p class="subtitle">Voici exactement où placer vos textes et quelles 3 couleurs choisir pour un rendu parfait</p>
+  </div>
+
+  <div class="container">
+
+    <!-- Mockup de gauche avec zones identifiées -->
+    <div class="pass-wrapper">
+      <div class="wallet-card">
+
+        <!-- ZONE 1: LOGO & HEADER -->
+        <div class="zone zone-header-row">
+          <span class="zone-badge">Zone 1 : En-tête</span>
+          <div class="logo-side">
+            <img src="anass-black-background.jpg" class="avatar-img" alt="Avatar">
+            <span class="logo-text-val">Anass Asrir</span>
+          </div>
+          <span class="header-field-val">QA LEAD</span>
+        </div>
+
+        <!-- ZONE 2: PRIMARY FIELD -->
+        <div class="zone zone-primary">
+          <span class="zone-badge">Zone 2 : Champ Principal</span>
+          <div class="lbl">TITRE DU POSTE</div>
+          <div class="val-primary">Senior QA Engineer</div>
+        </div>
+
+        <!-- ZONE 3: SECONDARY FIELD -->
+        <div class="zone zone-secondary">
+          <span class="zone-badge">Zone 3 : Secondaire</span>
+          <div>
+            <div class="lbl">SPÉCIALITÉ</div>
+            <div class="val-sec">Test Automation</div>
+          </div>
+          <div style="text-align: right;">
+            <div class="lbl">PORTFOLIO</div>
+            <div class="val-sec" style="color: #38bdf8;">github.io</div>
+          </div>
+        </div>
+
+        <!-- ZONE 4: QR CODE -->
+        <div class="zone zone-qr">
+          <span class="zone-badge">Zone 4 : Code-barres</span>
+          <div class="qr-box-inner">
+            <img src="qrcode-light.png" alt="QR">
+          </div>
+          <span class="qr-subtext">anassasrir.github.io</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Explications détaillées à droite -->
+    <div class="guide-col">
+
+      <!-- Carte 1: Pourquoi le nom était coupé -->
+      <div class="guide-card" style="border-left: 3px solid #ef4444;">
+        <div class="guide-card-title" style="color: #f87171;">
+          <span>⚠️</span> Pourquoi le nom était coupé ?
+        </div>
+        <p style="font-size: 13px; color: #cbd5e1; line-height: 1.5;">
+          Dans Apple Wallet, <strong>le coin supérieur droit (Header) n'a de place que pour 8 à 10 lettres max</strong>.
+          Si vous y avez mis <em>« Senior QA Engineer | Test Automation »</em> ou <em>« Anass Asrir »</em> avec un autre texte, iOS le tronque immédiatement avec des points de suspension <code>...</code>.
+        </p>
+      </div>
+
+      <!-- Carte 2: Où placer chaque texte -->
+      <div class="guide-card">
+        <div class="guide-card-title" style="color: #38bdf8;">
+          <span>✍️</span> Les 4 champs à remplir dans Pass2U :
+        </div>
+        <ul class="steps-list">
+          <li>
+            <span class="num-pill" style="background:#38bdf8; color:#000;">1</span>
+            <div><strong>Texte du logo (Logo Text) :</strong> Mettez <strong class="hl">Anass Asrir</strong> <em>(à côté de l'icône, ne sera jamais coupé)</em>.</div>
+          </li>
+          <li>
+            <span class="num-pill" style="background:#38bdf8; color:#000;">1</span>
+            <div><strong>Champ d'en-tête (Header Field en haut à droite) :</strong> Mettez court, ex: <strong class="hl">QA LEAD</strong> ou <strong class="hl">SDET</strong>.</div>
+          </li>
+          <li>
+            <span class="num-pill" style="background:#22c55e; color:#000;">2</span>
+            <div><strong>Champ principal (Primary Field) :</strong> Mettez <strong style="color:#22c55e;">Senior QA Engineer</strong> <em>(s'affiche en très grand au milieu sans coupure)</em>.</div>
+          </li>
+          <li>
+            <span class="num-pill" style="background:#eab308; color:#000;">3</span>
+            <div><strong>Champ secondaire (Secondary Field) :</strong> Mettez <strong style="color:#eab308;">Test Automation</strong>.</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Carte 3: Comment régler les couleurs (Contraste) -->
+      <div class="guide-card">
+        <div class="guide-card-title" style="color: #22c55e;">
+          <span>🎨</span> Réglage des 3 Couleurs (Pour éliminer le contraste bizarre)
+        </div>
+        <p style="font-size: 13px; color: #94a3b8; margin-bottom: 8px;">
+          Dans Pass2U, touchez l'onglet Couleurs et appliquez ces 3 teintes :
+        </p>
+        <div class="color-swatches">
+          <div class="swatch">
+            <div class="swatch-circle" style="background: #000000; border: 1px solid #475569;"></div>
+            <div class="swatch-name">Arrière-plan</div>
+            <div class="swatch-hex">Noir (#000000)</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-circle" style="background: #ffffff;"></div>
+            <div class="swatch-name">Premier plan (Texte)</div>
+            <div class="swatch-hex">Blanc (#FFFFFF)</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-circle" style="background: #94a3b8;"></div>
+            <div class="swatch-name">Étiquettes (Libellés)</div>
+            <div class="swatch-hex">Gris (#94A3B8)</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
