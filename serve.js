@@ -17,7 +17,30 @@ const MIME_TYPES = {
 
 const server = http.createServer((req, res) => {
   let reqPath = req.url.split('?')[0];
+
+  // API endpoint for contact form in local development
+  if (req.method === 'POST' && reqPath === '/api/contact') {
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', () => {
+      try {
+        const data = JSON.parse(body);
+        console.log('\n📬 [Nouveau message de contact reçu]');
+        console.log(`- De      : ${data.name} <${data.email}>`);
+        console.log(`- Sujet   : ${data.subject || '(Sans sujet)'}`);
+        console.log(`- Message : ${data.message}\n`);
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ success: true, message: 'Message reçu avec succès !' }));
+      } catch (err) {
+        res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ success: false, error: 'Données invalides' }));
+      }
+    });
+    return;
+  }
+
   if (reqPath === '/') reqPath = '/index.html';
+  if (reqPath === '/projets') reqPath = '/projects.html';
 
   let safePath = path.normalize(reqPath).replace(/^(\.\.[\/\\])+/, '');
   let filePath = path.join(__dirname, safePath);

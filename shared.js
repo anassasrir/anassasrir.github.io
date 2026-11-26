@@ -5,7 +5,8 @@
 
 const PORTFOLIO_CONFIG = {
   careerStartDate: "2016-08-01", // Début chez Capgemini en Août 2016
-  email: "asrir.anass@hotmail.fr"
+  email: "asrir.anass@hotmail.fr",
+  web3formsKey: "6019276f-5de2-4fb7-9932-8f30d7f10d22"
 };
 
 /**
@@ -46,6 +47,20 @@ const SEARCH_INDEX = [
       "historique", "timeline", "metriques", "impact", "chiffres", "statistiques",
       "stats", "kpi", "q-kpi", "annees", "senior", "architecte sdet", "qa lead",
       "10 ans", "10+", "annees d'experience", "defauts", "critiques", "evites"
+    ]
+  },
+  {
+    id: "nav-projects",
+    title: "Projets Personnels & Dev",
+    subtitle: "Architecture QA, frameworks open-source et applications web",
+    url: "/projects",
+    category: "Navigation",
+    icon: "💻",
+    action: "Aller ↵",
+    content: "Projets Personnels & Dev. Architecture QA & Frameworks : Enterprise Cypress E2E & API, Selenium WebDriver & C#, GEMAT Generic QA Automation Engine, Cross-Platform Mobile Testing Appium. Développement & Applications Web : Jolipas Jeu Éducatif Interactif PWA, Les Équier'Mômes Plateforme Associative Next.js. Vidéos & Formations : Formation SDET & BDD.",
+    keywords: [
+      "projets", "projects", "dev", "developpement", "apps", "applications", "frameworks",
+      "cypress", "selenium", "gemat", "appium", "jolipas", "equier momes", "open source"
     ]
   },
   {
@@ -310,18 +325,18 @@ const SEARCH_INDEX = [
   // 7. Actions Rapides & Contact
   // =========================================================================
   {
-    id: "action-email",
-    title: "Copier l'adresse Email",
-    subtitle: "asrir.anass@hotmail.fr (copie directe dans le presse-papier)",
-    url: "action:copy-email",
+    id: "action-contact",
+    title: "Envoyer un message (Formulaire)",
+    subtitle: "Formulaire de contact direct pour opportunités ou projets",
+    url: "action:open-contact",
     category: "Contact & Actions",
     icon: "✉️",
-    action: "Copier ↵",
-    content: "Email direct asrir.anass@hotmail.fr. Disponible pour opportunités, échanges techniques, architecture QA, missions SDET et conseil.",
+    action: "Écrire ↵",
+    content: "Formulaire de contact direct pour envoyer un message à Anass Asrir. Disponible pour opportunités, échanges techniques, architecture QA, missions SDET et conseil.",
     keywords: [
-      "email", "mail", "courriel", "contact", "contacter", "me contacter", "ecrire",
-      "message", "embauche", "recrutement", "freelance", "collaboration", "opportunite",
-      "coordonnees", "asrir", "anass", "asrir.anass@hotmail.fr", "discuter", "echanger"
+      "contact", "contacter", "formulaire", "message", "email", "mail", "courriel", "me contacter", "ecrire",
+      "embauche", "recrutement", "freelance", "collaboration", "opportunite",
+      "coordonnees", "asrir", "anass", "discuter", "echanger"
     ]
   },
   {
@@ -490,19 +505,9 @@ function showToast(message) {
 document.addEventListener("DOMContentLoaded", () => {
   updateDynamicContent();
 
-  // Bouton de copie d'email
-  const copyEmailBtn = document.getElementById("copyEmailBtn");
-  if (copyEmailBtn) {
-    copyEmailBtn.addEventListener("click", async () => {
-      const email = copyEmailBtn.getAttribute("data-email") || PORTFOLIO_CONFIG.email;
-      try {
-        await navigator.clipboard.writeText(email);
-        showToast("Email copié : " + email);
-      } catch (err) {
-        window.location.href = "mailto:" + email;
-      }
-    });
-  }
+  // Initialisation du modal formulaire de contact
+  initContactModal();
+
 
   // Spotlight Linear sur les cartes
   const cards = document.querySelectorAll(".link-card");
@@ -519,6 +524,370 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialisation du Command Palette avec moteur plein texte
   initCommandPalette();
 });
+
+/**
+ * Gestion du Popup Modal Formulaire de Contact (Linear Style)
+ */
+function initContactModal() {
+  ensureContactModalHtml();
+
+  const modal = document.getElementById("contactModal");
+  if (!modal) return;
+
+  const form = document.getElementById("contactForm");
+  const successState = document.getElementById("contactSuccessState");
+  const closeBtn = document.getElementById("closeContactModal");
+  const cancelBtn = document.getElementById("cancelContactBtn");
+  const closeSuccessBtn = document.getElementById("closeSuccessBtn");
+  const submitBtn = document.getElementById("submitContactBtn");
+  const errorAlert = document.getElementById("contactFormError");
+
+  // Champs de formulaire
+  const nameInput = document.getElementById("contactName");
+  const emailInput = document.getElementById("contactEmail");
+  const subjectInput = document.getElementById("contactSubject");
+  const messageInput = document.getElementById("contactMessage");
+
+  const nameError = document.getElementById("nameError");
+  const emailError = document.getElementById("emailError");
+  const messageError = document.getElementById("messageError");
+
+  function openContact() {
+    modal.classList.add("show");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+
+    // Réinitialise l'état si déjà envoyé
+    if (form && successState && successState.style.display !== "none") {
+      form.reset();
+      form.style.display = "flex";
+      successState.style.display = "none";
+      if (errorAlert) errorAlert.style.display = "none";
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        const btnText = submitBtn.querySelector(".btn-text");
+        const btnSpinner = submitBtn.querySelector(".btn-spinner");
+        if (btnText) btnText.textContent = "Envoyer le message";
+        if (btnSpinner) btnSpinner.style.display = "none";
+      }
+      clearErrors();
+    }
+
+    setTimeout(() => {
+      if (nameInput) nameInput.focus();
+    }, 150);
+  }
+
+  function closeContact() {
+    modal.classList.remove("show");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    if (errorAlert) errorAlert.style.display = "none";
+    clearErrors();
+  }
+
+  function clearErrors() {
+    [nameInput, emailInput, messageInput].forEach((input) => {
+      if (input) input.classList.remove("invalid");
+    });
+    if (nameError) nameError.textContent = "";
+    if (emailError) emailError.textContent = "";
+    if (messageError) messageError.textContent = "";
+    if (errorAlert) errorAlert.style.display = "none";
+  }
+
+  // Fonctions globales
+  window.openContactModal = openContact;
+  window.closeContactModal = closeContact;
+
+  // Attachement des écouteurs sur tous les déclencheurs
+  document.querySelectorAll("[data-open-contact], #openContactBtn, #cmdOpenContact").forEach((el) => {
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      const palette = document.getElementById("cmdPalette");
+      if (palette && palette.classList.contains("show")) {
+        palette.classList.remove("show");
+      }
+      openContact();
+    });
+  });
+
+  if (closeBtn) closeBtn.addEventListener("click", closeContact);
+  if (cancelBtn) cancelBtn.addEventListener("click", closeContact);
+  if (closeSuccessBtn) closeSuccessBtn.addEventListener("click", closeContact);
+
+  // Fermeture clic dehors
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeContact();
+    }
+  });
+
+  // Touche ESC
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("show")) {
+      closeContact();
+    }
+  });
+
+  // Validation en direct
+  if (nameInput) {
+    nameInput.addEventListener("input", () => {
+      if (nameInput.value.trim().length >= 2) {
+        nameInput.classList.remove("invalid");
+        if (nameError) nameError.textContent = "";
+      }
+    });
+  }
+
+  if (emailInput) {
+    emailInput.addEventListener("input", () => {
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (emailPattern.test(emailInput.value.trim())) {
+        emailInput.classList.remove("invalid");
+        if (emailError) emailError.textContent = "";
+      }
+    });
+  }
+
+  if (messageInput) {
+    messageInput.addEventListener("input", () => {
+      if (messageInput.value.trim().length >= 5) {
+        messageInput.classList.remove("invalid");
+        if (messageError) messageError.textContent = "";
+      }
+    });
+  }
+
+  // Soumission
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearErrors();
+
+      const nameVal = nameInput ? nameInput.value.trim() : "";
+      const emailVal = emailInput ? emailInput.value.trim() : "";
+      const subjectVal = subjectInput ? subjectInput.value.trim() : "";
+      const messageVal = messageInput ? messageInput.value.trim() : "";
+
+      let isValid = true;
+
+      if (!nameVal || nameVal.length < 2) {
+        if (nameInput) nameInput.classList.add("invalid");
+        if (nameError) nameError.textContent = "Veuillez indiquer votre nom ou société.";
+        isValid = false;
+      }
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailVal || !emailPattern.test(emailVal)) {
+        if (emailInput) emailInput.classList.add("invalid");
+        if (emailError) emailError.textContent = "Veuillez entrer une adresse email valide.";
+        isValid = false;
+      }
+
+      if (!messageVal || messageVal.length < 5) {
+        if (messageInput) messageInput.classList.add("invalid");
+        if (messageError) messageError.textContent = "Veuillez saisir votre message (min. 5 caractères).";
+        isValid = false;
+      }
+
+      if (!isValid) return;
+
+      const btnText = submitBtn.querySelector(".btn-text");
+      const btnSpinner = submitBtn.querySelector(".btn-spinner");
+      submitBtn.disabled = true;
+      if (btnText) btnText.textContent = "Envoi en cours...";
+      if (btnSpinner) btnSpinner.style.display = "inline-block";
+      if (errorAlert) errorAlert.style.display = "none";
+
+      const payload = {
+        name: nameVal,
+        email: emailVal,
+        subject: subjectVal || "Nouveau message portfolio",
+        message: messageVal
+      };
+
+      let sent = false;
+      let lastErrorMessage = "";
+
+      // Envoi du formulaire vers FormSubmit (avec journalisation locale si en dev)
+      const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+      if (isLocal) {
+        // Enregistre en local dans la console de serve.js
+        fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        }).catch(() => {});
+      }
+
+      const key = PORTFOLIO_CONFIG.web3formsKey;
+      const isWeb3FormsConfigured = key && !key.startsWith("__WEB3FORMS");
+
+      if (isWeb3FormsConfigured) {
+        // Envoi rapide via l'API Web3Forms (~150ms)
+        try {
+          const res = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+            body: JSON.stringify({
+              access_key: key,
+              name: payload.name,
+              email: payload.email,
+              subject: payload.subject,
+              message: payload.message,
+              from_name: payload.name,
+              botcheck: ""
+            })
+          });
+
+          const data = await res.json().catch(() => null);
+          if (res.ok && data && (data.success === true || data.success === "true")) {
+            sent = true;
+          } else {
+            lastErrorMessage = data && data.message ? data.message : `Erreur Web3Forms (code ${res.status})`;
+          }
+        } catch (err) {
+          console.warn("Erreur Web3Forms:", err);
+          lastErrorMessage = "Erreur de connexion lors de l'envoi du message.";
+        }
+      } else {
+        // En développement local sans la clé injectée
+        if (isLocal) {
+          sent = true;
+        } else {
+          lastErrorMessage = "Configuration du formulaire en cours (clé Web3Forms manquante).";
+        }
+      }
+
+      submitBtn.disabled = false;
+      if (btnText) btnText.textContent = "Envoyer le message";
+      if (btnSpinner) btnSpinner.style.display = "none";
+
+      if (sent) {
+        form.style.display = "none";
+        if (successState) successState.style.display = "flex";
+      } else {
+        const mailtoUrl = `mailto:${PORTFOLIO_CONFIG.email}?subject=${encodeURIComponent(payload.subject)}&body=${encodeURIComponent("De : " + payload.name + " <" + payload.email + ">\n\n" + payload.message)}`;
+        if (errorAlert) {
+          errorAlert.innerHTML = `⚠️ <strong>Échec d'envoi :</strong> ${lastErrorMessage}<br><br><a href="${mailtoUrl}" style="color: #fff; text-decoration: underline; font-weight: 600;">Cliquez ici pour l'envoyer directement via votre messagerie</a>.`;
+          errorAlert.style.display = "block";
+        }
+      }
+    });
+  }
+}
+
+/**
+ * Assure que le markup du modal de contact est présent sur la page
+ */
+function ensureContactModalHtml() {
+  if (document.getElementById("contactModal")) return;
+
+  const modalHtml = `
+    <div id="contactModal" class="contact-modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+      <div class="contact-modal-card">
+        <div class="contact-modal-header">
+          <div class="contact-modal-title-group">
+            <div class="contact-modal-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </div>
+            <div>
+              <h3 id="contactModalTitle" class="contact-modal-title">Envoyer un message</h3>
+              <p class="contact-modal-subtitle">Une opportunité, un projet ou une question ? Écrivez-moi directement.</p>
+            </div>
+          </div>
+          <button type="button" class="contact-modal-close" id="closeContactModal" aria-label="Fermer la fenêtre">
+            <span class="cmd-kbd-badge">ESC</span>
+          </button>
+        </div>
+
+        <div class="contact-modal-body">
+          <form id="contactForm" class="contact-form" novalidate>
+            <div class="contact-form-grid">
+              <div class="contact-field">
+                <label for="contactName">Votre Nom / Société <span class="required">*</span></label>
+                <input
+                  type="text"
+                  id="contactName"
+                  name="name"
+                  placeholder="Ex: Thomas Laurent"
+                  required
+                  autocomplete="name"
+                />
+                <span class="contact-field-error" id="nameError"></span>
+              </div>
+
+              <div class="contact-field">
+                <label for="contactEmail">Votre Adresse Email <span class="required">*</span></label>
+                <input
+                  type="email"
+                  id="contactEmail"
+                  name="email"
+                  placeholder="Ex: thomas@entreprise.com"
+                  required
+                  autocomplete="email"
+                />
+                <span class="contact-field-error" id="emailError"></span>
+              </div>
+            </div>
+
+            <div class="contact-field">
+              <label for="contactSubject">Objet du message</label>
+              <input
+                type="text"
+                id="contactSubject"
+                name="subject"
+                placeholder="Ex: Mission SDET, Collaboration, Question tech..."
+              />
+            </div>
+
+            <div class="contact-field">
+              <label for="contactMessage">Votre Message <span class="required">*</span></label>
+              <textarea
+                id="contactMessage"
+                name="message"
+                rows="4"
+                placeholder="Décrivez votre besoin, votre projet ou votre question..."
+                required
+              ></textarea>
+              <span class="contact-field-error" id="messageError"></span>
+            </div>
+
+            <div id="contactFormError" class="contact-form-alert error" style="display: none;"></div>
+
+            <div class="contact-form-footer">
+              <button type="button" class="contact-btn-ghost" id="cancelContactBtn">Annuler</button>
+              <button type="submit" class="contact-btn-primary" id="submitContactBtn">
+                <span class="btn-text">Envoyer le message</span>
+                <span class="btn-spinner" style="display: none;"></span>
+              </button>
+            </div>
+          </form>
+
+          <div id="contactSuccessState" class="contact-success-state" style="display: none;">
+            <div class="success-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <h4>Message envoyé avec succès !</h4>
+            <p>Merci pour votre message. Je vous répondrai dans les plus brefs délais sur votre adresse email.</p>
+            <button type="button" class="contact-btn-primary" id="closeSuccessBtn">Fermer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML("beforeend", modalHtml);
+}
+
 
 /**
  * Moteur de Recherche Plein Texte avec Scoring & Snippets d'Extrait
@@ -762,10 +1131,10 @@ function initCommandPalette() {
   function executeCommand(item) {
     closePalette();
 
-    if (item.url === "action:copy-email") {
-      navigator.clipboard.writeText(PORTFOLIO_CONFIG.email).then(() => {
-        showToast("Email copié : " + PORTFOLIO_CONFIG.email);
-      });
+    if (item.url === "action:open-contact" || item.url === "action:copy-email") {
+      if (window.openContactModal) {
+        window.openContactModal();
+      }
       return;
     }
 

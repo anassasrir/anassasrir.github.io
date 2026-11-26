@@ -25,423 +25,146 @@
     <div class="ambient-grid"></div>
 
     <main class="layout-wrapper">
-      <!-- Profile Header (Linktree Style) -->
-      <header class="profile-header">
-        <div class="avatar-container">
-          <div class="avatar">
-            <img src="favicon.png" alt="Anass Asrir" />
-          </div>
-        </div>
-
-        <div style="display: flex; gap: 0.5rem; align-items: center; justify-content: center; flex-wrap: wrap;">
-          <div class="status-badge">
-            <span class="status-dot"></span>
-            <span>Disponible pour échanger & projets</span>
-          </div>
+      <!-- Floating Hero Section (2-Column Side-by-Side: Text Left, Shadow Portrait Right) -->
+      <!-- Floating Hero Section -->
+      <header class="editorial-hero">
+        <!-- Top Bar (Both Desktop & Mobile): Search Button Right -->
+        <div class="site-top-bar">
           <button class="cmd-trigger-btn" id="openCmdBtn">
             <span>Recherche</span>
-            <span class="cmd-kbd-badge">⌘K</span>
+            <span class="cmd-kbd-badge">⌘ / Ctrl K</span>
           </button>
         </div>
 
-        <div class="profile-info">
-          <h1 class="profile-name">
-            <span class="linear-gradient-text">Anass Asrir</span>
-          </h1>
-          <p class="profile-role">Senior SDET Architect & Builder</p>
-          <p class="profile-bio">
-            Stratégie Shift-Left, Industrialisation CI/CD & Création
-            d'applications web modernes et performantes.
-          </p>
-        </div>
+        <!-- Main Hero Section (Desktop: Grand Titre Left, Grande Photo N&B Right / Mobile: Photo Top, Titre Below) -->
+        <div class="hero-header-top">
+          <div class="hero-title-group">
+            <h1 class="hero-main-title">
+              <span class="linear-gradient-text">Anass</span><br />
+              <span class="linear-gradient-text">Asrir</span>
+            </h1>
+          </div>
 
-        <!-- Highlighted Networks / Réseaux -->
-        <div class="social-links-bar">
-          <a
-            href="https://linkedin.com/in/anassasrir"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-button primary"
-            title="LinkedIn"
-          >
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+          <!-- Large B&W Photo with Transparent Background and Bottom Shadow Fade -->
+          <div class="hero-photo-wrap">
+            <div class="hero-photo-frame">
+              <img
+                src="anass-bw-transparent.png"
+                alt="Anass Asrir - Portrait Noir et Blanc"
+                class="hero-photo-img"
               />
-            </svg>
-            <span>LinkedIn</span>
-          </a>
-
-          <a
-            href="https://github.com/anassasrir"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-button"
-            title="GitHub"
-          >
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
-              />
-            </svg>
-            <span>GitHub</span>
-          </a>
-
-          <a
-            href="https://youtube.com/playlist?list=PL4BtVtsdnzadpYqpzXNrArRKXiG1MI6nH&si=esxQyFSGFNbqq2zQ"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-button"
-            title="YouTube"
-          >
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
-              />
-            </svg>
-            <span>Vidéos</span>
-          </a>
-
-          <button
-            id="copyEmailBtn"
-            class="social-button"
-            title="Copier l'email"
-            data-email="asrir.anass@hotmail.fr"
-          >
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M12 12.713l-11.985-9.713h23.97l-11.985 9.713zm0 2.574l-12-9.725v15.438h24v-15.438l-12 9.725z"
-              />
-            </svg>
-            <span>Email</span>
-          </button>
-        </div>
-      </header>
-
-      <!-- Pinned Highlight: Parcours & Impact -->
-      <a
-        href="/about"
-        class="link-card"
-        style="border-color: rgba(94, 106, 210, 0.4); background: linear-gradient(180deg, rgba(94, 106, 210, 0.08) 0%, rgba(255, 255, 255, 0.015) 100%);"
-      >
-        <div class="link-card-top">
-          <div class="link-card-identity">
-            <div class="link-icon-box" style="background: rgba(94, 106, 210, 0.15); border-color: rgba(94, 106, 210, 0.4);">📊</div>
-            <div class="link-title-wrapper">
-              <span class="link-title">
-                Parcours Professionnel & Chiffres Clés
-                <span class="link-badge" style="background: rgba(94, 106, 210, 0.2); color: #c7d2fe;" data-dynamic-years-text="{years} &bull; 4 postes">10+ ans &bull; 4 postes</span>
-              </span>
+              <div class="hero-photo-glow"></div>
             </div>
           </div>
-          <div class="link-arrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M7 17L17 7M17 7H7M17 7V17" />
-            </svg>
+        </div>
+
+        <!-- Bottom Section: En dessous de ces deux, le texte et les boutons d'action -->
+        <div class="hero-header-bottom">
+          <p class="hero-desc">
+            J'aide les équipes produit et tech à accélérer leurs cycles de livraison sans compromis sur la qualité, grâce à une ingénierie QA moderne, des tests automatisés robustes et une culture Shift-Left orientée impact.
+          </p>
+
+          <div class="hero-actions-bar">
+            <!-- Row 1: Socials (LinkedIn, GitHub, YouTube) -->
+            <div class="hero-btn-row">
+              <a
+                href="https://linkedin.com/in/anassasrir"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-button"
+                title="LinkedIn"
+              >
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+                  />
+                </svg>
+                <span>LinkedIn</span>
+              </a>
+
+              <a
+                href="https://github.com/anassasrir"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-button"
+                title="GitHub"
+              >
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                  />
+                </svg>
+                <span>GitHub</span>
+              </a>
+
+              <a
+                href="https://youtube.com/playlist?list=PL4BtVtsdnzadpYqpzXNrArRKXiG1MI6nH&si=esxQyFSGFNbqq2zQ"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-button"
+                title="YouTube"
+              >
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+                  />
+                </svg>
+                <span>YouTube</span>
+              </a>
+            </div>
+
+            <!-- Row 2: Parcours et chiffre clé -->
+            <div class="hero-btn-row">
+              <a
+                href="/about"
+                class="social-button highlight"
+                title="Parcours et chiffre clé"
+              >
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 19h16v2H4v-2zm2-8h3v6H6v-6zm5-6h3v12h-3V5zm5 4h3v8h-3V9z"/>
+                </svg>
+                <span>Parcours et chiffre clé</span>
+              </a>
+            </div>
+
+            <!-- Row 3: Projets personnels et dev -->
+            <div class="hero-btn-row">
+              <a
+                href="/projects"
+                class="social-button highlight"
+                title="Projets personnels et dev"
+              >
+                <svg viewBox="0 0 24 24">
+                  <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+                </svg>
+                <span>Projets personnels et dev</span>
+              </a>
+            </div>
+
+            <!-- Row 4: Contact (Ouvre le modal formulaire) -->
+            <div class="hero-btn-row">
+              <button
+                id="openContactBtn"
+                class="social-button"
+                title="Me contacter"
+                data-open-contact
+              >
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
+                  />
+                </svg>
+                <span>Contact</span>
+              </button>
+            </div>
           </div>
         </div>
-        <p class="link-description">
-          Découvrez mon historique d'architecte QA (kodehyve, Raja, Enablon, Capgemini), métriques d'impact (-90% temps manuel) et certifications (ISTQB, CSM).
-        </p>
-      </a>
-
-      <!-- Category Filter Tabs -->
-      <nav class="category-filter-nav" aria-label="Filtrer les catégories">
-        <button class="filter-btn active" data-filter="all">
-          <span>Tous</span>
-          <span class="filter-count">7</span>
-        </button>
-        <button class="filter-btn" data-filter="qa">
-          <span>🧪 QA & Outils</span>
-          <span class="filter-count">4</span>
-        </button>
-        <button class="filter-btn" data-filter="dev">
-          <span>💻 Dev & Apps</span>
-          <span class="filter-count">2</span>
-        </button>
-        <button class="filter-btn" data-filter="video">
-          <span>🎥 Vidéo & Tuto</span>
-          <span class="filter-count">1</span>
-        </button>
-      </nav>
-
-      <!-- Categorized Content Container -->
-      <div class="categories-container">
-        <!-- 1. Catégorie QA: Outils & Frameworks -->
-        <section class="category-group" data-category="qa" id="section-qa">
-          <div class="category-header">
-            <span class="category-header-icon">🧪</span>
-            <h2 class="category-title">Architecture QA & Frameworks</h2>
-            <div class="category-divider"></div>
-          </div>
-
-          <div class="links-list">
-            <!-- Cypress Framework -->
-            <a
-              href="https://github.com/anassasrir/cypress-tests"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="link-card"
-            >
-              <div class="link-card-top">
-                <div class="link-card-identity">
-                  <div class="link-icon-box">⚡</div>
-                  <div class="link-title-wrapper">
-                    <span class="link-title">
-                      Enterprise Cypress E2E & API
-                      <span class="link-badge">Open Source</span>
-                    </span>
-                  </div>
-                </div>
-                <div class="link-arrow">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17L17 7M17 7H7M17 7V17" />
-                  </svg>
-                </div>
-              </div>
-              <p class="link-description">
-                Framework d'automatisation UI & API complet, pensé pour les pipelines CI/CD haute vélocité avec exécution en pull request.
-              </p>
-              <div class="link-tags">
-                <span class="tag-pill">Cypress</span>
-                <span class="tag-pill">JavaScript / TS</span>
-                <span class="tag-pill">API Testing</span>
-                <span class="tag-pill">CI/CD Validation</span>
-              </div>
-            </a>
-
-            <!-- Selenium & C# -->
-            <a
-              href="https://github.com/anassasrir/selenium-framework"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="link-card"
-            >
-              <div class="link-card-top">
-                <div class="link-card-identity">
-                  <div class="link-icon-box">🎯</div>
-                  <div class="link-title-wrapper">
-                    <span class="link-title">
-                      Selenium WebDriver & C# Architecture
-                      <span class="link-badge">Framework</span>
-                    </span>
-                  </div>
-                </div>
-                <div class="link-arrow">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17L17 7M17 7H7M17 7V17" />
-                  </svg>
-                </div>
-              </div>
-              <p class="link-description">
-                Architecture Page Object Model (POM) hautement structurée sous l'écosystème .NET pour des tests d'entreprise fiables et maintenables.
-              </p>
-              <div class="link-tags">
-                <span class="tag-pill">C# / .NET</span>
-                <span class="tag-pill">Selenium WebDriver</span>
-                <span class="tag-pill">xUnit / MSTest</span>
-                <span class="tag-pill">POM Pattern</span>
-              </div>
-            </a>
-
-            <!-- GEMAT -->
-            <a
-              href="https://github.com/anassasrir/GEMAT"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="link-card"
-            >
-              <div class="link-card-top">
-                <div class="link-card-identity">
-                  <div class="link-icon-box">🔧</div>
-                  <div class="link-title-wrapper">
-                    <span class="link-title">
-                      GEMAT — Generic QA Automation Engine
-                      <span class="link-badge">Tool</span>
-                    </span>
-                  </div>
-                </div>
-                <div class="link-arrow">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17L17 7M17 7H7M17 7V17" />
-                  </svg>
-                </div>
-              </div>
-              <p class="link-description">
-                Outil et utilitaire dédié à l'automatisation des tâches répétitives : génération de données de test, health checks d'environnements et nettoyage BDD/API.
-              </p>
-              <div class="link-tags">
-                <span class="tag-pill">Data Management</span>
-                <span class="tag-pill">API & DB Integration</span>
-                <span class="tag-pill">Shell / PowerShell</span>
-              </div>
-            </a>
-
-            <!-- Appium Mobile -->
-            <a
-              href="https://github.com/anassasrir/Appium"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="link-card"
-            >
-              <div class="link-card-top">
-                <div class="link-card-identity">
-                  <div class="link-icon-box">📱</div>
-                  <div class="link-title-wrapper">
-                    <span class="link-title">
-                      Cross-Platform Mobile Testing (Appium)
-                      <span class="link-badge">Mobile QA</span>
-                    </span>
-                  </div>
-                </div>
-                <div class="link-arrow">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17L17 7M17 7H7M17 7V17" />
-                  </svg>
-                </div>
-              </div>
-              <p class="link-description">
-                Framework modulaire pour applications mobiles natives, hybrides et web pour iOS et Android basé sur le protocole unifié WebDriver.
-              </p>
-              <div class="link-tags">
-                <span class="tag-pill">Appium</span>
-                <span class="tag-pill">iOS & Android</span>
-                <span class="tag-pill">WebDriver Protocol</span>
-              </div>
-            </a>
-          </div>
-        </section>
-
-        <!-- 2. Catégorie Dev: Applications & Projets -->
-        <section class="category-group" data-category="dev" id="section-dev">
-          <div class="category-header">
-            <span class="category-header-icon">💻</span>
-            <h2 class="category-title">Développement & Applications Web</h2>
-            <div class="category-divider"></div>
-          </div>
-
-          <div class="links-list">
-            <!-- Jolipas App -->
-            <a
-              href="https://jolipas-app.pages.dev/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="link-card"
-            >
-              <div class="link-card-top">
-                <div class="link-card-identity">
-                  <div class="link-icon-box">🎨</div>
-                  <div class="link-title-wrapper">
-                    <span class="link-title">
-                      Jolipas — Jeu Éducatif Interactif
-                      <span class="link-badge live">● En ligne</span>
-                    </span>
-                  </div>
-                </div>
-                <div class="link-arrow">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17L17 7M17 7H7M17 7V17" />
-                  </svg>
-                </div>
-              </div>
-              <p class="link-description">
-                Application web progressive (PWA) conçue pour l'éveil et l'apprentissage ludique des enfants : univers visuel captivant, animations fluides et réactivité tactile.
-              </p>
-              <div class="link-tags">
-                <span class="tag-pill">PWA / Web App</span>
-                <span class="tag-pill">EdTech</span>
-                <span class="tag-pill">Interactive</span>
-                <span class="tag-pill">Cloudflare Pages</span>
-              </div>
-            </a>
-
-            <!-- Equier-Mômes -->
-            <a
-              href="https://equier-momes.fr"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="link-card"
-            >
-              <div class="link-card-top">
-                <div class="link-card-identity">
-                  <div class="link-icon-box">🏫</div>
-                  <div class="link-title-wrapper">
-                    <span class="link-title">
-                      Les Équier'Mômes — Plateforme Associative
-                      <span class="link-badge live">● En ligne</span>
-                    </span>
-                  </div>
-                </div>
-                <div class="link-arrow">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17L17 7M17 7H7M17 7V17" />
-                  </svg>
-                </div>
-              </div>
-              <p class="link-description">
-                Portail complet pour l'association de parents d'élèves : inscriptions en temps réel aux événements, planification des créneaux bénévoles et espace élus sécurisé.
-              </p>
-              <div class="link-tags">
-                <span class="tag-pill">Next.js</span>
-                <span class="tag-pill">TypeScript</span>
-                <span class="tag-pill">PostgreSQL Neon</span>
-                <span class="tag-pill">Resend API</span>
-              </div>
-            </a>
-          </div>
-        </section>
-
-        <!-- 3. Catégorie Vidéo: Mentoring & Formation -->
-        <section class="category-group" data-category="video" id="section-video">
-          <div class="category-header">
-            <span class="category-header-icon">🎥</span>
-            <h2 class="category-title">Vidéos & Formations</h2>
-            <div class="category-divider"></div>
-          </div>
-
-          <div class="links-list">
-            <!-- Formations Dédiées Page -->
-            <a
-              href="/formations"
-              class="link-card"
-            >
-              <div class="link-card-top">
-                <div class="link-card-identity">
-                  <div class="link-icon-box">🎬</div>
-                  <div class="link-title-wrapper">
-                    <span class="link-title">
-                      Formation SDET & BDD (Cucumber / Selenium)
-                      <span class="link-badge video">● Espace Dédié & Vidéos</span>
-                    </span>
-                  </div>
-                </div>
-                <div class="link-arrow">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M7 17L17 7M17 7H7M17 7V17" />
-                  </svg>
-                </div>
-              </div>
-              <p class="link-description">
-                Espace de formation complet avec lecteur vidéo YouTube intégré, programme modulaire étape par étape et bonnes pratiques BDD.
-              </p>
-              <div class="link-tags">
-                <span class="tag-pill">Lecteur Vidéo Intégré</span>
-                <span class="tag-pill">BDD / Gherkin</span>
-                <span class="tag-pill">Selenium WebDriver</span>
-                <span class="tag-pill">100% Gratuit</span>
-              </div>
-            </a>
-          </div>
-        </section>
-      </div>
+      </header>
 
       <!-- Footer -->
       <footer class="page-footer">
         <p class="footer-text">
-          &copy; <span id="currentYear"></span> Anass Asrir &bull; Architecting Quality & Crafting Software
-        </p>
-        <p class="footer-quote">
-          Shift-Left &bull; CI/CD &bull; Fullstack Craftsmanship
+          &copy; <span id="currentYear"></span> Anass Asrir
         </p>
       </footer>
     </main>
@@ -483,6 +206,17 @@
               <div>
                 <span class="cmd-item-title">Parcours & Impact</span>
                 <span class="cmd-item-subtitle">Métriques, 4 postes & certifications</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Aller ↵</span>
+          </a>
+
+          <a href="/projects" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">💻</span>
+              <div>
+                <span class="cmd-item-title">Projets Personnels & Dev</span>
+                <span class="cmd-item-subtitle">Frameworks QA, tools & apps web</span>
               </div>
             </div>
             <span class="cmd-item-action">Aller ↵</span>
@@ -545,15 +279,15 @@
           </a>
 
           <div class="cmd-group-label">Actions Rapides</div>
-          <div class="cmd-item" id="cmdCopyEmail">
+          <div class="cmd-item" id="cmdOpenContact" data-open-contact>
             <div class="cmd-item-left">
               <span class="cmd-item-icon">✉️</span>
               <div>
-                <span class="cmd-item-title">Copier l'adresse Email</span>
-                <span class="cmd-item-subtitle">asrir.anass@hotmail.fr</span>
+                <span class="cmd-item-title">Envoyer un message</span>
+                <span class="cmd-item-subtitle">Formulaire de contact direct</span>
               </div>
             </div>
-            <span class="cmd-item-action">Copier ↵</span>
+            <span class="cmd-item-action">Écrire ↵</span>
           </div>
 
           <a href="https://linkedin.com/in/anassasrir" target="_blank" rel="noopener noreferrer" class="cmd-item">
@@ -578,40 +312,118 @@
       </div>
     </div>
 
+    <!-- Contact Modal Popup (Formulaire de contact direct) -->
+    <div id="contactModal" class="contact-modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+      <div class="contact-modal-card">
+        <!-- Header -->
+        <div class="contact-modal-header">
+          <div class="contact-modal-title-group">
+            <div class="contact-modal-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </div>
+            <div>
+              <h3 id="contactModalTitle" class="contact-modal-title">Envoyer un message</h3>
+              <p class="contact-modal-subtitle">Une opportunité, un projet ou une question ? Écrivez-moi directement.</p>
+            </div>
+          </div>
+          <button type="button" class="contact-modal-close" id="closeContactModal" aria-label="Fermer la fenêtre">
+            <span class="cmd-kbd-badge">ESC</span>
+          </button>
+        </div>
+
+        <!-- Body: Form or Success message -->
+        <div class="contact-modal-body">
+          <form id="contactForm" class="contact-form" novalidate>
+            <div class="contact-form-grid">
+              <div class="contact-field">
+                <label for="contactName">Votre Nom / Société <span class="required">*</span></label>
+                <input
+                  type="text"
+                  id="contactName"
+                  name="name"
+                  placeholder="Ex: Thomas Laurent"
+                  required
+                  autocomplete="name"
+                />
+                <span class="contact-field-error" id="nameError"></span>
+              </div>
+
+              <div class="contact-field">
+                <label for="contactEmail">Votre Adresse Email <span class="required">*</span></label>
+                <input
+                  type="email"
+                  id="contactEmail"
+                  name="email"
+                  placeholder="Ex: thomas@entreprise.com"
+                  required
+                  autocomplete="email"
+                />
+                <span class="contact-field-error" id="emailError"></span>
+              </div>
+            </div>
+
+            <div class="contact-field">
+              <label for="contactSubject">Objet du message</label>
+              <input
+                type="text"
+                id="contactSubject"
+                name="subject"
+                placeholder="Ex: Mission SDET, Collaboration, Question tech..."
+              />
+            </div>
+
+            <div class="contact-field">
+              <label for="contactMessage">Votre Message <span class="required">*</span></label>
+              <textarea
+                id="contactMessage"
+                name="message"
+                rows="4"
+                placeholder="Décrivez votre besoin, votre projet ou votre question..."
+                required
+              ></textarea>
+              <span class="contact-field-error" id="messageError"></span>
+            </div>
+
+            <!-- Error notice if submit fails -->
+            <div id="contactFormError" class="contact-form-alert error" style="display: none;"></div>
+
+            <div class="contact-form-footer">
+              <button type="button" class="contact-btn-ghost" id="cancelContactBtn">Annuler</button>
+              <button type="submit" class="contact-btn-primary" id="submitContactBtn">
+                <span class="btn-text">Envoyer le message</span>
+                <span class="btn-spinner" style="display: none;"></span>
+              </button>
+            </div>
+          </form>
+
+          <!-- Success View (Shown after sending) -->
+          <div id="contactSuccessState" class="contact-success-state" style="display: none;">
+            <div class="success-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <h4>Message envoyé avec succès !</h4>
+            <p>Merci pour votre message. Je vous répondrai dans les plus brefs délais sur votre adresse email.</p>
+            <button type="button" class="contact-btn-primary" id="closeSuccessBtn">Fermer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Interactive Copy Toast -->
     <div id="toast" class="toast-notice" role="status" aria-live="polite">
       <span>✓</span>
       <span id="toastMsg">Email copié dans le presse-papier !</span>
     </div>
 
-    <!-- Interactive Scripts: Filtering, Copy Toast, Spotlight Effect, Command Palette -->
+    <!-- Interactive Scripts: Current Year, Copy Toast, Spotlight Effect, Command Palette -->
     <script>
       // Current year in footer
       document.getElementById("currentYear").textContent = new Date().getFullYear();
-
-      // Category filter tabs
-      const filterBtns = document.querySelectorAll(".filter-btn");
-      const categoryGroups = document.querySelectorAll(".category-group");
-
-      filterBtns.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const filter = btn.getAttribute("data-filter");
-
-          // Update active button
-          filterBtns.forEach((b) => b.classList.remove("active"));
-          btn.classList.add("active");
-
-          // Filter groups
-          categoryGroups.forEach((group) => {
-            const category = group.getAttribute("data-category");
-            if (filter === "all" || filter === category) {
-              group.classList.remove("hidden");
-            } else {
-              group.classList.add("hidden");
-            }
-          });
-        });
-      });
     </script>
 
     <!-- Core Shared Utilities (Dynamic Experience, Command Palette, Spotlight, Toast) -->
