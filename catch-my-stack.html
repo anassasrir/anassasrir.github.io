@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catch My Stack — Anass Asrir</title>
+    <meta
+      name="description"
+      content="Jeu interactif Catch My Stack : capturez les technologies et frameworks maîtrisés par Anass Asrir, Senior QA Engineer & SDET Architect."
+    />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="apple-touch-icon" href="favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Ambient Glow & Grid -->
+    <div class="ambient-glow"></div>
+    <div class="ambient-grid"></div>
+
+    <main class="layout-wrapper layout-wrapper-wide layout-wrapper-game">
+      <!-- Subpage Top Navigation -->
+      <nav class="subpage-top-nav">
+        <a href="/" class="back-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          <span>Accueil</span>
+        </a>
+
+        <button class="cmd-trigger-btn" id="openCmdBtn">
+          <span>Recherche</span>
+          <span class="cmd-kbd-badge">⌘ / Ctrl K</span>
+        </button>
+      </nav>
+
+      <!-- Page Header (ISO avec les autres sous-pages) -->
+      <header class="page-title-section">
+        <div class="page-badge">● Expérience Interactive</div>
+        <h1 class="page-main-title">Catch My Stack</h1>
+        <p class="page-subtitle">
+          Cliquez sur les logos en mouvement pour les capturer, figer leur position et révéler les projets et métriques d'usage associés.
+        </p>
+      </header>
+
+      <!-- Main Interactive Section: Large Arena -->
+      <section class="stack-hunter-section dedicated" id="stackHunter" aria-label="Catch My Stack - Technologies maîtrisées">
+        <div class="stack-hunter-card">
+          <!-- Header Bar with Sound & Reset (Sans redondance avec le titre de la page) -->
+          <div class="sh-header">
+            <div class="sh-title-group">
+              <div class="sh-icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                </svg>
+              </div>
+              <div class="sh-title-text-wrap">
+                <span class="sh-title">Arène Interactive</span>
+              </div>
+            </div>
+
+            <div class="sh-controls">
+              <button type="button" class="sh-control-btn" id="shSoundToggle" title="Activer / Couper les sons" aria-label="Activer / Couper les sons">
+                <span id="shSoundIcon">🔊</span>
+              </button>
+              <button type="button" class="sh-control-btn" id="shResetBtn" title="Réinitialiser les stacks" aria-label="Réinitialiser l'arène">
+                <span>↺</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Arena (Large Dotted Grid Canvas with Floating Stack Logos) -->
+          <div class="sh-arena-wrap sh-arena-large" id="shArenaWrap">
+            <div class="sh-arena-grid" id="shArena">
+              <!-- Floating Stack Items Injected Dynamically by shared.js -->
+            </div>
+
+            <!-- Sleek Tooltip Popover for Hover / Details -->
+            <div class="sh-popover" id="shPopover" role="dialog" aria-hidden="true">
+              <div class="sh-popover-header">
+                <div class="sh-popover-tag" id="shPopoverCategory">
+                  <span class="sh-tag-dot">●</span>
+                  <span id="shPopoverCategoryText">AUTOMATION E2E</span>
+                </div>
+                <div class="sh-popover-timing" id="shPopoverTiming">
+                  <span class="sh-time-icon">⏱</span>
+                  <span id="shPopoverTimingText">3+ ans</span>
+                </div>
+              </div>
+
+              <div class="sh-popover-identity">
+                <div class="sh-popover-icon" id="shPopoverIcon"></div>
+                <div class="sh-popover-title-box">
+                  <h4 class="sh-popover-title" id="shPopoverTitle">Cypress</h4>
+                  <p class="sh-popover-role" id="shPopoverRole">Architecture E2E & Validation PR</p>
+                </div>
+              </div>
+
+              <div class="sh-popover-exp-list" id="shPopoverExpList">
+                <!-- Companies and metrics injected dynamically -->
+              </div>
+
+              <div class="sh-popover-footer">
+                <a href="/about" class="sh-popover-link" id="shPopoverLink">
+                  <span>Voir le poste & les réalisations</span>
+                  <span class="sh-link-arrow">→</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Legend Bar -->
+          <div class="sh-legend">
+            <div class="sh-legend-item">
+              <span class="sh-legend-dot primary">●</span>
+              <span>Cliquez ou tapez sur un logo pour le capturer et le figer</span>
+            </div>
+            <div class="sh-legend-item">
+              <span class="sh-legend-dot accent">●</span>
+              <span>Survolez une stack pour révéler les projets et métriques d'usage</span>
+            </div>
+            <div class="sh-legend-item">
+              <span class="sh-legend-dot success">✓</span>
+              <span>Stack capturée & figée</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="page-footer">
+        <p class="footer-text">
+          &copy; <span id="currentYear" data-current-year>2026</span> Anass Asrir
+        </p>
+      </footer>
+    </main>
+
+    <!-- Global Command Palette Modal (⌘K / Ctrl+K) -->
+    <div id="cmdPaletteModal" class="cmd-palette-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="cmd-palette-container">
+        <div class="cmd-input-wrapper">
+          <svg class="cmd-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input
+            type="text"
+            id="cmdSearchInput"
+            class="cmd-search-input"
+            placeholder="Rechercher une techno, expérience, outil..."
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <kbd class="cmd-esc-badge" id="cmdEscBadge">ESC</kbd>
+        </div>
+
+        <div class="cmd-results" id="cmdResults">
+          <!-- Dynamically populated -->
+        </div>
+
+        <div class="cmd-footer">
+          <span>Navigation : flèches ↑ / ↓</span>
+          <div class="cmd-footer-keys">
+            <span class="cmd-footer-key"><span class="cmd-kbd-badge">↵</span> Sélectionner</span>
+            <span class="cmd-footer-key"><span class="cmd-kbd-badge">ESC</span> Fermer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast-notice" role="status" aria-live="polite">
+      <span>✓</span>
+      <span id="toastMsg">Action effectuée</span>
+    </div>
+
+    <!-- Core Shared Utilities -->
+    <script src="shared.js"></script>
+  </body>
+</html>

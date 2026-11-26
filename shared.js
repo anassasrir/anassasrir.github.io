@@ -10,6 +10,19 @@ const PORTFOLIO_CONFIG = {
 };
 
 /**
+ * Utilitaire global d'échappement HTML pour éviter les failles XSS et les ReferenceErrors
+ */
+function escapeHtml(str) {
+  if (str === null || str === undefined) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+/**
  * Base de Données Complète pour la Recherche Plein Texte (Grep-like Full-Text Index)
  * Chaque entrée contient la totalité de son contenu textuel (bullets, descriptions, métriques).
  */
@@ -79,6 +92,17 @@ const SEARCH_INDEX = [
       "cucumber", "gherkin", "masterclass", "cours gratuit", "chaine youtube",
       "lecteur", "video youtube", "syllabus", "modules", "apprenant", "formation gratuite"
     ]
+  },
+  {
+    id: "action-qr",
+    title: "QR Code du portfolio",
+    subtitle: "Scanner avec un smartphone ou télécharger le badge",
+    url: "#qr",
+    category: "Action",
+    icon: "📱",
+    action: "Afficher ↵",
+    content: "Afficher le QR Code du portfolio pour scanner ou partager avec un smartphone",
+    keywords: ["qr", "qrcode", "qr-code", "flashcode", "mobile", "scanner", "scan", "partager", "wallet", "carte"]
   },
 
   // =========================================================================
@@ -340,6 +364,42 @@ const SEARCH_INDEX = [
     ]
   },
   {
+    id: "action-download-cv-fr",
+    title: "Télécharger mon CV en Français (PDF)",
+    subtitle: "Curriculum Vitae complet en français (3 pages) — Anass Asrir",
+    url: "cv-anass-asrir-fr.pdf",
+    category: "Contact & Actions",
+    icon: "🇫🇷",
+    action: "Télécharger ↵",
+    content: "Télécharger le CV officiel en français d'Anass Asrir au format PDF. Expériences Kodehyve, Mangopay, Raja, Enablon, Byron Group, Capgemini, compétences Cypress, Selenium, BDD, CI/CD, certifications ISTQB et CSM.",
+    keywords: ["cv fr", "cv francais", "cv", "resume", "curriculum", "vitae", "pdf", "telecharger", "francais", "french"]
+  },
+  {
+    id: "action-download-cv-en",
+    title: "Download Resume in English (PDF)",
+    subtitle: "Full English resume (3 pages) — Anass Asrir",
+    url: "cv-anass-asrir-en.pdf",
+    category: "Contact & Actions",
+    icon: "🇬🇧",
+    action: "Download ↵",
+    content: "Download official English resume of Anass Asrir in PDF format. SDET background, Kodehyve, Mangopay, Raja, Enablon, Byron Group, Capgemini, Cypress, Selenium, Cucumber BDD, CI/CD, ISTQB and CSM certifications.",
+    keywords: ["cv en", "resume english", "english", "anglais", "cv anglais", "resume", "curriculum", "download", "pdf"]
+  },
+  {
+    id: "action-catch-my-stack",
+    title: "Catch My Stack — Terrain de Jeu Interactif",
+    subtitle: "Explorez de manière interactive les technologies et frameworks d'Anass",
+    url: "/catch-my-stack",
+    category: "Navigation & Outils",
+    icon: "🎮",
+    action: "Explorer ↵",
+    content: "Jeu interactif Catch My Stack : capturez les technologies Cypress, Playwright, Selenium, TypeScript, C#, Python, Java, GitHub Actions, Azure DevOps, PostgreSQL, Postman, Percy, Cucumber, Docker, Power BI, Appium, Next.js, React, Vue.js, Vercel, Cloudflare Pages, Supabase, Resend, Web3Forms, Tailwind CSS, Vitest.",
+    keywords: [
+      "catch my stack", "stack hunter", "jeu", "game", "technos", "stacks", "competences",
+      "interactif", "bug hunter", "nextjs", "react", "vuejs", "vercel", "cloudflare", "supabase", "resend", "vitest", "tailwind"
+    ]
+  },
+  {
     id: "action-linkedin",
     title: "Profil LinkedIn — Anass Asrir",
     subtitle: "linkedin.com/in/anassasrir — Connexion & recommandations",
@@ -508,6 +568,20 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialisation du modal formulaire de contact
   initContactModal();
 
+  // Initialisation du modal QR Code & Partage
+  initQrModal();
+
+  // Initialisation de la section Catch My Stack (Stack Hunter)
+  initStackHunter();
+
+  // Initialisation du hover mini-window YouTube
+  initYouTubePreview();
+
+  // Initialisation du menu de téléchargement du CV (FR / EN)
+  initCvDropdown();
+
+  // Initialisation du parcours temporel interactif (Time Travel Timeline)
+  initInteractiveTimeline();
 
   // Spotlight Linear sur les cartes
   const cards = document.querySelectorAll(".link-card");
@@ -888,6 +962,137 @@ function ensureContactModalHtml() {
   document.body.insertAdjacentHTML("beforeend", modalHtml);
 }
 
+/**
+ * Gestion du Modal QR Code & Partage (Linear Style)
+ */
+function initQrModal() {
+  ensureQrModalHtml();
+
+  const modal = document.getElementById("qrModal");
+  if (!modal) return;
+
+  const closeBtn = document.getElementById("closeQrModal");
+  const copyBtn = document.getElementById("copyQrUrlBtn");
+  const openButtons = document.querySelectorAll("[data-open-qr], #openQrBtn");
+
+  function openQr() {
+    modal.classList.add("active");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeQr() {
+    modal.classList.remove("active");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  openButtons.forEach((btn) => btn.addEventListener("click", openQr));
+  if (closeBtn) closeBtn.addEventListener("click", closeQr);
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeQr();
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("active")) {
+      closeQr();
+    }
+  });
+
+  if (copyBtn) {
+    copyBtn.addEventListener("click", () => {
+      const url = "https://anassasrir.github.io/";
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => {
+          showToast("Lien du portfolio copié dans le presse-papier !");
+        }).catch(() => {
+          fallbackCopyText(url);
+        });
+      } else {
+        fallbackCopyText(url);
+      }
+    });
+  }
+
+  function fallbackCopyText(text) {
+    const dummy = document.createElement("input");
+    document.body.appendChild(dummy);
+    dummy.value = text;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+    showToast("Lien du portfolio copié dans le presse-papier !");
+  }
+
+  // Rendre accessible globalement
+  window.openQrModal = openQr;
+  window.closeQrModal = closeQr;
+}
+
+/**
+ * Assure que le markup du modal QR Code est présent sur la page
+ */
+function ensureQrModalHtml() {
+  if (document.getElementById("qrModal")) return;
+
+  const modalHtml = `
+    <div id="qrModal" class="cmd-palette-backdrop qr-modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="qrModalTitle">
+      <div class="cmd-palette-modal qr-modal-card">
+        <div class="qr-modal-header">
+          <div class="qr-modal-title-group">
+            <span class="qr-modal-dot">●</span>
+            <span id="qrModalTitle" class="qr-modal-title">Partager le Portfolio</span>
+          </div>
+          <button class="qr-modal-close" id="closeQrModal" aria-label="Fermer">✕</button>
+        </div>
+
+        <div class="qr-modal-body">
+          <div class="qr-modal-profile">
+            <div class="qr-modal-avatar-frame">
+              <img src="anass-bw-transparent.png" alt="Anass Asrir" class="qr-modal-avatar">
+            </div>
+            <div class="qr-modal-profile-text">
+              <h3 class="qr-modal-name">Anass Asrir</h3>
+              <p class="qr-modal-role">Senior QA Engineer | Test Automation</p>
+            </div>
+          </div>
+
+          <div class="qr-modal-box">
+            <img src="qr/qrcode-light.png" alt="QR Code Portfolio" class="qr-modal-img" width="210" height="210">
+          </div>
+
+          <div class="qr-modal-url-pill">
+            <span class="qr-url-icon">🔗</span>
+            <span class="qr-url-text">anassasrir.github.io</span>
+          </div>
+
+          <p class="qr-modal-hint">Scannez avec l'appareil photo de votre smartphone pour ouvrir le portfolio instantanément.</p>
+
+          <div class="qr-modal-actions">
+            <button class="social-button highlight" id="copyQrUrlBtn" type="button">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Copier le lien</span>
+            </button>
+            <a href="qr/qrcode-light.png" download="QR-Code-Anass-Asrir.png" class="social-button">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>Télécharger QR (PNG)</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML("beforeend", modalHtml);
+}
+
 
 /**
  * Moteur de Recherche Plein Texte avec Scoring & Snippets d'Extrait
@@ -1138,6 +1343,13 @@ function initCommandPalette() {
       return;
     }
 
+    if (item.id === "action-qr" || item.url === "#qr") {
+      if (typeof window.openQrModal === "function") {
+        window.openQrModal();
+      }
+      return;
+    }
+
     if (item.url.startsWith("http")) {
       window.open(item.url, "_blank", "noopener,noreferrer");
       return;
@@ -1174,3 +1386,852 @@ function initCommandPalette() {
   // Rendu initial par défaut
   renderSearchResults("");
 }
+
+/**
+ * =========================================================================
+ * Hover Mini-Window Video Preview pour YouTube
+ * =========================================================================
+ */
+function initYouTubePreview() {
+  const wrapper = document.getElementById("ytPreviewWrapper");
+  const popover = document.getElementById("ytMiniWindow");
+  const ytLink = document.getElementById("youtubeLink");
+  if (!wrapper || !popover || !ytLink) return;
+
+  // Sur mobile / touch : un tap affiche la mini-window si non affichée
+  const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+  if (isTouchDevice) {
+    ytLink.addEventListener("click", (e) => {
+      if (!popover.classList.contains("is-active")) {
+        e.preventDefault();
+        popover.classList.add("is-active");
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!wrapper.contains(e.target)) {
+        popover.classList.remove("is-active");
+      }
+    });
+  }
+}
+
+/**
+ * =========================================================================
+ * Interactive Gamified Stack Explorer: Catch My Stack (Stack Hunter)
+ * Inspiré du "Bug Hunter", avec logos des stacks, squash effect, popover
+ * de métriques d'usage par entreprise et compteur gamifié.
+ * =========================================================================
+ */
+function initStackHunter() {
+  const arenaWrap = document.getElementById("shArenaWrap");
+  const arena = document.getElementById("shArena");
+  const popover = document.getElementById("shPopover");
+  const scoreCurrentEl = document.getElementById("shScoreCurrent");
+  const scoreTotalEl = document.getElementById("shScoreTotal");
+  const soundToggleBtn = document.getElementById("shSoundToggle");
+  const soundIconEl = document.getElementById("shSoundIcon");
+  const resetBtn = document.getElementById("shResetBtn");
+
+  if (!arenaWrap || !arena || !popover) return;
+
+  // Dictionnaire des 16 stacks clés d'Anass avec vrais logos officiels SVG & cas d'usage réels
+  const STACKS = [
+    {
+      id: "cypress",
+      name: "Cypress",
+      icon: "icons/cypress.svg",
+      category: "AUTOMATION E2E",
+      timing: "4+ ans • Production",
+      role: "Architecture E2E TypeScript & validation des Pull Requests",
+      experiences: [
+        { company: "Kodehyve (Depuis 2023)", metric: "Processus PR Shift-Left & retour sous 5 min (-90% temps)" },
+        { company: "Raja (2021 – 2023)", metric: "Tunnels d'achat & parcours de paiement critiques" }
+      ],
+      link: "/about#kodehyve"
+    },
+    {
+      id: "playwright",
+      name: "Playwright",
+      icon: "icons/playwright.svg",
+      category: "AUTOMATION E2E",
+      timing: "Moderne & Rapide",
+      role: "Framework E2E nouvelle génération multi-navigateurs & API mocks",
+      experiences: [
+        { company: "Projets Perso & R&D", metric: "Suites de tests résilientes, traces interactives & isolation" }
+      ],
+      link: "/projects"
+    },
+    {
+      id: "selenium",
+      name: "Selenium WebDriver",
+      icon: "icons/selenium.svg",
+      category: "ENTERPRISE QA",
+      timing: "6+ ans • Standard",
+      role: "Frameworks Page Object Model d'entreprise (C# & Java) et Grid",
+      experiences: [
+        { company: "Enablon (2018 – 2021)", metric: "Harmonisation multi-squads en Selenium C# .NET" },
+        { company: "Capgemini (2016 – 2018)", metric: "Migration réussie HP UFT vers Selenium open-source" },
+        { company: "YouTube", metric: "Auteur d'une formation vidéo complète de A à Z" }
+      ],
+      link: "/formations"
+    },
+    {
+      id: "typescript",
+      name: "TypeScript / JS",
+      icon: "icons/typescript.svg",
+      category: "LANGAGES & DEV",
+      timing: "Quotidien",
+      role: "Typage strict, architecture logicielle des frameworks et web apps",
+      experiences: [
+        { company: "Kodehyve", metric: "Socle robuste Cypress + TypeScript pour toute la squad" },
+        { company: "Projets Web", metric: "Développement d'applications complètes (Next.js, PWA)" }
+      ],
+      link: "/about#kodehyve"
+    },
+    {
+      id: "github-actions",
+      name: "GitHub Actions",
+      icon: "icons/github-actions.svg",
+      category: "CI/CD & SHIFT-LEFT",
+      timing: "-90% Feedback",
+      role: "Industrialisation CI/CD : exécution parallèle & validation instantanée",
+      experiences: [
+        { company: "Kodehyve", metric: "Workflows PR-driven avec reporting et exécution distribuée" },
+        { company: "Projets & Portfolios", metric: "Déploiements automatisés sans friction sur GitHub Pages" }
+      ],
+      link: "/about#kodehyve"
+    },
+    {
+      id: "azure-devops",
+      name: "Azure DevOps",
+      icon: "icons/azure-devops.svg",
+      category: "CI/CD & RELEASE",
+      timing: "100% Automatisé",
+      role: "Pipelines multi-étapes et Quality Gates avant déploiement en prod",
+      experiences: [
+        { company: "Raja (2021 – 2023)", metric: "100% de validation QA automatisée avant mise en production" }
+      ],
+      link: "/about#raja"
+    },
+    {
+      id: "postgresql",
+      name: "PostgreSQL & SQL",
+      icon: "icons/postgresql.svg",
+      category: "DATA & BACKEND",
+      timing: "Données de Test",
+      role: "Automatisation de la génération, injection et nettoyage des données API",
+      experiences: [
+        { company: "Kodehyve", metric: "Reproductibilité garantie des tests grâce à l'isolation SQL" },
+        { company: "Les Équier'Mômes", metric: "Schéma relationnel & persistance Next.js" }
+      ],
+      link: "/about#kodehyve"
+    },
+    {
+      id: "csharp",
+      name: "C# / .NET",
+      icon: "icons/csharp.svg",
+      category: "LANGAGES & DEV",
+      timing: "Architecture .NET",
+      role: "Architecture Page Object Model, NUnit et intégration multi-squads",
+      experiences: [
+        { company: "Enablon (Wolters Kluwer)", metric: "+30% de maintenabilité sur les suites Selenium C#" }
+      ],
+      link: "/about#enablon"
+    },
+    {
+      id: "python",
+      name: "Python",
+      icon: "icons/python.svg",
+      category: "SCRIPTING & DATA",
+      timing: "Utilitaires & PyTest",
+      role: "Scripts d'automatisation, parsing de logs et génération de fixtures",
+      experiences: [
+        { company: "Ingénierie & R&D", metric: "Mocks rapides de services et manipulation de jeux de données" }
+      ],
+      link: "/about"
+    },
+    {
+      id: "java",
+      name: "Java",
+      icon: "icons/java.svg",
+      category: "LANGAGES & ENTERPRISE",
+      timing: "BDD & Enterprise",
+      role: "Frameworks BDD d'entreprise Cucumber + Selenium et support pédagogique",
+      experiences: [
+        { company: "Capgemini", metric: "Framework BDD Java permettant l'automatisation par les fonctionnels" },
+        { company: "Formation YouTube", metric: "Support complet du cursus SDET / Cucumber" }
+      ],
+      link: "/formations"
+    },
+    {
+      id: "postman",
+      name: "Postman & Newman",
+      icon: "icons/postman.svg",
+      category: "API TESTING",
+      timing: "REST & Contrats",
+      role: "Validation fonctionnelle des APIs et exécution automatisée en CI",
+      experiences: [
+        { company: "Kodehyve & E-Commerce", metric: "Collections de régression exécutées à chaque build" }
+      ],
+      link: "/about"
+    },
+    {
+      id: "percy",
+      name: "Percy (BrowserStack)",
+      icon: "icons/percy.svg",
+      category: "VISUAL TESTING",
+      timing: "-15% Anomalies UI",
+      role: "Tests de régression visuelle pixel-perfect multi-résolutions",
+      experiences: [
+        { company: "Raja (2021 – 2023)", metric: "-15% d'anomalies visuelles sur le tunnel d'achat critique" }
+      ],
+      link: "/about#raja"
+    },
+    {
+      id: "cucumber",
+      name: "Cucumber & Gherkin",
+      icon: "icons/cucumber.svg",
+      category: "BDD & MÉTHODOLOGIE",
+      timing: "3 Amigos",
+      role: "Spécifications exécutables partagées entre Product, Dev et QA",
+      experiences: [
+        { company: "Capgemini", metric: "Déploiement du BDD à l'échelle pour clarifier le besoin client" },
+        { company: "Formation Vidéo", metric: "Instructeur sur YouTube avec des centaines d'apprenants" }
+      ],
+      link: "/formations"
+    },
+    {
+      id: "docker",
+      name: "Docker",
+      icon: "icons/docker.svg",
+      category: "DEVOPS & ENVIRONNEMENTS",
+      timing: "Reproductibilité",
+      role: "Conteneurisation des agents de test, Grid distribué et mocks",
+      experiences: [
+        { company: "Enablon & Kodehyve", metric: "Exécution isolée des suites sans dépendance d'OS" }
+      ],
+      link: "/about"
+    },
+    {
+      id: "powerbi",
+      name: "Power BI & Q-KPIs",
+      icon: "icons/powerbi.svg",
+      category: "QUALIMÉTRIE & MANAGEMENT",
+      timing: "Aide à la Décision",
+      role: "Tableaux de bord d'analyse de qualité basés sur les données d'exécution",
+      experiences: [
+        { company: "Enablon (Wolters Kluwer)", metric: "Dashboards managériaux guidant les décisions de releases" }
+      ],
+      link: "/about#enablon"
+    },
+    {
+      id: "appium",
+      name: "Appium & Ranorex",
+      icon: "icons/appium.svg",
+      category: "MOBILE & APPLICATION",
+      timing: "Multi-Plateformes",
+      role: "Automatisation de tests sur applications mobiles et riches",
+      experiences: [
+        { company: "Enablon", metric: "Standardisation transversale multi-produits desktop & mobile" }
+      ],
+      link: "/about#enablon"
+    },
+    {
+      id: "nextjs",
+      name: "Next.js",
+      icon: "icons/nextjs.svg",
+      category: "DEV & FULLSTACK",
+      timing: "Production • App Router",
+      role: "Architecture React Fullstack, Server Components & Actions",
+      experiences: [
+        { company: "Les Équier'Mômes", metric: "Portail associatif complet (App Router, Server Actions)" },
+        { company: "Portfolio & Projets Perso", metric: "Web apps haute performance avec SEO optimisé" }
+      ],
+      link: "/projects"
+    },
+    {
+      id: "react",
+      name: "React",
+      icon: "icons/react.svg",
+      category: "FRONTEND & UI",
+      timing: "Moderne",
+      role: "Composants interactifs modulaires & architectures réactives",
+      experiences: [
+        { company: "Projets Perso & Open-Source", metric: "Interfaces dynamiques, hooks avancés & design systems" }
+      ],
+      link: "/projects"
+    },
+    {
+      id: "vuejs",
+      name: "Vue.js 3",
+      icon: "icons/vuejs.svg",
+      category: "FRONTEND & PWA",
+      timing: "Composition API",
+      role: "Développement réactif avec Pinia, Vite & animations tactiles",
+      experiences: [
+        { company: "Jolipas (PWA)", metric: "Jeu éducatif interactif, fluidité 60fps & réactivité tactile" }
+      ],
+      link: "/projects"
+    },
+    {
+      id: "vercel",
+      name: "Vercel",
+      icon: "icons/vercel.svg",
+      category: "DEPLOY & CLOUD",
+      timing: "Serverless Edge",
+      role: "Déploiement continu automatisé, Edge Functions & monitoring",
+      experiences: [
+        { company: "Les Équier'Mômes", metric: "Déploiement instantané à chaque git push avec zero-downtime" }
+      ],
+      link: "/projects"
+    },
+    {
+      id: "cloudflare",
+      name: "Cloudflare Pages",
+      icon: "icons/cloudflare.svg",
+      category: "EDGE & CDN",
+      timing: "Edge Hosting",
+      role: "Hébergement edge ultra-rapide mondial, workers & sécurité",
+      experiences: [
+        { company: "Jolipas App", metric: "Distribution mondiale sur le réseau Cloudflare edge CDN" }
+      ],
+      link: "/projects"
+    },
+    {
+      id: "supabase",
+      name: "Supabase",
+      icon: "icons/supabase.svg",
+      category: "BACKEND & BDD",
+      timing: "BaaS Serverless",
+      role: "Backend as a Service, base PostgreSQL managée, Auth & Storage",
+      experiences: [
+        { company: "Jolipas & Apps", metric: "Gestion des utilisateurs, synchronisation temps réel & assets" }
+      ],
+      link: "/projects"
+    },
+    {
+      id: "resend",
+      name: "Resend API",
+      icon: "icons/resend.svg",
+      category: "EMAILS & NOTIFICATIONS",
+      timing: "Transactional API",
+      role: "Envoi d'e-mails transactionnels sécurisés et suivi de délivrabilité",
+      experiences: [
+        { company: "Les Équier'Mômes", metric: "Confirmations automatiques d'inscriptions et planning bénévoles" }
+      ],
+      link: "/projects"
+    },
+    {
+      id: "web3forms",
+      name: "Web3Forms",
+      icon: "icons/web3forms.svg",
+      category: "FORM & SERVERLESS",
+      timing: "Production",
+      role: "Passerelle formulaires serverless avec protection antispam & webhook",
+      experiences: [
+        { company: "Portfolio Anass Asrir", metric: "Envoi direct des prises de contact sans backend lourd" }
+      ],
+      link: "#"
+    },
+    {
+      id: "tailwindcss",
+      name: "Tailwind CSS",
+      icon: "icons/tailwindcss.svg",
+      category: "STYLING & DESIGN",
+      timing: "Design System",
+      role: "Design system utility-first, animations et interfaces responsives",
+      experiences: [
+        { company: "Équier'Mômes & Beehive", metric: "Design épuré, mode sombre et composants UI accessibles" }
+      ],
+      link: "/projects"
+    },
+    {
+      id: "vitest",
+      name: "Vitest",
+      icon: "icons/vitest.svg",
+      category: "TESTING & UNIT",
+      timing: "Ultra-rapide",
+      role: "Tests unitaires et d'intégration ultra-rapides compatibles Vite",
+      experiences: [
+        { company: "Jolipas App", metric: "Validation des composants Vue et calculs d'états Pinia" }
+      ],
+      link: "/projects"
+    }
+  ];
+
+  if (scoreTotalEl) {
+    scoreTotalEl.textContent = String(STACKS.length);
+  }
+
+  // État du son (synthétiseur Web Audio API)
+  let soundEnabled = localStorage.getItem("sh_sound") !== "off";
+  updateSoundIcon();
+
+  soundToggleBtn.addEventListener("click", () => {
+    soundEnabled = !soundEnabled;
+    localStorage.setItem("sh_sound", soundEnabled ? "on" : "off");
+    updateSoundIcon();
+  });
+
+  function updateSoundIcon() {
+    soundIconEl.textContent = soundEnabled ? "🔊" : "🔇";
+    soundToggleBtn.title = soundEnabled ? "Couper le son" : "Activer le son";
+  }
+
+  function playPopSound() {
+    if (!soundEnabled) return;
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(520, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(1180, ctx.currentTime + 0.1);
+      gain.gain.setValueAtTime(0.18, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.13);
+    } catch (e) {}
+  }
+
+  // Création des objets et de la physique
+  const itemElements = [];
+  const ITEM_SIZE = 44;
+  let arenaWidth = arenaWrap.clientWidth || 600;
+  let arenaHeight = arenaWrap.clientHeight || 400;
+
+  function updateArenaDimensions() {
+    arenaWidth = arenaWrap.clientWidth || 600;
+    arenaHeight = arenaWrap.clientHeight || 400;
+  }
+  window.addEventListener("resize", updateArenaDimensions);
+
+  // Initialisation des éléments
+  arena.innerHTML = "";
+  STACKS.forEach((stack, index) => {
+    const el = document.createElement("div");
+    el.className = "sh-item";
+    el.title = `${stack.name} — Cliquez pour capturer !`;
+    el.setAttribute("data-id", stack.id);
+    el.innerHTML = `<img src="${stack.icon}" alt="${escapeHtml(stack.name)}" class="sh-icon-img" loading="eager" draggable="false" />`;
+
+    // Position initiale aléatoire bien répartie
+    const cols = 6;
+    const row = Math.floor(index / cols);
+    const col = index % cols;
+    const startX = Math.max(10, Math.min(arenaWidth - ITEM_SIZE - 10, (col * (arenaWidth / cols)) + (Math.random() * 30 - 15)));
+    const startY = Math.max(10, Math.min(arenaHeight - ITEM_SIZE - 10, (row * (arenaHeight / Math.ceil(STACKS.length / cols))) + (Math.random() * 25 - 12)));
+
+    // Vélocité aléatoire douce
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 0.35 + Math.random() * 0.45;
+    const vx = Math.cos(angle) * speed;
+    const vy = Math.sin(angle) * speed;
+
+    const itemObj = {
+      data: stack,
+      el: el,
+      x: startX,
+      y: startY,
+      vx: vx,
+      vy: vy,
+      isHovered: false,
+      isCaptured: false
+    };
+
+    el.style.transform = `translate3d(${startX}px, ${startY}px, 0)`;
+
+    // Événements Hover
+    el.addEventListener("mouseenter", () => {
+      itemObj.isHovered = true;
+      el.classList.add("is-hovered");
+      showPopover(itemObj);
+    });
+
+    el.addEventListener("mouseleave", () => {
+      itemObj.isHovered = false;
+      el.classList.remove("is-hovered");
+      scheduleHidePopover();
+    });
+
+    // Événement Click / Tap (Capture / Squash & Stop immédiat)
+    function handleCapture(e) {
+      if (e) e.stopPropagation();
+      captureItem(itemObj);
+      showPopover(itemObj);
+    }
+
+    el.addEventListener("click", handleCapture);
+    el.addEventListener("pointerdown", (e) => {
+      if (e.pointerType === "touch") {
+        handleCapture(e);
+      }
+    });
+
+    arena.appendChild(el);
+    itemElements.push(itemObj);
+  });
+
+  // Maintien du popover si la souris entre dessus
+  popover.addEventListener("mouseenter", () => {
+    cancelHidePopover();
+  });
+  popover.addEventListener("mouseleave", () => {
+    scheduleHidePopover();
+  });
+
+  // Fermeture du popover au tap/clic en dehors
+  document.addEventListener("pointerdown", (e) => {
+    if (!popover.contains(e.target) && !arena.contains(e.target)) {
+      popover.classList.remove("is-visible");
+    }
+  });
+
+  arena.addEventListener("pointerdown", (e) => {
+    if (!e.target.closest(".sh-item") && !popover.contains(e.target)) {
+      popover.classList.remove("is-visible");
+    }
+  });
+
+  // Gestion du Popover
+  let hidePopoverTimer = null;
+
+  function showPopover(itemObj) {
+    cancelHidePopover();
+    const data = itemObj.data;
+
+    // Remplissage du contenu
+    document.getElementById("shPopoverCategoryText").textContent = data.category;
+    document.getElementById("shPopoverTimingText").textContent = data.timing;
+    document.getElementById("shPopoverIcon").innerHTML = `<img src="${data.icon}" alt="${escapeHtml(data.name)}" class="sh-popover-img" />`;
+    document.getElementById("shPopoverTitle").textContent = data.name;
+    document.getElementById("shPopoverRole").textContent = data.role;
+
+    const expList = document.getElementById("shPopoverExpList");
+    expList.innerHTML = "";
+    data.experiences.forEach((exp) => {
+      const expDiv = document.createElement("div");
+      expDiv.className = "sh-popover-exp-item";
+      expDiv.innerHTML = `
+        <span class="sh-exp-company">${escapeHtml(exp.company)}</span>
+        <span class="sh-exp-metric">${escapeHtml(exp.metric)}</span>
+      `;
+      expList.appendChild(expDiv);
+    });
+
+    const linkEl = document.getElementById("shPopoverLink");
+    linkEl.href = data.link;
+
+    // Calcul de position intelligente (dynamique et clampée pour éviter tout rognage)
+    updateArenaDimensions();
+
+    // Rendre mesurable pour obtenir la hauteur réelle exacte
+    popover.style.visibility = "hidden";
+    popover.classList.add("is-visible");
+    const popoverWidth = Math.min(320, arenaWidth - 20);
+    const popoverHeight = popover.offsetHeight || 270;
+    popover.style.visibility = "";
+
+    // Position horizontale : à droite si l'espace suffit, sinon à gauche
+    let posX = itemObj.x + ITEM_SIZE + 14;
+    if (posX + popoverWidth > arenaWidth - 10) {
+      posX = itemObj.x - popoverWidth - 14;
+    }
+    if (posX < 10) posX = 10;
+
+    // Position verticale : centrée sur l'élément, et clampée pour ne JAMAIS être tronquée en bas
+    let posY = itemObj.y + (ITEM_SIZE / 2) - (popoverHeight / 2);
+    const maxPosY = arenaHeight - popoverHeight - 10;
+    if (posY > maxPosY) {
+      posY = maxPosY;
+    }
+    if (posY < 10) {
+      posY = 10;
+    }
+
+    popover.style.left = `${Math.round(posX)}px`;
+    popover.style.top = `${Math.round(posY)}px`;
+    popover.classList.add("is-visible");
+  }
+
+  function scheduleHidePopover() {
+    cancelHidePopover();
+    hidePopoverTimer = setTimeout(() => {
+      popover.classList.remove("is-visible");
+    }, 220);
+  }
+
+  function cancelHidePopover() {
+    if (hidePopoverTimer) {
+      clearTimeout(hidePopoverTimer);
+      hidePopoverTimer = null;
+    }
+  }
+
+  // Capture d'un élément (Arrête le mouvement, grise et ajoute le check vert)
+  function captureItem(itemObj) {
+    if (!itemObj.isCaptured) {
+      itemObj.isCaptured = true;
+      // Stoppe définitivement le mouvement de cette stack
+      itemObj.vx = 0;
+      itemObj.vy = 0;
+      itemObj.el.classList.add("is-captured");
+
+      // Effet squash bref
+      itemObj.el.classList.add("is-squashing");
+      setTimeout(() => {
+        itemObj.el.classList.remove("is-squashing");
+      }, 350);
+
+      // Son de validation
+      playPopSound();
+
+      // Mise à jour du score
+      const capturedCount = itemElements.filter((i) => i.isCaptured).length;
+      if (scoreCurrentEl) {
+        scoreCurrentEl.textContent = String(capturedCount);
+      }
+
+      // Si tout est capturé : félicitations !
+      if (capturedCount === STACKS.length) {
+        if (typeof showToast === "function") {
+          showToast("🏆 Impressionnant ! Vous avez exploré toutes les stacks techniques d'Anass !");
+        }
+      }
+    }
+  }
+
+  // Réinitialisation de l'arène
+  resetBtn.addEventListener("click", () => {
+    popover.classList.remove("is-visible");
+    if (scoreCurrentEl) {
+      scoreCurrentEl.textContent = "0";
+    }
+    itemElements.forEach((item) => {
+      item.isCaptured = false;
+      item.isHovered = false;
+      item.el.classList.remove("is-captured", "is-hovered", "is-squashing");
+
+      // Nouvel emplacement aléatoire
+      item.x = Math.max(10, Math.min(arenaWidth - ITEM_SIZE - 10, Math.random() * (arenaWidth - ITEM_SIZE)));
+      item.y = Math.max(10, Math.min(arenaHeight - ITEM_SIZE - 10, Math.random() * (arenaHeight - ITEM_SIZE)));
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 0.35 + Math.random() * 0.45;
+      item.vx = Math.cos(angle) * speed;
+      item.vy = Math.sin(angle) * speed;
+      item.el.style.transform = `translate3d(${item.x}px, ${item.y}px, 0)`;
+    });
+    scoreCurrentEl.textContent = "0";
+    if (typeof showToast === "function") {
+      showToast("Arène réinitialisée. Prêt pour la chasse aux stacks !");
+    }
+  });
+
+  // Boucle d'animation fluide en requestAnimationFrame
+  let isRunning = true;
+  function animate() {
+    if (!isRunning) return;
+
+    for (let i = 0; i < itemElements.length; i++) {
+      const item = itemElements[i];
+
+      // Si l'élément est capturé ou survolé, il est COMPLÈTEMENT FIGÉ (ne bouge plus)
+      if (item.isCaptured || item.isHovered) continue;
+
+      item.x += item.vx;
+      item.y += item.vy;
+
+      // Rebond sur les bords
+      const maxX = arenaWidth - ITEM_SIZE;
+      const maxY = arenaHeight - ITEM_SIZE;
+
+      if (item.x <= 0) {
+        item.x = 0;
+        item.vx = Math.abs(item.vx);
+      } else if (item.x >= maxX) {
+        item.x = maxX;
+        item.vx = -Math.abs(item.vx);
+      }
+
+      if (item.y <= 0) {
+        item.y = 0;
+        item.vy = Math.abs(item.vy);
+      } else if (item.y >= maxY) {
+        item.y = maxY;
+        item.vy = -Math.abs(item.vy);
+      }
+
+      item.el.style.transform = `translate3d(${item.x.toFixed(1)}px, ${item.y.toFixed(1)}px, 0)`;
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  requestAnimationFrame(animate);
+}
+
+/**
+ * =========================================================================
+ * Dropdown de téléchargement du CV en Français et Anglais
+ * =========================================================================
+ */
+function initCvDropdown() {
+  const wrapper = document.getElementById("cvDropdownWrapper");
+  const btn = document.getElementById("cvDropdownBtn");
+  const popover = document.getElementById("cvMenuPopover");
+  if (!wrapper || !btn || !popover) return;
+
+  // Clic sur le bouton principal : toggle du menu
+  btn.addEventListener("click", (e) => {
+    // Si l'utilisateur clique directement sur un badge de langue (FR ou EN)
+    const langBadge = e.target.closest("[data-dl-lang]");
+    if (langBadge) {
+      e.stopPropagation();
+      const lang = langBadge.getAttribute("data-dl-lang");
+      const file = lang === "en" ? "cv-anass-asrir-en.pdf" : "cv-anass-asrir-fr.pdf";
+      const filename = lang === "en" ? "CV-Anass-Asrir-EN.pdf" : "CV-Anass-Asrir-FR.pdf";
+      const a = document.createElement("a");
+      a.href = file;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      if (typeof showToast === "function") {
+        showToast(lang === "en" ? "✓ English Resume download started!" : "✓ Téléchargement du CV en Français lancé !");
+      }
+      return;
+    }
+
+    const isOpen = popover.classList.contains("is-open");
+    if (isOpen) {
+      popover.classList.remove("is-open");
+      btn.setAttribute("aria-expanded", "false");
+    } else {
+      popover.classList.add("is-open");
+      btn.setAttribute("aria-expanded", "true");
+    }
+  });
+
+  // Fermer au clic extérieur
+  document.addEventListener("click", (e) => {
+    if (!wrapper.contains(e.target)) {
+      popover.classList.remove("is-open");
+      btn.setAttribute("aria-expanded", "false");
+    }
+  });
+
+  // Fermer avec Escape
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && popover.classList.contains("is-open")) {
+      popover.classList.remove("is-open");
+      btn.setAttribute("aria-expanded", "false");
+    }
+  });
+}
+
+/**
+ * =========================================================================
+ * Parcours Temporel Interactif (Time Travel Timeline)
+ * Permet de voyager à travers les années du parcours avec une ligne laser
+ * réactive au scroll, des puces interactives et des animations de focus.
+ * =========================================================================
+ */
+function initInteractiveTimeline() {
+  const wrap = document.getElementById("timelineWrap");
+  if (!wrap) return;
+
+  const items = Array.from(wrap.querySelectorAll(".timeline-item"));
+  const interactiveTriggers = wrap.querySelectorAll(".timeline-year-chip, .stepper-node");
+
+  if (!items.length) return;
+
+  // 1. Navigation directe par clic sur les puces d'années ou nœuds stepper
+  interactiveTriggers.forEach((trigger) => {
+    trigger.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetId = trigger.getAttribute("data-target");
+      if (!targetId) return;
+
+      const targetCard = document.getElementById(targetId);
+      if (targetCard) {
+        // Défilement fluide centré
+        targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        // Animation de mise en avant (spotlight)
+        items.forEach((item) => item.classList.remove("is-spotlighted"));
+        const parentItem = targetCard.closest(".timeline-item");
+        if (parentItem) {
+          parentItem.classList.add("is-spotlighted");
+          setTimeout(() => {
+            parentItem.classList.remove("is-spotlighted");
+          }, 2200);
+        }
+      }
+    });
+  });
+
+  // 2. Synchronisation de la carte active selon la lecture au scroll
+  let ticking = false;
+
+  function updateTimelineProgress() {
+    const windowH = window.innerHeight;
+    const focalY = windowH * 0.42;
+
+    // Détermination de la carte en cours de lecture
+    let activeItem = items[0]; // Par défaut, 2023 (Kodehyve)
+
+    items.forEach((item) => {
+      const card = item.querySelector(".timeline-card");
+      if (!card) return;
+
+      const cardRect = card.getBoundingClientRect();
+      // Si la ligne focale se situe sur cette carte
+      if (cardRect.top <= focalY && cardRect.bottom >= focalY - 40) {
+        activeItem = item;
+      }
+    });
+
+    // Harmonisation : seule la carte active (en cours de lecture) a le halo
+    items.forEach((item) => {
+      if (item === activeItem) {
+        item.classList.add("is-active");
+      } else {
+        item.classList.remove("is-active");
+      }
+    });
+
+    ticking = false;
+  }
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        requestAnimationFrame(updateTimelineProgress);
+        ticking = true;
+      }
+    },
+    { passive: true }
+  );
+
+  window.addEventListener(
+    "resize",
+    () => {
+      if (!ticking) {
+        requestAnimationFrame(updateTimelineProgress);
+        ticking = true;
+      }
+    },
+    { passive: true }
+  );
+
+  // Exécution initiale au chargement
+  updateTimelineProgress();
+}
+
+

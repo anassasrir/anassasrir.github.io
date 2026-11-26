@@ -1,0 +1,9 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Temporary test scripts, logs and scratch artifacts
+scratch/
+*.log
+.DS_Store
+Thumbs.db
