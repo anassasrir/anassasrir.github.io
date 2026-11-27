@@ -583,6 +583,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialisation du parcours temporel interactif (Time Travel Timeline)
   initInteractiveTimeline();
 
+  // Initialisation de l'Espace Formations (Catalogue & Playlist Studio)
+  initFormationsPage();
+
   // Spotlight Linear sur les cartes
   const cards = document.querySelectorAll(".link-card");
   cards.forEach((card) => {
@@ -1392,28 +1395,191 @@ function initCommandPalette() {
  * Hover Mini-Window Video Preview pour YouTube
  * =========================================================================
  */
+/**
+ * =========================================================================
+ * Hover & Interactive Video Preview pour YouTube
+ * - Clic sur le bouton : Bascule (toggle) de la popup SANS redirection vers YouTube
+ * - Miniature interactive : Lancement direct du lecteur vidéo dans la popup
+ * - Modules cliquables avec flèche externe vers les vidéos respectives
+ * - Hover fluide avec pont invisible et debounce anti-disparition
+ * =========================================================================
+ */
 function initYouTubePreview() {
   const wrapper = document.getElementById("ytPreviewWrapper");
   const popover = document.getElementById("ytMiniWindow");
-  const ytLink = document.getElementById("youtubeLink");
-  if (!wrapper || !popover || !ytLink) return;
+  const ytBtn = document.getElementById("youtubeLink");
+  const closeBtn = document.getElementById("closeYtMiniBtn");
+  const bannerTrigger = document.getElementById("ytBannerTrigger");
+  const embedFrame = document.getElementById("ytMiniEmbedFrame");
+  const iframePlayer = document.getElementById("ytIframePlayer");
+  const stopVideoBtn = document.getElementById("ytStopVideoBtn");
+  const backdrop = document.getElementById("ytMobileBackdrop");
 
-  // Sur mobile / touch : un tap affiche la mini-window si non affichée
-  const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
-  if (isTouchDevice) {
-    ytLink.addEventListener("click", (e) => {
-      if (!popover.classList.contains("is-active")) {
-        e.preventDefault();
-        popover.classList.add("is-active");
+  if (!wrapper || !popover || !ytBtn) return;
+
+  let isPinnedOpen = false;
+
+  function clampPopoverToViewport() {
+    if (!popover.classList.contains("is-active")) return;
+    if (window.innerWidth <= 640) return; // Sur mobile <= 640px c'est déjà un modal centré
+
+    // Calcul direct et exact indépendant des transitions CSS
+    const wrapperRect = wrapper.getBoundingClientRect();
+    const naturalBottom = wrapperRect.top - 14;
+    const naturalTop = naturalBottom - popover.offsetHeight;
+    const minTop = 16;
+
+    if (naturalTop < minTop) {
+      const shiftY = Math.round(minTop - naturalTop);
+      popover.style.setProperty("--yt-shift-y", `${shiftY}px`);
+      popover.classList.add("is-shifted");
+    } else {
+      popover.style.setProperty("--yt-shift-y", "0px");
+      popover.classList.remove("is-shifted");
+    }
+  }
+
+  function openPopover() {
+    popover.classList.add("is-active");
+    if (backdrop) backdrop.classList.add("is-active");
+    ytBtn.setAttribute("aria-expanded", "true");
+    clampPopoverToViewport();
+    setTimeout(clampPopoverToViewport, 100);
+    setTimeout(clampPopoverToViewport, 260);
+  }
+
+  function closePopover() {
+    popover.classList.remove("is-active");
+    popover.classList.remove("is-video-playing");
+    popover.classList.remove("is-shifted");
+    popover.style.setProperty("--yt-shift-y", "0px");
+    if (backdrop) backdrop.classList.remove("is-active");
+    ytBtn.setAttribute("aria-expanded", "false");
+    isPinnedOpen = false;
+    stopVideo();
+  }
+
+  function togglePopover(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (popover.classList.contains("is-active")) {
+      closePopover();
+    } else {
+      isPinnedOpen = true;
+      openPopover();
+    }
+  }
+
+  function playVideo() {
+    if (bannerTrigger && embedFrame && iframePlayer) {
+      bannerTrigger.style.display = "none";
+      embedFrame.style.display = "block";
+      const src = iframePlayer.getAttribute("data-src");
+      if (src && !iframePlayer.hasAttribute("src")) {
+        iframePlayer.setAttribute("src", src);
       }
-    });
+      isPinnedOpen = true; // Garde ouvert pendant la lecture
+      popover.classList.add("is-video-playing");
+      clampPopoverToViewport();
+      setTimeout(clampPopoverToViewport, 100);
+      setTimeout(clampPopoverToViewport, 260);
+    }
+  }
 
-    document.addEventListener("click", (e) => {
-      if (!wrapper.contains(e.target)) {
-        popover.classList.remove("is-active");
+  function stopVideo() {
+    if (bannerTrigger && embedFrame && iframePlayer) {
+      iframePlayer.removeAttribute("src");
+      embedFrame.style.display = "none";
+      bannerTrigger.style.display = "flex";
+      popover.classList.remove("is-video-playing");
+      popover.classList.remove("is-shifted");
+      popover.style.setProperty("--yt-shift-y", "0px");
+      clampPopoverToViewport();
+      setTimeout(clampPopoverToViewport, 100);
+      setTimeout(clampPopoverToViewport, 260);
+    }
+  }
+
+  window.addEventListener("resize", clampPopoverToViewport);
+
+  // 1. Clic sur le bouton principal YouTube : Toggle sans quitter la page
+  ytBtn.addEventListener("click", togglePopover);
+
+  // 2. Bouton de fermeture en haut à droite de la popup
+  if (closeBtn) {
+    closeBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closePopover();
+    });
+  }
+
+  // Clic sur l'arrière-plan mobile pour fermer
+  if (backdrop) {
+    backdrop.addEventListener("click", (e) => {
+      e.stopPropagation();
+      closePopover();
+    });
+  }
+
+  // 3. Clic sur la miniature pour lancer la vidéo dans la fenêtre
+  if (bannerTrigger) {
+    bannerTrigger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      playVideo();
+    });
+    bannerTrigger.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        e.stopPropagation();
+        playVideo();
       }
     });
   }
+
+  // 4. Bouton pour réduire le lecteur vidéo
+  if (stopVideoBtn) {
+    stopVideoBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      stopVideo();
+    });
+  }
+
+  // 5. Gestion du survol souris (Desktop) avec debounce et sécurité pendant lecture
+  let hoverTimer = null;
+  const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+  if (!isTouchDevice) {
+    wrapper.addEventListener("mouseenter", () => {
+      clearTimeout(hoverTimer);
+      openPopover();
+    });
+
+    wrapper.addEventListener("mouseleave", () => {
+      // Si la vidéo est en lecture ou si l'utilisateur a cliqué pour épingler, ne pas fermer au survol
+      if (isPinnedOpen || (embedFrame && embedFrame.style.display === "block")) {
+        return;
+      }
+      hoverTimer = setTimeout(() => {
+        closePopover();
+      }, 250);
+    });
+  }
+
+  // 6. Clic en dehors pour fermer
+  document.addEventListener("click", (e) => {
+    if (!wrapper.contains(e.target)) {
+      closePopover();
+    }
+  });
+
+  // 7. Touche Échap pour fermer
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && popover.classList.contains("is-active")) {
+      closePopover();
+    }
+  });
 }
 
 /**
@@ -2233,5 +2399,334 @@ function initInteractiveTimeline() {
   // Exécution initiale au chargement
   updateTimelineProgress();
 }
+
+/**
+ * =========================================================================
+ * Espace Formations & YouTube Playlist Studio
+ * - Navigation entre Vue Catalogue et Vue Playlist du Cours
+ * - Lecteur principal 16:9 avec chargement dynamique de la vidéo sélectionnée
+ * - File d'attente de vidéos avec vraies miniatures YouTube
+ * - Support des URL Hash & Paramètres (ex: #framework-tests-automatises&v=2)
+ * =========================================================================
+ */
+function initFormationsPage() {
+  const catalogView = document.getElementById("formationsCatalogView");
+  const courseView = document.getElementById("coursePlaylistView");
+  if (!catalogView || !courseView) return;
+
+  const PLAYLIST_VIDEOS = [
+    {
+      id: "BrR5-HWPjwE",
+      num: "01",
+      title: "Framework de tests automatisés #1 — Préparer son environnement",
+      shortTitle: "01 • Préparer son environnement",
+      duration: "14:28",
+      description: "Introduction aux prérequis et installation de l'outillage : Java JDK, Maven, environnement de développement (IDE) et plugins indispensables pour Cucumber et Selenium.",
+      github: "https://github.com/anassasrir/selenium-framework"
+    },
+    {
+      id: "PVvn2u_ZgcA",
+      num: "02",
+      title: "Framework de tests automatisés #2 — Créer son projet",
+      shortTitle: "02 • Créer son projet Maven",
+      duration: "11:50",
+      description: "Initialisation propre d'un projet Maven standardisé, structuration des dossiers de test (src/test/java, src/test/resources) et ajout des dépendances Selenium et Cucumber dans le pom.xml.",
+      github: "https://github.com/anassasrir/selenium-framework"
+    },
+    {
+      id: "b3edlIf7oNQ",
+      num: "03",
+      title: "Framework de tests automatisés #3 — Ecrire son premier test Cucumber",
+      shortTitle: "03 • Ecrire son premier test Cucumber",
+      duration: "15:10",
+      description: "Rédaction d'un fichier de spécification .feature en syntaxe Gherkin avec les mots-clés Given, When, Then et création du Test Runner JUnit pour piloter l'exécution.",
+      github: "https://github.com/anassasrir/selenium-framework"
+    },
+    {
+      id: "udwhtM5A714",
+      num: "04",
+      title: "Framework de tests automatisés #4 — Lancer son premier test",
+      shortTitle: "04 • Lancer son premier test",
+      duration: "09:45",
+      description: "Exécution initiale du runner Cucumber, détection des snippets de code manquants et compréhension du cycle de liaison entre scénarios Gherkin et code Java.",
+      github: "https://github.com/anassasrir/selenium-framework"
+    },
+    {
+      id: "YGhasXVpXRU",
+      num: "05",
+      title: "Framework de tests automatisés #5 — Implémenter ses premiers steps",
+      shortTitle: "05 • Implémenter ses premiers steps",
+      duration: "16:20",
+      description: "Création et implémentation des méthodes de Step Definitions. Automatisation des premières interactions avec le navigateur via Selenium WebDriver et assertions fonctionnelles.",
+      github: "https://github.com/anassasrir/selenium-framework"
+    },
+    {
+      id: "x0BA26OivVY",
+      num: "06",
+      title: "Framework de tests automatisés #6 — Mettre en place l'architecture du Framework",
+      shortTitle: "06 • Mettre en place l'architecture",
+      duration: "18:30",
+      description: "Conception d'une architecture modulaire, maintenable et scalable. Découpage en packages techniques (utils, pages, stepdefs, runners) et séparation des responsabilités.",
+      github: "https://github.com/anassasrir/selenium-framework"
+    },
+    {
+      id: "PkBuQQyC9SI",
+      num: "07",
+      title: "Framework de tests automatisés #7 — Hooks: Initier et détruire le test",
+      shortTitle: "07 • Hooks : Initier et détruire le test",
+      duration: "13:40",
+      description: "Utilisation des Hooks Cucumber (@Before et @After) pour instancier proprement le WebDriver avant chaque scénario et fermer la session (driver.quit()) après exécution.",
+      github: "https://github.com/anassasrir/selenium-framework"
+    },
+    {
+      id: "KbSLJizZOQo",
+      num: "08",
+      title: "Framework de tests automatisés #8 — Appliquer le Page Object Model",
+      shortTitle: "08 • Appliquer le Page Object Model (POM)",
+      duration: "21:15",
+      description: "Mise en œuvre approfondie du design pattern Page Object Model (POM). Encapsulation des localisateurs d'éléments web et exposition de méthodes métiers orientées utilisateur.",
+      github: "https://github.com/anassasrir/selenium-framework"
+    },
+    {
+      id: "W3D7r5bNR4U",
+      num: "09",
+      title: "Framework de tests automatisés #9 — Externaliser la gestion des navigateurs",
+      shortTitle: "09 • Gestion dynamique des navigateurs",
+      duration: "17:05",
+      description: "Conception d'un DriverManager / Factory pour sélectionner dynamiquement le navigateur cible via un fichier de configuration externe (config.properties) ou paramètre Maven.",
+      github: "https://github.com/anassasrir/selenium-framework"
+    },
+    {
+      id: "PBC_KXBhfb4",
+      num: "10",
+      title: "Framework de tests automatisés #10 — Configurer Chrome",
+      shortTitle: "10 • Configurer Chrome Driver",
+      duration: "12:35",
+      description: "Configuration avancée de Google Chrome avec ChromeDriver, options personnalisées (ChromeOptions), gestion des arguments headless, résolution d'écrans et sécurité.",
+      github: "https://github.com/anassasrir/selenium-framework"
+    },
+    {
+      id: "kKt6f-V8Tn0",
+      num: "11",
+      title: "Framework de tests automatisés #11 — Configurer Internet Explorer",
+      shortTitle: "11 • Configurer Internet Explorer",
+      duration: "10:15",
+      description: "Gestion des spécificités héritées avec IEDriverServer, configuration des zones de sécurité protégées et gestion des capacités spécifiques sous Windows.",
+      github: "https://github.com/anassasrir/selenium-framework"
+    },
+    {
+      id: "TaEaRDezm-k",
+      num: "12",
+      title: "Framework de tests automatisés #12 — Configurer Firefox Driver",
+      shortTitle: "12 • Configurer Firefox (GeckoDriver)",
+      duration: "11:40",
+      description: "Intégration et configuration de Mozilla Firefox avec GeckoDriver, profils personnalisés, gestion des certificats SSL et exécution multi-navigateur transparente.",
+      github: "https://github.com/anassasrir/selenium-framework"
+    },
+    {
+      id: "9Y7MxDZ-00U",
+      num: "13",
+      title: "Framework de tests automatisés #13 — Configurer Microsoft Edge",
+      shortTitle: "13 • Configurer Microsoft Edge",
+      duration: "12:10",
+      description: "Mise en place de EdgeDriver pour le moteur Chromium de Microsoft Edge. Optimisation des options Chromium partagées et exécution cross-browser.",
+      github: "https://github.com/anassasrir/selenium-framework"
+    },
+    {
+      id: "wDWFqiZyu3A",
+      num: "14",
+      title: "Framework de tests automatisés #14 — Utiliser les tags en Cucumber",
+      shortTitle: "14 • Utiliser les tags en Cucumber",
+      duration: "14:50",
+      description: "Organisation et filtrage des campagnes de test avec les tags Cucumber (@smoke, @regression, @sprint). Exécution ciblée de sous-ensembles de tests en pipeline CI/CD.",
+      github: "https://github.com/anassasrir/selenium-framework"
+    },
+    {
+      id: "-BvyPWkN0dY",
+      num: "15",
+      title: "Framework de tests automatisés #15 — A vous de pratiquer",
+      shortTitle: "15 • A vous de pratiquer (Exercice)",
+      duration: "15:30",
+      description: "Mise en pratique guidée sur un cas réel d'application e-commerce : identification des scénarios, modélisation des pages objects et écriture autonome des tests automatisés.",
+      github: "https://github.com/anassasrir/selenium-framework"
+    },
+    {
+      id: "2yDvgeW8ZxE",
+      num: "16",
+      title: "Framework de tests automatisés #16 — Intégrer RestAssured",
+      shortTitle: "16 • Intégrer RestAssured (Tests API)",
+      duration: "20:45",
+      description: "Extension du framework aux tests d'API REST avec la librairie Java RestAssured : validation des codes HTTP de retour, parsing des payloads JSON et scénarios combinés UI + API.",
+      github: "https://github.com/anassasrir/selenium-framework"
+    }
+  ];
+
+  let currentVideoIndex = 0;
+
+  // DOM elements
+  const iframePlayer = document.getElementById("mainPlaylistPlayer");
+  const modulePill = document.getElementById("activeVideoModulePill");
+  const durationEl = document.getElementById("activeVideoDuration");
+  const titleEl = document.getElementById("activeVideoTitle");
+  const descEl = document.getElementById("activeVideoDesc");
+  const prevBtn = document.getElementById("prevVideoBtn");
+  const nextBtn = document.getElementById("nextVideoBtn");
+  const ytExtLink = document.getElementById("activeVideoYtLink");
+  const queueList = document.getElementById("playlistQueueList");
+  const queueCounter = document.getElementById("queueVideoCounter");
+  const navTrail = document.getElementById("formationsNavTrail");
+  const btnBackToCatalog = document.getElementById("btnBackToCatalog");
+  const btnCourseBackTop = document.getElementById("btnCourseBackTop");
+  const openCourseBtns = document.querySelectorAll("[data-open-course]");
+
+  function renderQueue() {
+    if (!queueList) return;
+    if (queueCounter) queueCounter.textContent = `${PLAYLIST_VIDEOS.length} Modules • +3h45 au total`;
+
+    queueList.innerHTML = PLAYLIST_VIDEOS.map((item, idx) => {
+      const isActive = idx === currentVideoIndex;
+      return `
+        <div class="yt-queue-item ${isActive ? "is-active" : ""}" data-video-index="${idx}" role="button" tabindex="0">
+          <div class="yt-queue-thumb-wrap">
+            <img src="https://img.youtube.com/vi/${item.id}/mqdefault.jpg" alt="${item.title}" class="yt-queue-thumb-img" loading="lazy" />
+            <span class="yt-queue-duration">${item.duration}</span>
+            <div class="yt-queue-thumb-play" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+          <div class="yt-queue-info">
+            <div class="yt-queue-meta-row">
+              <span class="yt-queue-idx">${isActive ? "▶ EN LECTURE" : `MODULE ${item.num}`}</span>
+            </div>
+            <h4 class="yt-queue-title">${item.shortTitle}</h4>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    queueList.querySelectorAll(".yt-queue-item").forEach((el) => {
+      el.addEventListener("click", () => {
+        const idx = parseInt(el.getAttribute("data-video-index"), 10);
+        selectVideo(idx, true);
+      });
+      el.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          const idx = parseInt(el.getAttribute("data-video-index"), 10);
+          selectVideo(idx, true);
+        }
+      });
+    });
+  }
+
+  function selectVideo(index, autoPlay = false) {
+    if (index < 0 || index >= PLAYLIST_VIDEOS.length) return;
+    currentVideoIndex = index;
+    const video = PLAYLIST_VIDEOS[index];
+
+    // Mettre à jour l'iframe
+    if (iframePlayer) {
+      const playParam = autoPlay ? "1" : "0";
+      iframePlayer.src = `https://www.youtube-nocookie.com/embed/${video.id}?autoplay=${playParam}&rel=0&list=PL4BtVtsdnzadpYqpzXNrArRKXiG1MI6nH&index=${index + 1}`;
+    }
+
+    // Mettre à jour les informations
+    if (modulePill) modulePill.textContent = `MODULE ${video.num} / 16`;
+    if (durationEl) durationEl.textContent = `⏱ ${video.duration}`;
+    if (titleEl) titleEl.textContent = video.title;
+    if (descEl) descEl.textContent = video.description;
+    if (ytExtLink) {
+      ytExtLink.href = `https://www.youtube.com/watch?v=${video.id}&list=PL4BtVtsdnzadpYqpzXNrArRKXiG1MI6nH&index=${index + 1}`;
+    }
+
+    // Mettre à jour les boutons Précédent / Suivant
+    if (prevBtn) {
+      prevBtn.disabled = index === 0;
+      prevBtn.style.opacity = index === 0 ? "0.4" : "1";
+      prevBtn.style.cursor = index === 0 ? "not-allowed" : "pointer";
+    }
+    if (nextBtn) {
+      nextBtn.disabled = index === PLAYLIST_VIDEOS.length - 1;
+      nextBtn.style.opacity = index === PLAYLIST_VIDEOS.length - 1 ? "0.4" : "1";
+      nextBtn.style.cursor = index === PLAYLIST_VIDEOS.length - 1 ? "not-allowed" : "pointer";
+    }
+
+    // Mettre à jour la file d'attente
+    renderQueue();
+
+    // Mettre à jour le hash d'URL
+    history.replaceState(null, "", `#framework-tests-automatises&v=${index + 1}`);
+
+    // Si sur mobile ou petit écran, faire défiler doucement vers le lecteur
+    if (window.innerWidth <= 960 && autoPlay) {
+      const stage = document.querySelector(".yt-stage-player-container");
+      if (stage) stage.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  function showCatalog() {
+    catalogView.style.display = "block";
+    courseView.style.display = "none";
+    if (navTrail) navTrail.style.display = "none";
+    if (iframePlayer) iframePlayer.src = ""; // Stop la lecture
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    history.pushState(null, "", window.location.pathname);
+  }
+
+  function showCourse(videoIdx = 0, autoPlay = false) {
+    catalogView.style.display = "none";
+    courseView.style.display = "block";
+    if (navTrail) navTrail.style.display = "inline-flex";
+    selectVideo(videoIdx, autoPlay);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // Événements boutons
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => {
+      if (currentVideoIndex > 0) selectVideo(currentVideoIndex - 1, true);
+    });
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+      if (currentVideoIndex < PLAYLIST_VIDEOS.length - 1) selectVideo(currentVideoIndex + 1, true);
+    });
+  }
+  if (btnBackToCatalog) {
+    btnBackToCatalog.addEventListener("click", (e) => {
+      e.preventDefault();
+      showCatalog();
+    });
+  }
+  if (btnCourseBackTop) {
+    btnCourseBackTop.addEventListener("click", (e) => {
+      e.preventDefault();
+      showCatalog();
+    });
+  }
+  openCourseBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      showCourse(0, false);
+    });
+  });
+
+  // Détection du hash / paramètre d'URL au chargement
+  const hash = window.location.hash;
+  const urlParams = new URLSearchParams(window.location.search);
+  const courseParam = urlParams.get("course");
+
+  if (hash.includes("framework-tests-automatises") || courseParam === "framework-tests-automatises") {
+    let videoIndex = 0;
+    const vMatch = hash.match(/v=(\d+)/);
+    if (vMatch && vMatch[1]) {
+      videoIndex = Math.max(0, Math.min(PLAYLIST_VIDEOS.length - 1, parseInt(vMatch[1], 10) - 1));
+    }
+    showCourse(videoIndex, false);
+  } else {
+    showCatalog();
+  }
+}
+
 
 

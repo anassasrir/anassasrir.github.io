@@ -24,7 +24,7 @@
     <div class="ambient-glow"></div>
     <div class="ambient-grid"></div>
 
-    <main class="layout-wrapper">
+    <main class="layout-wrapper layout-wrapper-formations">
       <!-- Subpage Top Navigation -->
       <nav class="subpage-top-nav">
         <a href="/" class="back-link">
@@ -34,123 +34,353 @@
           <span>Accueil</span>
         </a>
 
+        <!-- Breadcrumb Navigation Trail (visible inside course view) -->
+        <div class="formations-nav-trail" id="formationsNavTrail" style="display: none;">
+          <button type="button" class="trail-btn" id="btnBackToCatalog" title="Retourner à la liste de toutes les formations">
+            <span>← Toutes les formations</span>
+          </button>
+          <span class="trail-separator">/</span>
+          <span class="trail-current" id="trailCurrentTitle">Framework de tests automatisés</span>
+        </div>
+
         <button class="cmd-trigger-btn" id="openCmdBtn">
           <span>Recherche</span>
           <span class="cmd-kbd-badge">⌘ / Ctrl K</span>
         </button>
       </nav>
 
-      <!-- Page Header -->
-      <header class="page-title-section">
-        <div class="page-badge">🎥 100% Gratuit & Open Source</div>
-        <h1 class="page-main-title">Formation SDET & BDD</h1>
-        <p class="page-subtitle">
-          Cours vidéo structuré pas-à-pas pour concevoir des architectures d'automatisation de tests robustes basées sur le comportement avec Cucumber (syntaxe Gherkin) et Selenium.
-        </p>
-      </header>
+      <!-- =========================================================================
+           1. VUE CATALOGUE DES FORMATIONS (#formationsCatalogView)
+           ========================================================================= -->
+      <section class="formations-catalog-view" id="formationsCatalogView">
+        <header class="page-title-section">
+          <div class="page-badge">🎓 Académie QA & Formations Vidéo</div>
+          <h1 class="page-main-title">Espace Formations</h1>
+          <p class="page-subtitle">
+            Parcours vidéo complets, masterclasses d'architecture logicielle et tutoriels pas-à-pas sur l'ingénierie QA, 100% gratuits et open source.
+          </p>
+        </header>
 
-      <!-- Lecteur Vidéo YouTube Intégré -->
-      <section class="video-player-container">
-        <iframe
-          src="https://www.youtube.com/embed/videoseries?si=LBbk7_AmfmYzd8ur&amp;list=PL4BtVtsdnzadpYqpzXNrArRKXiG1MI6nH"
-          title="Formation SDET & BDD — Selenium & Cucumber"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
+        <!-- Stats Bar -->
+        <div class="catalog-stats-bar">
+          <div class="catalog-stat-item">
+            <span>📚 Formations :</span>
+            <strong>3 Référencées</strong>
+          </div>
+          <div class="catalog-stat-item">
+            <span>▶ Vidéos disponibles :</span>
+            <strong>16 Vidéos complètes</strong>
+          </div>
+          <div class="catalog-stat-item">
+            <span>⏱ Durée cumulée :</span>
+            <strong>+3h45 de contenu</strong>
+          </div>
+          <div class="catalog-stat-item">
+            <span>🏷 Modèle :</span>
+            <strong style="color: #34d399;">100% Gratuit & Libre</strong>
+          </div>
+        </div>
+
+        <!-- Formations Grid -->
+        <div class="formations-grid">
+          <!-- Formation 1: Framework de tests automatisés (ACTIVE & DISPONIBLE) -->
+          <article class="formation-card is-available">
+            <div class="formation-card-preview">
+              <img
+                src="https://img.youtube.com/vi/BrR5-HWPjwE/mqdefault.jpg"
+                alt="Miniature Formation Framework de tests automatisés"
+                class="formation-card-thumb"
+              />
+              <div class="formation-card-play-pill" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+              <span class="formation-card-duration">16 Vidéos • +3h 45m</span>
+            </div>
+
+            <div class="formation-status-pill available">
+              <span>●</span>
+              <span>Formation Complète • 16 Vidéos</span>
+            </div>
+
+            <h2 class="formation-card-title">Framework de tests automatisés</h2>
+            <div class="formation-card-subtitle">Selenium WebDriver Java & Cucumber BDD</div>
+
+            <p class="formation-card-desc">
+              Conception d'un framework d'automatisation industriel de A à Z : principes BDD & 3 Amigos, syntaxe Gherkin, architecture Page Object Model (POM), synchronisation explicite, multi-navigateurs et tests API RestAssured.
+            </p>
+
+            <div class="formation-card-tags">
+              <span class="formation-tag">Java</span>
+              <span class="formation-tag">Selenium</span>
+              <span class="formation-tag">Cucumber BDD</span>
+              <span class="formation-tag">Gherkin</span>
+              <span class="formation-tag">Page Object Model</span>
+              <span class="formation-tag">RestAssured</span>
+              <span class="formation-tag">Maven</span>
+              <span class="formation-tag">CI/CD</span>
+            </div>
+
+            <button
+              type="button"
+              class="formation-card-action primary"
+              data-open-course="framework-tests-automatises"
+            >
+              <span>Accéder à la formation (16 Vidéos)</span>
+              <span aria-hidden="true">▶</span>
+            </button>
+          </article>
+
+          <!-- Formation 2: Enterprise Cypress E2E & API Framework (À VENIR) -->
+          <article class="formation-card">
+            <div class="formation-card-preview" style="background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);">
+              <img
+                src="icons/cypress.svg"
+                alt="Cypress Logo"
+                class="formation-card-thumb"
+                style="object-fit: contain; padding: 2.5rem; opacity: 0.85;"
+              />
+              <span class="formation-card-duration">5 Modules • ~1h 30m</span>
+            </div>
+
+            <div class="formation-status-pill upcoming">
+              <span>⏳</span>
+              <span>En production • Q1 2027</span>
+            </div>
+
+            <h2 class="formation-card-title">Enterprise Cypress E2E & API Framework</h2>
+            <div class="formation-card-subtitle">Automatisation moderne Web & API sous pipeline CI/CD</div>
+
+            <p class="formation-card-desc">
+              Architecture d'automatisation haute vélocité pour applications React/Next.js : validation d'APIs REST, mocking réseau, pattern App Actions, exécution parallèle et reporting Allure sous GitHub Actions.
+            </p>
+
+            <div class="formation-card-tags">
+              <span class="formation-tag">Cypress</span>
+              <span class="formation-tag">TypeScript</span>
+              <span class="formation-tag">API REST</span>
+              <span class="formation-tag">GitHub Actions</span>
+              <span class="formation-tag">Allure</span>
+            </div>
+
+            <a
+              href="https://github.com/anassasrir/cypress-tests"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="formation-card-action secondary"
+            >
+              <span>Explorer le projet GitHub</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          </article>
+
+          <!-- Formation 3: Playwright Architecture & Multi-Browser Testing (PLANIFIÉ) -->
+          <article class="formation-card">
+            <div class="formation-card-preview" style="background: radial-gradient(circle at center, #1e1b4b 0%, #0f1013 100%);">
+              <img
+                src="icons/playwright.svg"
+                alt="Playwright Logo"
+                class="formation-card-thumb"
+                style="object-fit: contain; padding: 2.5rem; opacity: 0.85;"
+              />
+              <span class="formation-card-duration">4 Modules • ~1h 15m</span>
+            </div>
+
+            <div class="formation-status-pill upcoming">
+              <span>💡</span>
+              <span>Prochainement • 2027</span>
+            </div>
+
+            <h2 class="formation-card-title">Playwright Architecture & Multi-Browser</h2>
+            <div class="formation-card-subtitle">Tests résilients, auto-waiting et traçabilité avancée</div>
+
+            <p class="formation-card-desc">
+              Maîtriser Playwright pour l'ingénierie QA moderne : parallélisation native multi-workers, émulation mobile (iOS / Android), tests visuels de non-régression et débogage via le Trace Viewer.
+            </p>
+
+            <div class="formation-card-tags">
+              <span class="formation-tag">Playwright</span>
+              <span class="formation-tag">TypeScript</span>
+              <span class="formation-tag">Multi-Browser</span>
+              <span class="formation-tag">Trace Viewer</span>
+              <span class="formation-tag">Mobile Emulation</span>
+            </div>
+
+            <button type="button" class="formation-card-action secondary disabled" disabled>
+              <span>Bientôt disponible</span>
+              <span aria-hidden="true">⏳</span>
+            </button>
+          </article>
+        </div>
       </section>
 
-      <!-- Boutons d'action -->
-      <div class="video-cta-bar">
-        <a
-          href="https://youtube.com/playlist?list=PL4BtVtsdnzadpYqpzXNrArRKXiG1MI6nH&si=esxQyFSGFNbqq2zQ"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="social-button primary"
-          style="flex: 1; justify-content: center;"
-        >
-          <svg viewBox="0 0 24 24">
-            <path
-              d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
-            />
-          </svg>
-          <span>Regarder toute la playlist sur YouTube ↗</span>
-        </a>
+      <!-- =========================================================================
+           2. VUE PLAYLIST YOUTUBE DU COURS (#coursePlaylistView)
+           ========================================================================= -->
+      <section class="course-playlist-view" id="coursePlaylistView" style="display: none;">
+        <!-- Course Header Bar with Switcher / Back button -->
+        <div class="course-header-bar">
+          <div class="course-header-left">
+            <div class="course-header-meta">
+              <span class="course-header-badge">FORMATION ACTIVE</span>
+              <span class="catalog-stat-item" style="font-size: 0.72rem;">● 16 Modules • 100% Gratuit</span>
+            </div>
+            <h1 class="course-header-title">Framework de tests automatisés (Selenium & BDD)</h1>
+          </div>
 
-        <a
-          href="https://github.com/anassasrir"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="social-button"
-        >
-          <svg viewBox="0 0 24 24">
-            <path
-              d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
-            />
-          </svg>
-          <span>Dépôts GitHub ↗</span>
-        </a>
-      </div>
-
-      <!-- Programme & Modules Clés -->
-      <section class="curriculum-card">
-        <div class="category-header" style="padding: 0;">
-          <span class="category-header-icon">📚</span>
-          <h2 class="category-title">Contenu du Cours & Notions Abordées</h2>
-          <div class="category-divider"></div>
+          <button type="button" class="trail-btn" id="btnCourseBackTop" style="padding: 0.4rem 0.8rem;">
+            <span>← Changer de formation</span>
+          </button>
         </div>
 
-        <div class="curriculum-list">
-          <div class="curriculum-item">
-            <span class="curriculum-num">01</span>
-            <div class="curriculum-info">
-              <span class="curriculum-title">Principes du Behavior-Driven Development (BDD)</span>
-              <p class="curriculum-desc">
-                Comprendre la philosophie BDD, les 3 Amigos (Product, Dev, QA) et comment la clarté des spécifications évite les anomalies dès l'origine.
+        <!-- YouTube Playlist Studio (Player Gauche + Queue Droite avec Miniatures) -->
+        <div class="yt-playlist-studio">
+          <!-- Colonne Gauche: Lecteur Principal & Détails de la vidéo sélectionnée -->
+          <div class="yt-stage-column">
+            <!-- 16:9 Video Player Container -->
+            <div class="yt-stage-player-container">
+              <iframe
+                id="mainPlaylistPlayer"
+                src="https://www.youtube-nocookie.com/embed/BrR5-HWPjwE?autoplay=0&rel=0&list=PL4BtVtsdnzadpYqpzXNrArRKXiG1MI6nH&index=1"
+                title="Formation SDET & BDD — Selenium & Cucumber"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
+            </div>
+
+            <!-- Détails de la vidéo active -->
+            <div class="yt-active-video-details">
+              <div class="yt-video-badge-row">
+                <span class="yt-module-indicator-pill" id="activeVideoModulePill">MODULE 01 / 16</span>
+                <span class="yt-active-duration" id="activeVideoDuration">⏱ 14:28</span>
+              </div>
+
+              <h2 class="yt-active-video-title" id="activeVideoTitle">
+                Framework de tests automatisés #1 — Préparer son environnement
+              </h2>
+
+              <p class="yt-active-video-desc" id="activeVideoDesc">
+                Introduction approfondie aux concepts du Behavior-Driven Development (BDD). Comment aligner le Product Owner, le Développeur et le QA (les 3 Amigos) autour de critères d'acceptation vivants. Configuration de l'environnement complet : JDK Java, IDE, projet Maven et dépendances Cucumber.
               </p>
+
+              <!-- Contrôles et liens vidéo -->
+              <div class="yt-active-video-actions">
+                <button type="button" class="yt-action-nav-btn" id="prevVideoBtn" title="Passer au module précédent">
+                  <span>◀ Précédent</span>
+                </button>
+                <button type="button" class="yt-action-nav-btn" id="nextVideoBtn" title="Passer au module suivant">
+                  <span>Suivant ▶</span>
+                </button>
+
+                <a
+                  href="https://www.youtube.com/watch?v=BrR5-HWPjwE&list=PL4BtVtsdnzadpYqpzXNrArRKXiG1MI6nH&index=1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="yt-ext-link-btn"
+                  id="activeVideoYtLink"
+                  title="Ouvrir cette vidéo directement sur YouTube"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  </svg>
+                  <span>Sur YouTube ↗</span>
+                </a>
+
+                <a
+                  href="https://github.com/anassasrir/selenium-framework"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="yt-ext-link-btn"
+                  title="Consulter le code source du framework sur GitHub"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                  <span>Code GitHub ↗</span>
+                </a>
+              </div>
             </div>
           </div>
 
-          <div class="curriculum-item">
-            <span class="curriculum-num">02</span>
-            <div class="curriculum-info">
-              <span class="curriculum-title">Syntaxe Gherkin & Rédaction de Scénarios</span>
-              <p class="curriculum-desc">
-                Maîtriser les mots-clés <code>Given</code>, <code>When</code>, <code>Then</code>, <code>Scenario Outline</code> et tables de données (Examples) compréhensibles par tous.
-              </p>
+          <!-- Colonne Droite: File d'attente Playlist avec Miniatures (Thumbnails) -->
+          <aside class="yt-playlist-queue-column">
+            <div class="yt-queue-header">
+              <div class="yt-queue-header-title">
+                <span class="yt-queue-icon">▶</span>
+                <span>Playlist du cours</span>
+              </div>
+              <span class="yt-queue-meta" id="queueVideoCounter">16 Modules • +3h 45m</span>
             </div>
-          </div>
 
-          <div class="curriculum-item">
-            <span class="curriculum-num">03</span>
-            <div class="curriculum-info">
-              <span class="curriculum-title">Architecture Page Object Model (POM)</span>
-              <p class="curriculum-desc">
-                Structuration modulaire et découplage strict entre les sélecteurs graphiques, les actions utilisateurs et les assertions de test.
-              </p>
+            <!-- Liste dynamique des vidéos avec miniatures -->
+            <div class="yt-queue-items" id="playlistQueueList">
+              <!-- Rempli par JavaScript (renderQueue) -->
             </div>
-          </div>
-
-          <div class="curriculum-item">
-            <span class="curriculum-num">04</span>
-            <div class="curriculum-info">
-              <span class="curriculum-title">Step Definitions & Liaisons Selenium</span>
-              <p class="curriculum-desc">
-                Implémentation propre du code d'automatisation, synchronisation dynamique (Explicit Waits) et gestion des états de session.
-              </p>
-            </div>
-          </div>
-
-          <div class="curriculum-item">
-            <span class="curriculum-num">05</span>
-            <div class="curriculum-info">
-              <span class="curriculum-title">Rapports d'Exécution & Bonnes Pratiques</span>
-              <p class="curriculum-desc">
-                Génération de rapports visuels détaillés (Cucumber HTML Reports), capture d'écrans automatique sur échec et exécution en pipeline CI.
-              </p>
-            </div>
-          </div>
+          </aside>
         </div>
+
+        <!-- Programme Pédagogique & Notions Abordées -->
+        <section class="curriculum-card">
+          <div class="category-header" style="padding: 0;">
+            <span class="category-header-icon">📚</span>
+            <h2 class="category-title">Syllabus & Compétences Clés Visées</h2>
+            <div class="category-divider"></div>
+          </div>
+
+          <div class="curriculum-list">
+            <div class="curriculum-item">
+              <span class="curriculum-num">01</span>
+              <div class="curriculum-info">
+                <span class="curriculum-title">Principes du Behavior-Driven Development (BDD)</span>
+                <p class="curriculum-desc">
+                  Comprendre la philosophie BDD, les 3 Amigos (Product, Dev, QA) et comment la clarté des spécifications évite les anomalies dès l'origine.
+                </p>
+              </div>
+            </div>
+
+            <div class="curriculum-item">
+              <span class="curriculum-num">02</span>
+              <div class="curriculum-info">
+                <span class="curriculum-title">Syntaxe Gherkin & Rédaction de Scénarios</span>
+                <p class="curriculum-desc">
+                  Maîtriser les mots-clés <code>Given</code>, <code>When</code>, <code>Then</code>, <code>Scenario Outline</code> et tables de données (Examples) compréhensibles par tous.
+                </p>
+              </div>
+            </div>
+
+            <div class="curriculum-item">
+              <span class="curriculum-num">03</span>
+              <div class="curriculum-info">
+                <span class="curriculum-title">Architecture Page Object Model (POM)</span>
+                <p class="curriculum-desc">
+                  Structuration modulaire et découplage strict entre les sélecteurs graphiques, les actions utilisateurs et les assertions de test.
+                </p>
+              </div>
+            </div>
+
+            <div class="curriculum-item">
+              <span class="curriculum-num">04</span>
+              <div class="curriculum-info">
+                <span class="curriculum-title">Step Definitions & Liaisons Selenium</span>
+                <p class="curriculum-desc">
+                  Implémentation propre du code d'automatisation, synchronisation dynamique (Explicit Waits) et gestion des états de session.
+                </p>
+              </div>
+            </div>
+
+            <div class="curriculum-item">
+              <span class="curriculum-num">05</span>
+              <div class="curriculum-info">
+                <span class="curriculum-title">Rapports d'Exécution & Bonnes Pratiques CI/CD</span>
+                <p class="curriculum-desc">
+                  Génération de rapports visuels détaillés (Cucumber HTML Reports), capture d'écrans automatique sur échec et exécution en pipeline CI.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
       </section>
 
       <!-- Footer -->
