@@ -128,19 +128,21 @@ const SEARCH_INDEX = [
   // =========================================================================
   {
     id: "exp-anatec",
-    title: "Anatec / WeSave — Lead SDET Architect",
-    subtitle: "Playwright-BDD, Cockpit Qualité TMS, GitLab CI, Jira & DORA (Depuis 01/2026)",
+    title: "Anatec / WeSave — QA Lead / Responsable Automatisation des Tests",
+    subtitle: "Playwright-BDD, 0 Flakiness, DORA Metrics, Visual Testing, Infisical & Cloudflare (Depuis 01/2026)",
     url: "/about#anatec",
     category: "Expériences & Postes",
     icon: "🚀",
     action: "Voir poste ↵",
-    content: "Plateforme TMS & Cockpit Qualité : Conception et architecture d'un Test Management System sur-mesure interconnecté à GitLab CI, Jira et SonarQube. Tableaux de bord de suivi en temps réel, analyses différentielles (Run N-1 vs Run N) et pilotage des métriques DORA. Socle Playwright-BDD & Living Documentation : Refonte et migration vers une suite 100% BDD en Gherkin français (# language: fr), reliant directement les critères d'acceptation métier des US Jira aux tests automatisés (151+ scénarios). Locators Polymorphes & Refonte Vue 3 Tailwind 4 : Stratégie de sélecteurs résilients locator().or() absorbant la cohabitation Vue 2 / Vuetify, Design System et Vue 3 Tailwind 4. Sécurisation Zero Trust & Stabilité : Middleware d'injection de Service Tokens Cloudflare Access et neutralisation déterministe des micro-animations.",
+    content: "Rupture avec l'Ancien Socle & 0% Flakiness : Remplacement d'une suite historique de 6 à 8h d'exécution quotidienne par une suite Playwright-BDD parallélisée en quelques minutes avec 0% de flakiness. Détection Massive d'Anomalies : Interception précoce de dizaines de bugs bloquants en MR sur les parcours d'adhésion, simulations et flux financiers. Conformité DORA : Pilotage MTTR < 2h, Escape Rate < 2% et couverture par Epic Jira. Visual Testing : 194 snapshots A/B sécurisant la migration Vue 2 vers Vue 3 Tailwind 4. Architecture Multi-Projets : Platform TMS sur-mesure centralisant portails, espaces conseillers et simulateurs. Sécurité CI/CD : GitLab CI, Cloudflare Access Zero Trust et gestion des secrets avec Infisical.",
     keywords: [
-      "anatec", "wesave", "lead sdet", "sdet architect", "lead qa", "responsable qa", "architecte sdet",
+      "anatec", "wesave", "qa lead", "lead qa", "responsable automatisation", "responsable qa", "lead sdet", "sdet architect", "architecte sdet",
       "poste actuel", "actuel", "present", "2026", "janvier 2026", "fintech", "banque", "patrimoine",
-      "tms", "test management system", "cockpit qualite", "dashboard", "dora", "mttr", "escape rate",
+      "0 flakiness", "flakiness zero", "zero flaky", "stabilite", "6h", "8h", "performance",
+      "tms", "test management system", "cockpit qualite", "dashboard", "dora", "mttr", "escape rate", "rentabilite",
+      "visual testing", "snapshots", "regression visuelle", "multi-project", "multiprojet",
       "playwright", "playwright-bdd", "bdd", "gherkin", "living documentation",
-      "gitlab", "gitlab ci", "jira", "sonarqube", "cloudflare", "zero trust",
+      "gitlab", "gitlab ci", "jira", "sonarqube", "cloudflare", "zero trust", "infisical", "secrets",
       "vue 3", "tailwind 4", "locators polymorphes", "resilience", "experience", "historique"
     ]
   },
