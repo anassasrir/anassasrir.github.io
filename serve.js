@@ -13,6 +13,7 @@ const MIME_TYPES = {
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
   '.webp': 'image/webp',
+  '.webm': 'video/webm',
   '.pdf': 'application/pdf'
 };
 
@@ -41,7 +42,10 @@ const server = http.createServer((req, res) => {
   }
 
   if (reqPath === '/') reqPath = '/index.html';
-  if (reqPath === '/projets') reqPath = '/projects.html';
+  if (reqPath === '/projets' || reqPath === '/projects') reqPath = '/projects.html';
+  if (reqPath === '/tms' || reqPath === '/case-study' || reqPath === '/tms-case-study') reqPath = '/tms-case-study.html';
+  if (reqPath === '/about' || reqPath === '/parcours') reqPath = '/about.html';
+  if (reqPath === '/formations') reqPath = '/formations.html';
 
   let safePath = path.normalize(reqPath).replace(/^(\.\.[\/\\])+/, '');
   let filePath = path.join(__dirname, safePath);
@@ -56,7 +60,7 @@ const server = http.createServer((req, res) => {
   const ext = path.extname(filePath).toLowerCase();
   const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
-  fs.readFile(filePath, (err, content) => {
+  fs.stat(filePath, (err, stats) => {
     if (err) {
       if (err.code === 'ENOENT') {
         res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
@@ -65,15 +69,41 @@ const server = http.createServer((req, res) => {
         res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
         res.end(`500 Server Error: ${err.code}`);
       }
-    } else {
-      res.writeHead(200, {
-        'Content-Type': contentType,
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0'
-      });
-      res.end(content);
+      return;
     }
+
+    if (stats.isDirectory()) {
+      res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end('403 Forbidden');
+      return;
+    }
+
+    const range = req.headers.range;
+    if (range && (ext === '.webm' || ext === '.mp4')) {
+      const parts = range.replace(/bytes=/, '').split('-');
+      const start = parseInt(parts[0], 10);
+      const end = parts[1] ? parseInt(parts[1], 10) : stats.size - 1;
+      const chunksize = (end - start) + 1;
+      const file = fs.createReadStream(filePath, { start, end });
+      res.writeHead(206, {
+        'Content-Range': `bytes ${start}-${end}/${stats.size}`,
+        'Accept-Ranges': 'bytes',
+        'Content-Length': chunksize,
+        'Content-Type': contentType,
+      });
+      file.pipe(res);
+      return;
+    }
+
+    res.writeHead(200, {
+      'Content-Type': contentType,
+      'Content-Length': stats.size,
+      'Accept-Ranges': 'bytes',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0'
+    });
+    fs.createReadStream(filePath).pipe(res);
   });
 });
 

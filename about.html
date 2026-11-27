@@ -71,7 +71,7 @@
           <div class="bento-val">30+</div>
           <div class="bento-label">Projets Livrés</div>
           <div class="bento-desc">
-            Dans le SaaS, la PropTech, l'E-commerce à haute disponibilité et l'assurance.
+            Dans la FinTech, le SaaS, la PropTech, l'E-commerce à haute disponibilité et l'assurance.
           </div>
         </div>
 
@@ -114,15 +114,61 @@
           </div>
 
           <div class="timeline-items-list">
-            <!-- 1. Kodehyve (2023 - Présent) -->
-            <div class="timeline-item is-active" data-id="kodehyve" data-year="2023">
+            <!-- 1. Anatec / WeSave (2026 - Présent) -->
+            <div class="timeline-item is-active" data-id="anatec" data-year="2026">
+              <div class="timeline-marker">
+                <button type="button" class="timeline-year-chip" data-target="anatec" aria-label="Année 2026 : Anatec / WeSave">
+                  2026
+                </button>
+                <div class="timeline-lead-link"></div>
+                <button type="button" class="stepper-node is-current" data-target="anatec" aria-label="Poste actuel : 2026 (Anatec / WeSave)">
+                  <span class="stepper-dot-current"></span>
+                </button>
+                <div class="timeline-beam"></div>
+              </div>
+              <article class="timeline-card" id="anatec">
+                <div class="timeline-top">
+                  <div>
+                    <div class="timeline-role">Lead SDET Architect / Responsable Automatisation QA</div>
+                    <div class="timeline-company">Anatec / WeSave</div>
+                  </div>
+                  <span class="timeline-period"><span class="timeline-pulse-dot" style="display:inline-block; width:6px; height:6px; margin-right:5px; vertical-align:middle;"></span>En poste · Depuis 01/2026</span>
+                </div>
+                <ul class="timeline-bullets">
+                  <li>
+                    <strong>Plateforme TMS &amp; Cockpit Qualité :</strong> Conception et architecture d'un Test Management System sur-mesure interconnecté à GitLab CI, Jira et SonarQube. Tableaux de bord de suivi en temps réel, analyses différentielles (Run N-1 vs Run N) et pilotage des métriques DORA (MTTR, Escape Rate &lt; 2%).
+                  </li>
+                  <li>
+                    <strong>Socle Playwright-BDD &amp; Living Documentation :</strong> Refonte et migration de l'automatisation E2E vers une suite 100% BDD en Gherkin français (<code># language: fr</code>), reliant directement les critères d'acceptation métier des US Jira aux scénarios exécutables (151+ scénarios critiques passants).
+                  </li>
+                  <li>
+                    <strong>Résilience Multi-Frameworks &amp; Refonte Vue 3 :</strong> Stratégie de sélecteurs résilients <code>locator().or()</code> absorbant sans friction la transition de Vue 2 / Vuetify vers Vue 3 et Tailwind CSS 4, évitant toute casse lors des refontes d'interfaces.
+                  </li>
+                  <li>
+                    <strong>Sécurisation Zero Trust &amp; Flakiness Zéro :</strong> Automatisation de l'injection des Service Tokens Cloudflare Access pour les runners headless et neutralisation déterministe des micro-animations CSS (<code>waitForNoLoadersAndNoBlur</code>).
+                  </li>
+                </ul>
+                <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));">
+                  <a
+                    href="/tms-case-study"
+                    class="cert-pill"
+                    style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; color: #a5b4fc; border-color: rgba(94, 106, 210, 0.4); background: rgba(94, 106, 210, 0.1);"
+                  >
+                    <span>🚀 Découvrir l'Étude de Cas Dédiée &amp; les 8 Vidéos Showcases ➔</span>
+                  </a>
+                </div>
+              </article>
+            </div>
+
+            <!-- 2. Kodehyve (2023 - 2026) -->
+            <div class="timeline-item" data-id="kodehyve" data-year="2023">
               <div class="timeline-marker">
                 <button type="button" class="timeline-year-chip" data-target="kodehyve" aria-label="Année 2023 : Kodehyve">
                   2023
                 </button>
                 <div class="timeline-lead-link"></div>
-                <button type="button" class="stepper-node is-current" data-target="kodehyve" aria-label="Poste actuel : 2023 (Kodehyve)">
-                  <span class="stepper-dot-current"></span>
+                <button type="button" class="stepper-node is-milestone" data-target="kodehyve" aria-label="Poste 2023 : Kodehyve">
+                  <span class="stepper-dot"></span>
                 </button>
                 <div class="timeline-beam"></div>
               </div>
@@ -132,7 +178,7 @@
                     <div class="timeline-role">Quality Assurance Manager / SDET Architect</div>
                     <div class="timeline-company">kodehyve</div>
                   </div>
-                  <span class="timeline-period"><span class="timeline-pulse-dot" style="display:inline-block; width:6px; height:6px; margin-right:5px; vertical-align:middle;"></span>Depuis 07/2023</span>
+                  <span class="timeline-period">07/2023 – 01/2026</span>
                 </div>
                 <ul class="timeline-bullets">
                   <li>
@@ -273,10 +319,10 @@
             </div>
             <p class="sh-family-desc">Frameworks E2E, mobile, API, validation visuelle et tests unitaires.</p>
             <div class="sh-family-tags">
-              <span class="tag-pill">Cypress</span>
+              <span class="tag-pill">Playwright-BDD</span>
               <span class="tag-pill">Playwright</span>
+              <span class="tag-pill">Cypress</span>
               <span class="tag-pill">Selenium WebDriver</span>
-              <span class="tag-pill">Appium</span>
               <span class="tag-pill">Cucumber</span>
               <span class="tag-pill">Percy</span>
               <span class="tag-pill">Vitest</span>
@@ -294,6 +340,7 @@
               <span class="tag-pill">Next.js</span>
               <span class="tag-pill">React</span>
               <span class="tag-pill">Vue.js 3</span>
+              <span class="tag-pill">Tailwind CSS</span>
               <span class="tag-pill">TypeScript</span>
               <span class="tag-pill">C# .NET</span>
               <span class="tag-pill">Python</span>
@@ -309,11 +356,12 @@
             </div>
             <p class="sh-family-desc">Industrialisation des pipelines, conteneurs, hébergement serverless & edge.</p>
             <div class="sh-family-tags">
+              <span class="tag-pill">GitLab CI</span>
               <span class="tag-pill">GitHub Actions</span>
               <span class="tag-pill">Azure DevOps</span>
               <span class="tag-pill">Docker</span>
+              <span class="tag-pill">Cloudflare Zero Trust</span>
               <span class="tag-pill">Vercel</span>
-              <span class="tag-pill">Cloudflare Pages</span>
             </div>
           </div>
 
@@ -406,6 +454,17 @@
               </div>
             </div>
             <span class="cmd-item-action">Aller ↵</span>
+          </a>
+
+          <a href="/tms-case-study" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">🚀</span>
+              <div>
+                <span class="cmd-item-title">Case Study : Plateforme TMS &amp; Cockpit Qualité</span>
+                <span class="cmd-item-subtitle">Playwright-BDD, Visual Testing A/B &amp; 8 Showcases Vidéo</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Explorer ↵</span>
           </a>
 
           <div class="cmd-group-label">Actions Rapides</div>
