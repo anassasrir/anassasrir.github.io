@@ -117,6 +117,11 @@
               <img src="icons/cloudflare.svg" alt="Cloudflare" class="cs-tag-chip-icon" />
               <span>Cloudflare Zero Trust</span>
             </span>
+            <span class="cs-tag-chip">
+              <img src="icons/infisical.svg" alt="Infisical" class="cs-tag-chip-icon" />
+              <span>Infisical</span>
+            </span>
+            <span class="cs-tag-chip">Multi-Project Design</span>
             <span class="cs-tag-chip">DORA Metrics</span>
           </div>
         </div>
@@ -200,11 +205,14 @@
           </p>
 
           <p>
-            Historiquement, l'automatisation E2E reposait sur une suite Playwright en TypeScript monolithique.
-            Bien que rigoureuse techniquement, cette approche se heurtait à <strong>trois limites majeures</strong> :
+            Historiquement, l'automatisation E2E reposait sur une suite monolithique fragile et fragmentée.
+            Cette situation se heurtait à <strong>quatre limites opérationnelles majeures</strong> :
           </p>
 
           <ul>
+            <li>
+              <strong>Un socle historique lourd et instable (Runs de 6 à 8 heures par jour) :</strong> L'ancienne suite de tests souffrait d'une couverture très parcellaire tout en nécessitant <strong>6 à 8 heures d'exécution quotidienne</strong>. Cette lenteur extrême, combinée à une instabilité chronique (flakiness élevé), créait un goulet d'étranglement qui bloquait les mises en production, rendait les cycles de livraison trop dépendants d'interventions manuelles et imposait un coût de maintenance astronomique.
+            </li>
             <li>
               <strong>Un angle mort pour le Produit (Silos PO / Métier / QA) :</strong> Le code impératif TypeScript était inaccessible aux Product Owners et Business Analysts. Les exigences écrites dans Jira divergeaient rapidement de ce que les tests vérifiaient réellement, rendant la documentation obsolète dès le sprint suivant.
             </li>
@@ -291,9 +299,13 @@
           <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-medium); border-radius: var(--radius-sm); padding: 1rem 1.25rem; font-family: var(--font-mono); font-size: 0.85rem; color: #a5b4fc;">
             ScenarioSignature = Hash(Domain + FeatureFile + ScenarioTitle + GherkinTags)
           </div>
+          <h3 style="color: var(--text-primary); font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem;">
+            Architecture Multi-Projets &amp; Cloisonnement des Domaines
+          </h3>
           <p>
-            Cette empreinte permet au comparateur de runs de mapper immédiatement les résultats d'une exécution à l'autre,
-            sans être perturbé par les changements d'ordre d'exécution ou les variations de concurrence des workers Playwright.
+            Pour répondre aux besoins d'une organisation gérant plusieurs produits indépendants, la plateforme repose sur un <strong>Multi-Project Design</strong> natif :
+            elle centralise au sein d'une même instance les dépôts du portail client, des espaces conseillers B2B, des moteurs de simulations et des briques transactionnelles.
+            Chaque projet conserve son référentiel de tests, ses branches Git et ses variables d'exécution dédiées, tout en partageant le socle d'ingestion, le comparateur de runs et la gouvernance globale des métriques DORA.
           </p>
         </div>
       </section>
@@ -479,6 +491,19 @@
     }
   });
 };</code></pre>
+        </div>
+
+        <div class="cs-prose" style="margin-top: 1.5rem;">
+          <h3 style="color: var(--text-primary); font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 0.6rem;">
+            <img src="icons/infisical.svg" alt="Infisical" style="width: 24px; height: 24px; object-fit: contain;" />
+            <span>Gestion Chiffrée des Secrets CI/CD avec Infisical</span>
+          </h3>
+          <p>
+            Pour éliminer la dispersion des jetons sensibles dans les variables de dépôts Git, l'ensemble des secrets d'authentification
+            (tokens Cloudflare Access, clés d'API Jira, tokens d'ingestion TMS) est centralisé et synchronisé en temps réel via <strong>Infisical</strong>.
+            Les runners GitLab CI injectent les secrets chiffrés dynamiquement en mémoire lors du cycle d'exécution,
+            garantissant une étanchéité absolue et une conformité rigoureuse aux standards de sécurité bancaire et FinTech.
+          </p>
         </div>
       </section>
 
@@ -1330,15 +1355,21 @@
                 <td><span class="pill-tag pill-green">Zéro refactor de test lors de la bascule Tailwind 4</span></td>
               </tr>
               <tr>
-                <td><strong>🚀 Stabilité &amp; Flakiness</strong></td>
-                <td>Échecs aléatoires fréquents dus aux micro-animations et skeleton loaders CSS.</td>
-                <td>Synchronisation déterministe <code>waitForNoLoadersAndNoBlur</code> et veille gamifiée "Pause QAfé".</td>
-                <td><span class="pill-tag pill-green">0% de flakiness résiduelle en CI</span></td>
+                <td><strong>🚀 Stabilité &amp; Durée de Run</strong></td>
+                <td>Ancienne suite fragile nécessitant <strong>6 à 8 heures d'exécution quotidienne</strong>, flakiness élevé et blocage des livraisons.</td>
+                <td>Suite Playwright parallélisée en quelques minutes, synchronisation déterministe <code>waitForNoLoadersAndNoBlur</code>.</td>
+                <td><span class="pill-tag pill-green">0% de flakiness &amp; runs divisés par 30</span></td>
               </tr>
               <tr>
-                <td><strong>📊 Pilotage de Livraison</strong></td>
+                <td><strong>🎯 Détection de Bugs &amp; ROI</strong></td>
+                <td>Bugs fonctionnels découverts tardivement en staging ou par les utilisateurs en production ; ROI de test faible.</td>
+                <td>Interception précoce de dizaines d'anomalies critiques dès les Merge Requests (adhésions, KYC, fiscalité, rachats).</td>
+                <td><span class="pill-tag pill-green">Bugs bloquants stoppés avant la prod</span></td>
+              </tr>
+              <tr>
+                <td><strong>📊 Pilotage DORA &amp; Delivery</strong></td>
                 <td>Statistiques globales de build CI sans corrélation métier ni suivi d'incidents.</td>
-                <td>Cockpit DORA complet (MTTR, Escape Rate &lt; 2%, couverture d'Epics Jira).</td>
+                <td>Cockpit DORA complet (MTTR &lt; 2h, Escape Rate &lt; 2%, couverture d'Epics Jira).</td>
                 <td><span class="pill-tag pill-green">Gouvernance data-driven pour le Management</span></td>
               </tr>
             </tbody>
