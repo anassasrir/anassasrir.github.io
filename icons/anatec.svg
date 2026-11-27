@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <defs>
+    <linearGradient id="anatecBg" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#091426" />
+      <stop offset="100%" stop-color="#142238" />
+    </linearGradient>
+    <linearGradient id="anatecBlue" x1="10" y1="20" x2="60" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+    <linearGradient id="anatecGreen" x1="40" y1="20" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <filter id="anatecGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0284c7" flood-opacity="0.35" />
+    </filter>
+  </defs>
+  <rect width="100" height="100" rx="22" fill="url(#anatecBg)" />
+  <rect x="1" y="1" width="98" height="98" rx="21" fill="none" stroke="rgba(56, 189, 248, 0.2)" stroke-width="1.5" />
+  
+  <g filter="url(#anatecGlow)" transform="translate(11, 19) scale(1.05)">
+    <path d="M 4 8 L 22 58 C 23.8 62 29.2 62 31 58 L 41 28 L 33 16 L 26 36 L 14 8 Z" fill="url(#anatecBlue)" />
+    <path d="M 39 28 L 49 58 C 50.8 62 56.2 62 58 58 L 76 8 L 64 8 L 52 36 L 45 16 Z" fill="url(#anatecGreen)" />
+    <circle cx="40" cy="11" r="5" fill="#34d399" />
+  </g>
+</svg>
