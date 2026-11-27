@@ -149,15 +149,16 @@ const SEARCH_INDEX = [
   },
   {
     id: "exp-kodehyve",
-    title: "kodehyve — QA Manager / SDET Architect",
+    title: "kodehyve — QA Manager / SDET Architect (Rattaché CTO)",
     subtitle: "Shift-Left, Cypress TypeScript, GitHub Actions & Postgres (07/2023 – 01/2026)",
     url: "/about#kodehyve",
     category: "Expériences & Postes",
     icon: "🏢",
     action: "Voir poste ↵",
-    content: "Socle Qualité : Définition et déploiement du processus global de qualité logicielle (Shift-Left), garantissant la robustesse des livrables de la plateforme. Architecture d'Automatisation : Conception d'un framework Cypress / TypeScript intégré au processus de Pull Request pour une validation immédiate. Intégration Continue : Industrialisation des workflows GitHub Actions pour raccourcir les boucles de rétroaction (-90% de temps sur les tests critiques). Données de Test : Automatisation de la génération et du nettoyage des jeux de données API via SQL / PostgreSQL.",
+    content: "Gouvernance & Socle Qualité (Rattaché au CTO) : Rattaché directement au CTO, définition et déploiement du processus global de qualité logicielle (Shift-Left) et pilotage des standards d'automatisation garantissant la robustesse des livrables de la plateforme. Architecture d'Automatisation : Conception d'un framework Cypress / TypeScript intégré au processus de Pull Request pour une validation immédiate. Intégration Continue : Industrialisation des workflows GitHub Actions pour raccourcir les boucles de rétroaction (-90% de temps sur les tests critiques). Données de Test : Automatisation de la génération et du nettoyage des jeux de données API via SQL / PostgreSQL.",
     keywords: [
       "kodehyve", "qa manager", "responsable qa", "sdet architect", "architecte sdet",
+      "cto", "rattache cto", "report cto", "gouvernance", "strategie qa",
       "2023", "2024", "2025", "2026", "juillet 2023", "janvier 2026",
       "shift-left", "shift left", "processus qualite", "qualite logicielle", "robustesse",
       "cypress", "typescript", "javascript", "pull request", "pr", "validation pr",
