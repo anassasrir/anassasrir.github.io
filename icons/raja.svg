@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <defs>
+    <linearGradient id="rajaBg" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f1f5f9" />
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="22" fill="url(#rajaBg)" />
+  <rect x="1" y="1" width="98" height="98" rx="21" fill="none" stroke="rgba(0, 0, 0, 0.08)" stroke-width="1.5" />
+  
+  <g transform="translate(8.5, 39) scale(0.45)">
+    <polygon fill="#0071BA" points="11.8,3.1 2.6,3.1 2.6,46.4 11.8,46.4"/>
+    <path fill="#0071BA" d="M14.3,10.3h12.5c3.6,0,6.5,2.9,6.5,6.5s-2.9,6.5-6.5,6.5H14.3l21.5,23h12.1L32,27.9c6-0.9,10.5-6,10.5-12.2 c0-6.8-5.5-12.6-12.4-12.6H14.3V10.3z"/>
+    <polygon fill="#0071BA" points="67.9,37.8 87,37.8 91.3,46.4 100,46.4 79.3,3.1 73.2,3.1 52.5,46.4 61.2,46.4 76.2,16.2 83.5,30.3 71.7,30.3"/>
+    <path fill="#0071BA" d="M100.4,30.3c0,9.4,8.7,17,18.1,17s17.9-7.6,17.9-17V2.9h-9.2v27.4c0,6.4-4.3,9.4-8.8,9.4 c-4.4,0-9.2-2.9-9.2-9.4C109.2,30.3,100.4,30.3,100.4,30.3z"/>
+    <polygon fill="#0071BA" points="164.9,21.5 162.3,16.2 147.3,46.4 138.5,46.4 159.3,3.1 165.4,3.1 175.9,25.1"/>
+    <polygon fill="#F52135" points="162.3,38.7 187.5,30.4 162.3,22.1"/>
+    <polygon fill="#0071BA" points="180.2,34.2 186.1,46.4 177.3,46.4 172.5,36.7"/>
+  </g>
+</svg>

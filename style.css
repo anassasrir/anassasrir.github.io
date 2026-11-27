@@ -1780,8 +1780,16 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 1.25rem;
+}
+
+.timeline-header-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  flex: 1;
+  min-width: 0;
 }
 
 .timeline-role {
@@ -1789,12 +1797,13 @@ body {
   font-weight: 600;
   color: var(--text-primary);
   letter-spacing: -0.015em;
+  line-height: 1.35;
 }
 
 .timeline-company {
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: var(--accent-blue);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .timeline-period {
@@ -1802,9 +1811,44 @@ body {
   font-size: 0.75rem;
   color: var(--text-muted);
   background: rgba(255, 255, 255, 0.03);
-  padding: 0.2rem 0.55rem;
+  padding: 0.2rem 0.6rem;
   border-radius: var(--radius-full);
   border: 1px solid var(--border-subtle);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.15rem;
+  width: fit-content;
+}
+
+.timeline-client-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  flex-shrink: 0;
+  transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.timeline-card:hover .timeline-client-logo {
+  transform: translateY(-2px) scale(1.04);
+  border-color: var(--border-medium);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.timeline-company-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 9px;
+  display: block;
 }
 
 .timeline-bullets {
@@ -4229,6 +4273,15 @@ body {
   }
   .timeline-item .timeline-card {
     padding: 1.1rem 1.15rem;
+  }
+  .timeline-top {
+    gap: 0.75rem;
+  }
+  .timeline-client-logo {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    border-radius: 12px;
   }
 }
 
