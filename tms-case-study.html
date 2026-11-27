@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Case Study : Conception d'une Plateforme TMS & Cockpit Qualité E2E — Anass Asrir</title>
+    <meta
+      name="description"
+      content="Étude de cas détaillée sur la conception et le déploiement d'une plateforme de Test Management System (TMS) moderne : Playwright-BDD, Living Documentation, interconnexion GitLab CI / Jira / SonarQube, régression visuelle A/B, métriques DORA et 8 démonstrations vidéo."
+    />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="apple-touch-icon" href="favicon.png" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="case-study.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Ambient Background Glow & Tech Grid -->
+    <div class="ambient-glow"></div>
+    <div class="ambient-grid"></div>
+
+    <main class="layout-wrapper layout-wrapper-case-study">
+      <!-- Subpage Top Navigation -->
+      <nav class="subpage-top-nav">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <a href="/" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            <span>Accueil</span>
+          </a>
+          <span style="color: var(--border-medium); font-size: 0.8rem;">/</span>
+          <a href="/projects" class="back-link" style="color: var(--text-secondary);">
+            <span>Projets</span>
+          </a>
+        </div>
+
+        <button class="cmd-trigger-btn" id="openCmdBtn">
+          <span>Recherche</span>
+          <span class="cmd-kbd-badge">⌘ / Ctrl K</span>
+        </button>
+      </nav>
+
+      <!-- =========================================================================
+           HERO & EXECUTIVE INTRO
+           ========================================================================= -->
+      <header class="cs-hero" id="top">
+        <div class="cs-badge-group">
+          <span class="cs-badge">🚀 Case Study Architecture &amp; Ingénierie SDET</span>
+          <span class="cs-badge badge-cyan">Playwright-BDD • Living Doc</span>
+          <span class="cs-badge badge-green">8 Showcases Vidéo Live</span>
+          <span class="cs-badge">Écosystème FinTech &amp; Banking</span>
+        </div>
+
+        <h1 class="cs-hero-title">
+          Conception d'une Plateforme TMS &amp; Cockpit Qualité E2E :
+          <span class="gradient-text">Architecture, Interconnexion d'Outils &amp; Métriques DORA</span>
+        </h1>
+
+        <p class="cs-hero-lead">
+          Comment j'ai conçu, orchestré et industrialisé un <strong>Test Management System (TMS)</strong> de nouvelle génération :
+          interconnecté nativement à l'écosystème d'ingénierie (<strong>Playwright</strong>, <strong>GitLab CI</strong>, <strong>Jira</strong>, <strong>SonarQube</strong>),
+          propulsé par une Living Documentation Gherkin en français, une stratégie de régression visuelle A/B multi-frameworks (Vue 2 vers Vue 3 Tailwind 4)
+          et un pilotage scientifique des performances de livraison DORA.
+        </p>
+
+        <!-- Author & Metadata Bar -->
+        <div class="cs-meta-bar">
+          <div class="cs-author-box">
+            <img
+              src="anass-bw-transparent.png"
+              alt="Anass Asrir"
+              class="cs-author-avatar"
+            />
+            <div class="cs-author-info">
+              <span class="cs-author-name">Anass Asrir</span>
+              <span class="cs-author-role">Lead SDET Architect &amp; Software Quality Builder</span>
+            </div>
+          </div>
+
+          <div class="cs-meta-tags">
+            <span class="cs-tag-chip">
+              <img src="icons/playwright.svg" alt="Playwright" class="cs-tag-chip-icon" />
+              <span>Playwright-BDD</span>
+            </span>
+            <span class="cs-tag-chip">
+              <img src="icons/cucumber.svg" alt="Cucumber Gherkin" class="cs-tag-chip-icon" />
+              <span>Gherkin (#fr)</span>
+            </span>
+            <span class="cs-tag-chip">
+              <img src="icons/gitlab.svg" alt="GitLab CI/CD" class="cs-tag-chip-icon" />
+              <span>GitLab CI/CD</span>
+            </span>
+            <span class="cs-tag-chip">
+              <img src="icons/jira.svg" alt="Jira Software" class="cs-tag-chip-icon" />
+              <span>Jira API</span>
+            </span>
+            <span class="cs-tag-chip">
+              <img src="icons/sonarqube.svg" alt="SonarQube" class="cs-tag-chip-icon" />
+              <span>SonarQube</span>
+            </span>
+            <span class="cs-tag-chip">
+              <img src="icons/typescript.svg" alt="TypeScript" class="cs-tag-chip-icon" />
+              <span>TypeScript</span>
+            </span>
+            <span class="cs-tag-chip">
+              <img src="icons/vuejs.svg" alt="Vue.js" class="cs-tag-chip-icon" />
+              <span>Vue 3 / Tailwind 4</span>
+            </span>
+            <span class="cs-tag-chip">
+              <img src="icons/cloudflare.svg" alt="Cloudflare" class="cs-tag-chip-icon" />
+              <span>Cloudflare Zero Trust</span>
+            </span>
+            <span class="cs-tag-chip">DORA Metrics</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- =========================================================================
+           STICKY TABLE OF CONTENTS NAV
+           ========================================================================= -->
+      <div class="cs-sticky-nav-wrapper">
+        <nav class="cs-toc-nav" id="csTocNav" aria-label="Sommaire de l'article">
+          <a href="#contexte" class="cs-toc-link active"><span>01.</span> Contexte &amp; Défi</a>
+          <a href="#tms-architecture" class="cs-toc-link"><span>02.</span> Architecture du Cockpit</a>
+          <a href="#ecosysteme" class="cs-toc-link"><span>03.</span> Interconnexion Outils</a>
+          <a href="#framework-bdd" class="cs-toc-link"><span>04.</span> Socle Playwright-BDD</a>
+          <a href="#showcases" class="cs-toc-link"><span>05.</span> 8 Vidéos Showcases</a>
+          <a href="#gains-synthese" class="cs-toc-link"><span>06.</span> Synthèse des Gains</a>
+          <a href="#bilan" class="cs-toc-link"><span>07.</span> Bilan &amp; ROI</a>
+        </nav>
+      </div>
+
+      <!-- =========================================================================
+           KEY FIGURES / METRICS BAR
+           ========================================================================= -->
+      <div class="cs-kpi-grid">
+        <div class="cs-kpi-card">
+          <span class="cs-kpi-value purple">151+</span>
+          <span class="cs-kpi-label">Scénarios BDD E2E</span>
+          <span class="cs-kpi-sub">Desktop Chromium &amp; Mobile iPhone 14 à 100% passants en CI</span>
+        </div>
+
+        <div class="cs-kpi-card">
+          <span class="cs-kpi-value blue">194</span>
+          <span class="cs-kpi-label">Snapshots Visuels A/B</span>
+          <span class="cs-kpi-sub">Chaînage screens1 (Vue 2) vers screens2 (Vue 3 Tailwind 4)</span>
+        </div>
+
+        <div class="cs-kpi-card">
+          <span class="cs-kpi-value green">100%</span>
+          <span class="cs-kpi-label">Living Documentation</span>
+          <span class="cs-kpi-sub">Spécifications en Gherkin français (# language: fr) compréhensibles par le Métier</span>
+        </div>
+
+        <div class="cs-kpi-card">
+          <span class="cs-kpi-value purple">0%</span>
+          <span class="cs-kpi-label">Flakiness Résiduelle</span>
+          <span class="cs-kpi-sub">Locators polymorphes .or() et neutralisation des micro-animations CSS</span>
+        </div>
+
+        <div class="cs-kpi-card">
+          <span class="cs-kpi-value green">&gt;99%</span>
+          <span class="cs-kpi-label">Gain d'Effort d'Ingénierie</span>
+          <span class="cs-kpi-sub">Orchestration assistée par IA avec protocole de rebase sans conflit</span>
+        </div>
+
+        <div class="cs-kpi-card">
+          <span class="cs-kpi-value blue">8</span>
+          <span class="cs-kpi-label">Showcases Vidéo Live</span>
+          <span class="cs-kpi-sub">Démonstrations complètes des modules de la plateforme en conditions réelles</span>
+        </div>
+      </div>
+
+      <!-- =========================================================================
+           SECTION 1: CONTEXTE ET VISION STRATÉGIQUE
+           ========================================================================= -->
+      <section class="cs-section" id="contexte">
+        <div class="cs-section-header">
+          <span class="cs-section-num">Chapitre 01</span>
+          <h2 class="cs-section-title">Contexte Général &amp; Genèse du Projet</h2>
+          <p class="cs-section-desc">
+            Passer d'une suite de tests monolithique isolée à une plateforme collaborative unifiée, reliant en continu le code source, la CI/CD et le Métier.
+          </p>
+        </div>
+
+        <div class="cs-prose">
+          <p>
+            Dans le cadre d'un <strong>écosystème FinTech et bancaire d'entreprise</strong> hautement transactionnel,
+            la fiabilité des parcours utilisateurs conditionne directement la conformité réglementaire (MIFID II, DDA, RGPD)
+            et l'expérience client. Ces applications gèrent des flux critiques : formulaires d'adhésion multi-étapes avec contrôles KYC stricts,
+            simulateurs financiers avec projections d'objectifs et grilles de profils d'investissement,
+            moteurs de calculs fiscaux et synthèses budgétaires complexes.
+          </p>
+
+          <p>
+            Historiquement, l'automatisation E2E reposait sur une suite Playwright en TypeScript monolithique.
+            Bien que rigoureuse techniquement, cette approche se heurtait à <strong>trois limites majeures</strong> :
+          </p>
+
+          <ul>
+            <li>
+              <strong>Un angle mort pour le Produit (Silos PO / Métier / QA) :</strong> Le code impératif TypeScript était inaccessible aux Product Owners et Business Analysts. Les exigences écrites dans Jira divergeaient rapidement de ce que les tests vérifiaient réellement, rendant la documentation obsolète dès le sprint suivant.
+            </li>
+            <li>
+              <strong>Le défi d'une refonte front-end d'envergure :</strong> La réécriture progressive des interfaces (passage d'une stack Vue 2 historique vers un Design System propriétaire, puis vers Vue 3 propulsé par Tailwind CSS 4) menaçait de briser en chaîne les sélecteurs de tests à chaque livraison.
+            </li>
+            <li>
+              <strong>L'inadéquation des outils TMS SaaS traditionnels :</strong> Les solutions du marché (Xray, TestRail, Zephyr) imposent une saisie manuelle redondante, ne savent pas manipuler les baselines visuelles A/B, ne fournissent aucune analyse différentielle (Run N-1 vs Run N) et sont incapables de corréler en temps réel l'exécution des tests avec les métriques de livraison <strong>DORA</strong>.
+            </li>
+          </ul>
+
+          <div class="cs-callout info">
+            <div class="cs-callout-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <span>L'Ambition : Bâtir un Cockpit Qualité Intégré, Single Source of Truth</span>
+            </div>
+            <div class="cs-callout-body">
+              L'objectif a été de développer une plateforme sur mesure qui agit comme le <strong>centre nerveux de la qualité logicielle</strong> :
+              un tableau de bord moderne capable de streamer les exécutions Playwright, d'isoler les régressions en un clic,
+              de matérialiser la Living Documentation Gherkin, de piloter la couverture des Epics Jira et d'offrir une gouvernance scientifique de la stabilité des releases.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SECTION 2: ARCHITECTURE SYSTÈME DU COCKPIT
+           ========================================================================= -->
+      <section class="cs-section" id="tms-architecture">
+        <div class="cs-section-header">
+          <span class="cs-section-num">Chapitre 02</span>
+          <h2 class="cs-section-title">Architecture Système de la Plateforme QA Dashboard</h2>
+          <p class="cs-section-desc">
+            Comment le cockpit a été modélisé pour ingérer, corréler et restituer des milliers d'exécutions de tests sans aucune latence.
+          </p>
+        </div>
+
+        <div class="cs-prose">
+          <p>
+            Pour garantir une réactivité instantanée et une scalabilité face à des matrices d'exécutions massives,
+            le QA Dashboard repose sur une <strong>architecture modulaire en 3 couches fonctionnelles</strong> :
+          </p>
+        </div>
+
+        <!-- System Architecture 3-Tier Flow -->
+        <div class="cs-architecture-flow">
+          <div class="cs-flow-tier">
+            <span class="cs-flow-tier-badge">Couche 1</span>
+            <div class="cs-flow-tier-name">Moteur d'Ingestion &amp; Webhooks</div>
+            <div class="cs-flow-tier-desc">Point de collecte unifié recevant en temps réel les flux d'événements de tests (Playwright Reporter), les notifications GitLab CI, les webhooks Jira et les rapports SonarQube.</div>
+            <div class="cs-flow-tier-code">POST /api/v1/runs/ingest</div>
+          </div>
+
+          <div class="cs-flow-tier">
+            <span class="cs-flow-tier-badge">Couche 2</span>
+            <div class="cs-flow-tier-name">Datastore de Séries &amp; Événements</div>
+            <div class="cs-flow-tier-desc">Modèle de données optimisé pour les séries temporelles : empreintes de scénarios, métriques de durée, statuts pass/fail, stacktraces et liens d'artefacts (vidéos, traces).</div>
+            <div class="cs-flow-tier-code">Time-Series &amp; Run Repository</div>
+          </div>
+
+          <div class="cs-flow-tier">
+            <span class="cs-flow-tier-badge">Couche 3</span>
+            <div class="cs-flow-tier-name">Moteur de Corrélation &amp; Diffs</div>
+            <div class="cs-flow-tier-desc">Algorithme d'analyse différentielle O(N) comparant automatiquement les runs (N-1 vs N), détectant les régressions, le flakiness et calculant les indicateurs DORA consolidés.</div>
+            <div class="cs-flow-tier-code">Delta Engine &amp; DORA Aggregator</div>
+          </div>
+
+          <div class="cs-flow-tier">
+            <span class="cs-flow-tier-badge">Couche 4</span>
+            <div class="cs-flow-tier-name">Interface Réactive &amp; Cockpit</div>
+            <div class="cs-flow-tier-desc">Application web moderne avec filtres multi-projets, graphiques de tendance interactifs, inspection multimédia des artefacts et mini-jeu d'éradication de bugs.</div>
+            <div class="cs-flow-tier-code">Interactive Single-Page App</div>
+          </div>
+        </div>
+
+        <div class="cs-prose">
+          <h3 style="color: var(--text-primary); font-size: 1.25rem; font-weight: 700; margin-top: 1rem;">
+            Modélisation des Données &amp; Signature Unique des Scénarios
+          </h3>
+          <p>
+            L'un des défis majeurs dans un écosystème de tests dynamiques est de suivre un même scénario au fil des renommages et des évolutions de code.
+            Chaque cas de test est identifié par une <strong>signature d'empreinte immuable</strong> composée de :
+          </p>
+          <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-medium); border-radius: var(--radius-sm); padding: 1rem 1.25rem; font-family: var(--font-mono); font-size: 0.85rem; color: #a5b4fc;">
+            ScenarioSignature = Hash(Domain + FeatureFile + ScenarioTitle + GherkinTags)
+          </div>
+          <p>
+            Cette empreinte permet au comparateur de runs de mapper immédiatement les résultats d'une exécution à l'autre,
+            sans être perturbé par les changements d'ordre d'exécution ou les variations de concurrence des workers Playwright.
+          </p>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SECTION 3: INTERCONNEXION DES OUTILS DE L'ÉCOSYSTÈME
+           ========================================================================= -->
+      <section class="cs-section" id="ecosysteme">
+        <div class="cs-section-header">
+          <span class="cs-section-num">Chapitre 03</span>
+          <h2 class="cs-section-title">Interconnexion d'Outils : Le Hub Central d'Ingénierie</h2>
+          <p class="cs-section-desc">
+            Comment le QA Dashboard s'interface avec Playwright, GitLab CI, Jira et SonarQube pour automatiser la collecte d'informations.
+          </p>
+        </div>
+
+        <div class="cs-prose">
+          <p>
+            La véritable force de la plateforme réside dans son <strong>interconnexion native avec l'outillage DevOps existant</strong>.
+            Aucune double saisie manuelle n'est requise : les flux de données sont capturés automatiquement à chaque étape du cycle de vie du code.
+          </p>
+        </div>
+
+        <!-- 4 Tools Integration Grid -->
+        <div class="cs-integration-grid">
+          <!-- Connector 1: Playwright -->
+          <div class="cs-tool-card">
+            <div class="cs-tool-header">
+              <div class="cs-tool-identity">
+                <div class="cs-tool-icon"><img src="icons/playwright.svg" alt="Playwright" class="cs-tool-img" /></div>
+                <div class="cs-tool-title-group">
+                  <span class="cs-tool-title">Playwright &amp; BDD</span>
+                  <span class="cs-tool-type">Framework d'Automatisation E2E</span>
+                </div>
+              </div>
+              <span class="cs-tool-badge pill-purple">Custom Reporter</span>
+            </div>
+
+            <div class="cs-tool-specs-list">
+              <div class="cs-tool-spec-row">
+                <span class="cs-tool-spec-label">Flux Données :</span>
+                <span>Résultats d'étapes Gherkin, durée sub-seconde par step, stacktraces d'erreur, captures d'écran, vidéos WebM, traces Playwright (.zip).</span>
+              </div>
+              <div class="cs-tool-spec-row">
+                <span class="cs-tool-spec-label">Déclencheur :</span>
+                <span>Événements <code>onTestEnd</code> et <code>onEnd</code> du Reporter Playwright exécuté en fin de suite.</span>
+              </div>
+              <div class="cs-tool-spec-row">
+                <span class="cs-tool-spec-label">Valeur Cockpit :</span>
+                <span>Visualisation instantanée de l'étape métier défaillante, replay vidéo in-browser et arborescence du Plan de Test toujours synchronisée avec Git.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Connector 2: GitLab CI -->
+          <div class="cs-tool-card">
+            <div class="cs-tool-header">
+              <div class="cs-tool-identity">
+                <div class="cs-tool-icon"><img src="icons/gitlab.svg" alt="GitLab CI" class="cs-tool-img" /></div>
+                <div class="cs-tool-title-group">
+                  <span class="cs-tool-title">GitLab CI/CD</span>
+                  <span class="cs-tool-type">Orchestrateur de Pipeline &amp; Runners</span>
+                </div>
+              </div>
+              <span class="cs-tool-badge pill-green">Pipeline Webhook</span>
+            </div>
+
+            <div class="cs-tool-specs-list">
+              <div class="cs-tool-spec-row">
+                <span class="cs-tool-spec-label">Flux Données :</span>
+                <span>Pipeline ID, Commit SHA, branche source/cible, numéro de Merge Request, auteur, runner ID et environnement cible (DEV, DEV-VUE3, STAGING).</span>
+              </div>
+              <div class="cs-tool-spec-row">
+                <span class="cs-tool-spec-label">Déclencheur :</span>
+                <span>GitLab Pipeline Events Webhook déclenché lors du statut <code>success</code> ou <code>failed</code>.</span>
+              </div>
+              <div class="cs-tool-spec-row">
+                <span class="cs-tool-spec-label">Valeur Cockpit :</span>
+                <span>Corrélation immédiate entre un échec de test et le commit exact qui l'a introduit, sans nécessiter d'ouvrir la console GitLab.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Connector 3: Jira -->
+          <div class="cs-tool-card">
+            <div class="cs-tool-header">
+              <div class="cs-tool-identity">
+                <div class="cs-tool-icon"><img src="icons/jira.svg" alt="Jira" class="cs-tool-img" /></div>
+                <div class="cs-tool-title-group">
+                  <span class="cs-tool-title">Jira Software</span>
+                  <span class="cs-tool-type">Gestion de Projet &amp; Bug Tracking</span>
+                </div>
+              </div>
+              <span class="cs-tool-badge pill-blue">REST API &amp; Tags</span>
+            </div>
+
+            <div class="cs-tool-specs-list">
+              <div class="cs-tool-spec-row">
+                <span class="cs-tool-spec-label">Flux Données :</span>
+                <span>Identifiants d'User Stories (<code>@jira:US-123</code>), Epics métier (<code>@epic:onboarding</code>), statuts des anomalies et dates de résolution.</span>
+              </div>
+              <div class="cs-tool-spec-row">
+                <span class="cs-tool-spec-label">Déclencheur :</span>
+                <span>Extraction des tags Gherkin par le parser AST et synchronisation planifiée avec l'API REST Jira.</span>
+              </div>
+              <div class="cs-tool-spec-row">
+                <span class="cs-tool-spec-label">Valeur Cockpit :</span>
+                <span>Calcul automatique de la couverture fonctionnelle par Epic (graphique donut) et suivi du MTTR et du taux d'échappement des bugs.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Connector 4: SonarQube & Audits -->
+          <div class="cs-tool-card">
+            <div class="cs-tool-header">
+              <div class="cs-tool-identity">
+                <div class="cs-tool-icon"><img src="icons/sonarqube.svg" alt="SonarQube" class="cs-tool-img" /></div>
+                <div class="cs-tool-title-group">
+                  <span class="cs-tool-title">SonarQube &amp; Audits Prod</span>
+                  <span class="cs-tool-type">Qualité de Code &amp; Conformité</span>
+                </div>
+              </div>
+              <span class="cs-tool-badge pill-yellow">Sonar API &amp; LCOV</span>
+            </div>
+
+            <div class="cs-tool-specs-list">
+              <div class="cs-tool-spec-row">
+                <span class="cs-tool-spec-label">Flux Données :</span>
+                <span>Rapports de couverture unitaire/composants (LCOV/Cobertura), scores de Quality Gate, indicateurs de vulnérabilité et audits de performance web.</span>
+              </div>
+              <div class="cs-tool-spec-row">
+                <span class="cs-tool-spec-label">Déclencheur :</span>
+                <span>Webhook de fin d'analyse SonarQube et jobs d'audits planifiés en staging/production.</span>
+              </div>
+              <div class="cs-tool-spec-row">
+                <span class="cs-tool-spec-label">Valeur Cockpit :</span>
+                <span>Vision panoramique combinant la santé statique du code (dette, sécurité) et la validation dynamique E2E sur une seule et même page.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cs-prose">
+          <h3 style="color: var(--text-primary); font-size: 1.25rem; font-weight: 700; margin-top: 1rem; display: flex; align-items: center; gap: 0.6rem;">
+            <img src="icons/cloudflare.svg" alt="Cloudflare" style="width: 24px; height: 24px; object-fit: contain;" />
+            <span>Sécurisation Zero Trust &amp; Cloudflare Access</span>
+          </h3>
+          <p>
+            Les environnements internes étant verrouillés derrière des passerelles <strong>Cloudflare Access (Zero Trust)</strong>,
+            les runners headless de GitLab CI ne pouvaient accéder aux pages protégées sans authentification.
+            J'ai implémenté un middleware d'injection dynamique de <em>Service Tokens machine-to-machine</em> directement au niveau des requêtes réseau de Playwright :
+          </p>
+        </div>
+
+        <div class="cs-code-box">
+          <div class="cs-code-topbar">
+            <span class="cs-code-title">
+              <span class="cs-code-lang">TypeScript</span>
+              <span>playwright/configurePage.ts — Injection Sécurisée Zero Trust</span>
+            </span>
+            <button class="cs-code-copy-btn" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre class="cs-code-content"><code><span class="kw">import</span> { Page } <span class="kw">from</span> <span class="str">'@playwright/test'</span>;
+
+<span class="kw">export const</span> <span class="fn">configurePage</span> = <span class="kw">async</span> (page: Page) =&gt; {
+  <span class="kw">const</span> cfId = process.env.CF_ACCESS_ID || <span class="str">''</span>;
+  <span class="kw">const</span> cfSecret = process.env.CF_ACCESS_SECRET || <span class="str">''</span>;
+
+  <span class="cmt">// Interception des requêtes vers les domaines applicatifs protégés par Zero Trust</span>
+  <span class="kw">await</span> page.route(<span class="str">'**/*'</span>, <span class="kw">async</span> (route) =&gt; {
+    <span class="kw">const</span> url = route.request().url();
+    <span class="kw">if</span> (url.includes(<span class="str">'enterprise-domain.internal'</span>) || url.includes(<span class="str">'app.internal'</span>)) {
+      <span class="kw">await</span> route.continue({
+        headers: {
+          ...route.request().headers(),
+          ...(cfId ? { <span class="str">'CF-Access-Client-Id'</span>: cfId } : {}),
+          ...(cfSecret ? { <span class="str">'CF-Access-Client-Secret'</span>: cfSecret } : {}),
+          <span class="str">'Cache-Control'</span>: <span class="str">'no-cache'</span>,
+        },
+      });
+    } <span class="kw">else</span> {
+      <span class="kw">await</span> route.continue();
+    }
+  });
+};</code></pre>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SECTION 4: SOCLE PLAYWRIGHT-BDD & RÉSOLUTION MULTI-FRAMEWORKS
+           ========================================================================= -->
+      <section class="cs-section" id="framework-bdd">
+        <div class="cs-section-header">
+          <span class="cs-section-num">Chapitre 04</span>
+          <h2 class="cs-section-title">Le Socle d'Automatisation Playwright-BDD</h2>
+          <p class="cs-section-desc">
+            Comment le framework a été architecturé pour absorber la migration Vue 2 vers Vue 3 Tailwind 4 sans casser les tests.
+          </p>
+        </div>
+
+        <div class="cs-prose">
+          <p>
+            Pour garantir que les tests ne subissent pas la refonte graphique tout en restant lisibles par les équipes Produit,
+            l'automatisation repose sur le principe de <strong>Living Documentation</strong> propulsé par <code>playwright-bdd</code>
+            avec des scénarios rédigés en français (<code># language: fr</code>) :
+          </p>
+
+          <h3 style="color: var(--text-primary); font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+            <img src="icons/vuejs.svg" alt="Vue.js" style="width: 22px; height: 22px; object-fit: contain;" />
+            <img src="icons/tailwindcss.svg" alt="Tailwind CSS" style="width: 22px; height: 22px; object-fit: contain;" />
+            <span>1. Locators Polymorphes Multi-Frameworks : L'opérateur <code>.or()</code></span>
+          </h3>
+          <p>
+            Au cours de la migration, les composants coexistent sous trois versions dans les différents environnements de test :
+            composants historiques Vuetify 2, composants intermédiaires du Design System, et composants modernisés sous Vue 3 avec Tailwind CSS 4.
+            Pour éviter d'avoir à maintenir des tests distincts, j'ai introduit des <strong>locators polymorphes résilients</strong> :
+          </p>
+        </div>
+
+        <div class="cs-code-box">
+          <div class="cs-code-topbar">
+            <span class="cs-code-title">
+              <span class="cs-code-lang">TypeScript</span>
+              <span>pages/portal/ProfileFormPage.ts — Locators Polymorphes Résilients</span>
+            </span>
+            <button class="cs-code-copy-btn" onclick="copyCode(this)">Copier</button>
+          </div>
+          <pre class="cs-code-content"><code><span class="cmt">// Locator polymorphe résistant aux refontes : Vue 3 Tailwind 4, Design System et Vuetify 2</span>
+<span class="kw">public</span> <span class="fn">getProfileSelectField</span>() {
+  <span class="kw">return</span> <span class="kw">this</span>.page
+    .locator(<span class="str">'[data-test="profile-select-vue3"]'</span>)   <span class="cmt">// 1. Cible moderne Vue 3 / Tailwind 4</span>
+    .or(<span class="kw">this</span>.page.locator(<span class="str">'.ds-select-profile'</span>))     <span class="cmt">// 2. Composant Design System intermédiaire</span>
+    .or(<span class="kw">this</span>.page.locator(<span class="str">'.v-select[name="status"]'</span>)); <span class="cmt">// 3. Sélecteur historique Vuetify 2</span>
+}
+
+<span class="cmt">// Méthode métier unifiée appelée par les Step Definitions Gherkin</span>
+<span class="kw">public async</span> <span class="fn">selectProfileStatus</span>(status: <span class="str">string</span>) {
+  <span class="kw">await this</span>.<span class="fn">waitForNoLoadersAndNoBlur</span>();
+  <span class="kw">const</span> select = <span class="kw">this</span>.<span class="fn">getProfileSelectField</span>();
+  <span class="kw">await</span> select.scrollIntoViewIfNeeded();
+  <span class="kw">await</span> select.click();
+  <span class="kw">await this</span>.page.locator(<span class="str">`[role="option"]:has-text("${status}")`</span>).click();
+}</code></pre>
+        </div>
+
+        <div class="cs-prose">
+          <h3 style="color: var(--text-primary); font-size: 1.25rem; font-weight: 700; margin-top: 1rem;">
+            2. Neutralisation des Micro-Animations &amp; Stabilité Déterministe
+          </h3>
+          <p>
+            Pour éradiquer la flakiness liée aux transitions graphiques et aux filtres de flou CSS,
+            la fonction <code>waitForNoLoadersAndNoBlur</code> attend déterministement que le DOM soit stable avant toute assertion ou capture d'écran :
+          </p>
+          <ul>
+            <li>Disparition de tous les indicateurs de chargement : <code>[aria-busy="true"]</code>, <code>.skeleton-loader</code>, <code>.loading-spinner</code>.</li>
+            <li>Rétablissement nominal de l'opacité et retrait des filtres <code>backdrop-filter: blur(...)</code>.</li>
+            <li>Stabilisation du trafic réseau via <code>waitForLoadState('networkidle')</code> combiné à une temporisation de sécurité.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SECTION 5: LES 8 SHOWCASES VIDÉO EN ACTION
+           ========================================================================= -->
+      <section class="cs-section" id="showcases">
+        <div class="cs-section-header">
+          <span class="cs-section-num">Chapitre 05</span>
+          <h2 class="cs-section-title">Les 8 Showcases Vidéo en Action &amp; Analyse des Gains</h2>
+          <p class="cs-section-desc">
+            Démonstrations complètes des modules de la plateforme enregistrées en direct, accompagnées de l'explication détaillée des gains de temps, d'analyse et de performance.
+          </p>
+        </div>
+
+        <div class="cs-showcases-container">
+          <!-- -------------------------------------------------------------
+               SHOWCASE 1: DASHBOARD
+               ------------------------------------------------------------- -->
+          <article class="cs-showcase-item" id="video-01">
+            <div class="cs-mockup-header">
+              <div class="cs-mockup-dots">
+                <span class="cs-mockup-dot red"></span>
+                <span class="cs-mockup-dot yellow"></span>
+                <span class="cs-mockup-dot green"></span>
+              </div>
+              <div class="cs-mockup-title-wrapper">
+                <span class="cs-mockup-title">QA Dashboard — Vue d'Ensemble &amp; Tendance Temporelle KPI</span>
+                <span class="cs-mockup-badge">Showcase #01</span>
+              </div>
+              <div class="cs-mockup-actions">
+                <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);">01_dashboard_showcase.webm</span>
+              </div>
+            </div>
+
+            <div class="cs-video-stage">
+              <video
+                controls
+                loop
+                muted
+                playsinline
+                preload="metadata"
+                class="cs-video-player"
+              >
+                <source src="showcase_videos/01_dashboard_showcase.webm" type="video/webm" />
+                Votre navigateur ne prend pas en charge la balise vidéo WebM.
+              </video>
+            </div>
+
+            <div class="cs-showcase-details">
+              <div class="cs-showcase-header-row">
+                <span class="cs-showcase-index">Module #01 • Cockpit Exécutif</span>
+                <h3 class="cs-showcase-heading">Tableau de Bord Global &amp; Courbes Temporelles Multi-Périodes</h3>
+                <p class="cs-showcase-summary">
+                  Vue d'ensemble de la santé des tests : taux de réussite consolidé, volume de scénarios exécutés, durée moyenne des runs et courbes d'évolution temporelle dynamique.
+                </p>
+              </div>
+
+              <div class="cs-showcase-columns four-cols">
+                <div class="cs-showcase-col gain-time">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">⚡</span>
+                    <span>Gain de Temps</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Élimine le besoin de compiler manuellement des rapports de tests épars.
+                    La vision d'ensemble du statut de la release est accessible en <strong>1 seconde</strong> au lieu de 20 minutes d'inspection manuelle.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-analysis">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">🔬</span>
+                    <span>Gain d'Analyse</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Bascule instantanée de la perspective temporelle (<strong>7 jours</strong>, <strong>30 jours</strong>, <strong>3 mois</strong>, <strong>Tout l'historique</strong>) pour identifier immédiatement si une dégradation de qualité est ponctuelle ou structurelle.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-perf">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">🚀</span>
+                    <span>Gain de Performance</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Détection immédiate des dérives de durée d'exécution globale du pipeline CI, permettant d'intervenir avant que le temps de build ne pénalise la vélocité de l'équipe dev.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-integration">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon" style="display: inline-flex; align-items: center; gap: 4px;">
+                      <img src="icons/playwright.svg" class="cs-inline-tool-logo" alt="Playwright" />
+                      <img src="icons/gitlab.svg" class="cs-inline-tool-logo" alt="GitLab" />
+                    </span>
+                    <span>Playwright &amp; GitLab</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Agrège les événements envoyés par le <strong>Custom Reporter Playwright</strong> et les webhooks de fin de pipeline de <strong>GitLab CI</strong> dans un datastore de séries temporelles.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- -------------------------------------------------------------
+               SHOWCASE 2: DETAILS TEST FAIL
+               ------------------------------------------------------------- -->
+          <article class="cs-showcase-item" id="video-02">
+            <div class="cs-mockup-header">
+              <div class="cs-mockup-dots">
+                <span class="cs-mockup-dot red"></span>
+                <span class="cs-mockup-dot yellow"></span>
+                <span class="cs-mockup-dot green"></span>
+              </div>
+              <div class="cs-mockup-title-wrapper">
+                <span class="cs-mockup-title">QA Dashboard — Diagnostic d'Échec, Stacktrace &amp; Artefacts</span>
+                <span class="cs-mockup-badge">Showcase #02</span>
+              </div>
+              <div class="cs-mockup-actions">
+                <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);">02_details_failed_test_showcase.webm</span>
+              </div>
+            </div>
+
+            <div class="cs-video-stage">
+              <video
+                controls
+                loop
+                muted
+                playsinline
+                preload="metadata"
+                class="cs-video-player"
+              >
+                <source src="showcase_videos/02_details_failed_test_showcase.webm" type="video/webm" />
+                Votre navigateur ne prend pas en charge la balise vidéo WebM.
+              </video>
+            </div>
+
+            <div class="cs-showcase-details">
+              <div class="cs-showcase-header-row">
+                <span class="cs-showcase-index">Module #02 • Diagnostic d'Incident</span>
+                <h3 class="cs-showcase-heading">Diagnostic Chirurgical d'Échec : Gherkin, Stacktrace &amp; Artefacts</h3>
+                <p class="cs-showcase-summary">
+                  Lorsqu'un test échoue en CI, la vue détail isole l'étape Gherkin exacte en faute, affiche la stacktrace technique complète, la vidéo de la session et la capture d'écran horodatée.
+                </p>
+              </div>
+
+              <div class="cs-showcase-columns four-cols">
+                <div class="cs-showcase-col gain-time">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">⚡</span>
+                    <span>Gain de Temps</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Fin du téléchargement de lourdes archives de traces ou de la reproduction manuelle en local. Le développeur visualise le moment précis de l'échec directement dans son navigateur en <strong>10 secondes</strong>.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-analysis">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">🔬</span>
+                    <span>Gain d'Analyse</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    L'erreur est contextualisée en langage naturel (l'étape fonctionnelle Gherkin en rouge) plutôt que par un sélecteur CSS brut. Développeurs et PO savent immédiatement s'il s'agit d'un bug métier ou technique.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-perf">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">🚀</span>
+                    <span>Gain de Performance</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Le profiling pas-à-pas affiche le temps consommé par chaque step Gherkin (en millisecondes), permettant d'isoler les requêtes API ou animations lentes qui ralentissent la suite de tests.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-integration">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon" style="display: inline-flex; align-items: center; gap: 4px;">
+                      <img src="icons/playwright.svg" class="cs-inline-tool-logo" alt="Playwright" />
+                      <img src="icons/gitlab.svg" class="cs-inline-tool-logo" alt="GitLab" />
+                    </span>
+                    <span>Playwright &amp; Artefacts CI</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Connecté directement aux <strong>artefacts de build GitLab CI</strong> et aux traces Playwright, avec anonymisation dynamique des données à la volée.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- -------------------------------------------------------------
+               SHOWCASE 3: HISTORY
+               ------------------------------------------------------------- -->
+          <article class="cs-showcase-item" id="video-03">
+            <div class="cs-mockup-header">
+              <div class="cs-mockup-dots">
+                <span class="cs-mockup-dot red"></span>
+                <span class="cs-mockup-dot yellow"></span>
+                <span class="cs-mockup-dot green"></span>
+              </div>
+              <div class="cs-mockup-title-wrapper">
+                <span class="cs-mockup-title">QA Dashboard — Historique Multi-Runs &amp; Déclencheur Comparatif</span>
+                <span class="cs-mockup-badge">Showcase #03</span>
+              </div>
+              <div class="cs-mockup-actions">
+                <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);">03_history_showcase.webm</span>
+              </div>
+            </div>
+
+            <div class="cs-video-stage">
+              <video
+                controls
+                loop
+                muted
+                playsinline
+                preload="metadata"
+                class="cs-video-player"
+              >
+                <source src="showcase_videos/03_history_showcase.webm" type="video/webm" />
+                Votre navigateur ne prend pas en charge la balise vidéo WebM.
+              </video>
+            </div>
+
+            <div class="cs-showcase-details">
+              <div class="cs-showcase-header-row">
+                <span class="cs-showcase-index">Module #03 • Traçabilité CI/CD</span>
+                <h3 class="cs-showcase-heading">Historique Chronologique Multi-Runs &amp; Déclencheur Comparatif</h3>
+                <p class="cs-showcase-summary">
+                  Journal consolidé de toutes les exécutions de pipeline avec filtrage par branche, environnement et statut, doté d'une sélection multi-runs intuitive et d'une barre d'action flottante.
+                </p>
+              </div>
+
+              <div class="cs-showcase-columns four-cols">
+                <div class="cs-showcase-col gain-time">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">⚡</span>
+                    <span>Gain de Temps</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Permet de sélectionner deux passages de pipeline quelconques (ex: run d'hier vs run d'aujourd'hui) et de déclencher leur comparaison différentielle sans aucune manipulation de fichiers.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-analysis">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">🔬</span>
+                    <span>Gain d'Analyse</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Affiche la corrélation entre les runs et les événements Git (commit, auteur, branche de refonte Vue 3 vs branche master), offrant une traçabilité totale sur l'origine des régressions.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-perf">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">🚀</span>
+                    <span>Gain de Performance</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Surveillance de la stabilité au fil des exécutions successives : détection précoce des tests instables (flaky) qui oscillent entre pass et fail d'un run à l'autre sans modification de code.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-integration">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon" style="display: inline-flex; align-items: center; gap: 4px;">
+                      <img src="icons/gitlab.svg" class="cs-inline-tool-logo" alt="GitLab" />
+                    </span>
+                    <span>GitLab CI Pipelines API</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Synchronisé en continu avec les métadonnées de pipelines de <strong>GitLab CI</strong> via API REST et événements webhooks sécurisés.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- -------------------------------------------------------------
+               SHOWCASE 4: COMPARE
+               ------------------------------------------------------------- -->
+          <article class="cs-showcase-item" id="video-04">
+            <div class="cs-mockup-header">
+              <div class="cs-mockup-dots">
+                <span class="cs-mockup-dot red"></span>
+                <span class="cs-mockup-dot yellow"></span>
+                <span class="cs-mockup-dot green"></span>
+              </div>
+              <div class="cs-mockup-title-wrapper">
+                <span class="cs-mockup-title">QA Dashboard — Comparateur Intelligent de Runs (Diff N-1 vs N)</span>
+                <span class="cs-mockup-badge">Showcase #04</span>
+              </div>
+              <div class="cs-mockup-actions">
+                <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);">04_compare_showcase.webm</span>
+              </div>
+            </div>
+
+            <div class="cs-video-stage">
+              <video
+                controls
+                loop
+                muted
+                playsinline
+                preload="metadata"
+                class="cs-video-player"
+              >
+                <source src="showcase_videos/04_compare_showcase.webm" type="video/webm" />
+                Votre navigateur ne prend pas en charge la balise vidéo WebM.
+              </video>
+            </div>
+
+            <div class="cs-showcase-details">
+              <div class="cs-showcase-header-row">
+                <span class="cs-showcase-index">Module #04 • Analyse Différentielle</span>
+                <h3 class="cs-showcase-heading">Comparateur Intelligent de Runs : Détection des Régressions et Deltas</h3>
+                <p class="cs-showcase-summary">
+                  Le moteur différentiel confronte deux exécutions distinctes (Run N-1 vs Run N) et isole automatiquement les régressions pures, les corrections effectives et les écarts de durée.
+                </p>
+              </div>
+
+              <div class="cs-showcase-columns four-cols">
+                <div class="cs-showcase-col gain-time">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">⚡</span>
+                    <span>Gain de Temps</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Évite de relire la totalité d'un rapport de 150 tests : le comparateur n'affiche que les <strong>deltas réels</strong>, réduisant le temps d'analyse de release de 45 minutes à <strong>3 minutes</strong>.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-analysis">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">🔬</span>
+                    <span>Gain d'Analyse</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Distinction nette entre les vraies régressions (tests passants devenus KO), les tests réparés (tests KO redevenus passants) et les tests stables. La causalité de la Merge Request est indiscutable.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-perf">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">🚀</span>
+                    <span>Gain de Performance</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Matrice différentielle de durée : met en évidence les scénarios dont le temps d'exécution a augmenté significativement (+15s) suite à l'introduction d'un nouveau composant ou d'une requête non optimisée.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-integration">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon" style="display: inline-flex; align-items: center; gap: 4px;">
+                      <img src="icons/playwright.svg" class="cs-inline-tool-logo" alt="Playwright" />
+                    </span>
+                    <span>Moteur Différentiel TMS</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Moteur de calcul interne au TMS réalisant la jointure par empreinte unique de scénario (<code>ScenarioSignature</code>) en mémoire O(N).
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- -------------------------------------------------------------
+               SHOWCASE 5: TESTPLAN
+               ------------------------------------------------------------- -->
+          <article class="cs-showcase-item" id="video-05">
+            <div class="cs-mockup-header">
+              <div class="cs-mockup-dots">
+                <span class="cs-mockup-dot red"></span>
+                <span class="cs-mockup-dot yellow"></span>
+                <span class="cs-mockup-dot green"></span>
+              </div>
+              <div class="cs-mockup-title-wrapper">
+                <span class="cs-mockup-title">QA Dashboard — Plan de Test &amp; Living Documentation Gherkin</span>
+                <span class="cs-mockup-badge">Showcase #05</span>
+              </div>
+              <div class="cs-mockup-actions">
+                <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);">05_testplan_showcase.webm</span>
+              </div>
+            </div>
+
+            <div class="cs-video-stage">
+              <video
+                controls
+                loop
+                muted
+                playsinline
+                preload="metadata"
+                class="cs-video-player"
+              >
+                <source src="showcase_videos/05_testplan_showcase.webm" type="video/webm" />
+                Votre navigateur ne prend pas en charge la balise vidéo WebM.
+              </video>
+            </div>
+
+            <div class="cs-showcase-details">
+              <div class="cs-showcase-header-row">
+                <span class="cs-showcase-index">Module #05 • Référentiel Métier Vivant</span>
+                <h3 class="cs-showcase-heading">Arborescence Interactive du Plan de Test &amp; Rendu Gherkin Live</h3>
+                <p class="cs-showcase-summary">
+                  Synchronisation bidirectionnelle avec le dépôt Git : navigation fluide dans l'arborescence des dossiers de tests, visualisation des fichiers <code>.feature</code> avec coloration syntaxique et statut de passage associé.
+                </p>
+              </div>
+
+              <div class="cs-showcase-columns four-cols">
+                <div class="cs-showcase-col gain-time">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">⚡</span>
+                    <span>Gain de Temps</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Supprime toute double maintenance de documentation de test. Les fichiers <code>.feature</code> constituent simultanément la spécification et le code exécutable, garantissant <strong>zéro désynchronisation</strong>.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-analysis">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">🔬</span>
+                    <span>Gain d'Analyse</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Permet aux Product Owners et Business Analysts de relire directement les règles de gestion et d'auditer la couverture fonctionnelle sans installer Node.js ni ouvrir un IDE.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-perf">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">🚀</span>
+                    <span>Gain de Performance</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Permet de cibler l'exécution de sous-ensembles précis grâce aux tags Gherkin (<code>@smoke</code>, <code>@critical</code>, <code>@visual</code>) directement visualisables dans l'arborescence.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-integration">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon" style="display: inline-flex; align-items: center; gap: 4px;">
+                      <img src="icons/cucumber.svg" class="cs-inline-tool-logo" alt="Cucumber" />
+                      <img src="icons/playwright.svg" class="cs-inline-tool-logo" alt="Playwright" />
+                    </span>
+                    <span>Gherkin &amp; Playwright-BDD</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Parser AST Gherkin natif interconnecté avec le référentiel de code Git et corrélé aux résultats d'exécution Playwright.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- -------------------------------------------------------------
+               SHOWCASE 6: QUALITY CODE
+               ------------------------------------------------------------- -->
+          <article class="cs-showcase-item" id="video-06">
+            <div class="cs-mockup-header">
+              <div class="cs-mockup-dots">
+                <span class="cs-mockup-dot red"></span>
+                <span class="cs-mockup-dot yellow"></span>
+                <span class="cs-mockup-dot green"></span>
+              </div>
+              <div class="cs-mockup-title-wrapper">
+                <span class="cs-mockup-title">QA Dashboard — Qualité de Code, Couverture &amp; Audits Production</span>
+                <span class="cs-mockup-badge">Showcase #06</span>
+              </div>
+              <div class="cs-mockup-actions">
+                <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);">06_quality_code_showcase.webm</span>
+              </div>
+            </div>
+
+            <div class="cs-video-stage">
+              <video
+                controls
+                loop
+                muted
+                playsinline
+                preload="metadata"
+                class="cs-video-player"
+              >
+                <source src="showcase_videos/06_quality_code_showcase.webm" type="video/webm" />
+                Votre navigateur ne prend pas en charge la balise vidéo WebM.
+              </video>
+            </div>
+
+            <div class="cs-showcase-details">
+              <div class="cs-showcase-header-row">
+                <span class="cs-showcase-index">Module #06 • Ingénierie Logicielle</span>
+                <h3 class="cs-showcase-heading">Surveillance de la Qualité de Code, Couverture &amp; Audits de Production</h3>
+                <p class="cs-showcase-summary">
+                  Suivi continu de la santé du code source : courbes d'évolution de la couverture de tests (Jest/Vitest/Playwright), modale d'audits de production (sécurité, conformité, performance) et filtrage par typologie de dépôt.
+                </p>
+              </div>
+
+              <div class="cs-showcase-columns four-cols">
+                <div class="cs-showcase-col gain-time">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">⚡</span>
+                    <span>Gain de Temps</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Unifie sur un écran unique les métriques de qualité statique et dynamique, évitant de naviguer entre SonarQube, les rapports de couverture et les dashboards Lighthouse.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-analysis">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">🔬</span>
+                    <span>Gain d'Analyse</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Mise en perspective de la couverture unitaire par rapport aux tests E2E pour repérer les zones de code insuffisamment protégées (pyramide de tests équilibrée).
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-perf">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">🚀</span>
+                    <span>Gain de Performance</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Surveillance des scores de performance en production (Core Web Vitals, temps de réponse serveur) permettant de détecter les régressions de chargement avant le déploiement général.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-integration">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon" style="display: inline-flex; align-items: center; gap: 4px;">
+                      <img src="icons/sonarqube.svg" class="cs-inline-tool-logo" alt="SonarQube" />
+                      <img src="icons/vitest.svg" class="cs-inline-tool-logo" alt="Vitest" />
+                    </span>
+                    <span>SonarQube &amp; LCOV</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Connecteur d'ingestion des rapports <strong>LCOV / Cobertura</strong> et synchronisation avec les Quality Gates <strong>SonarQube</strong>.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- -------------------------------------------------------------
+               SHOWCASE 7: DORA BUGS & COVERAGE
+               ------------------------------------------------------------- -->
+          <article class="cs-showcase-item" id="video-07">
+            <div class="cs-mockup-header">
+              <div class="cs-mockup-dots">
+                <span class="cs-mockup-dot red"></span>
+                <span class="cs-mockup-dot yellow"></span>
+                <span class="cs-mockup-dot green"></span>
+              </div>
+              <div class="cs-mockup-title-wrapper">
+                <span class="cs-mockup-title">QA Dashboard — DORA Metrics, MTTR &amp; Couverture par Epic</span>
+                <span class="cs-mockup-badge">Showcase #07</span>
+              </div>
+              <div class="cs-mockup-actions">
+                <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);">07_dora_bugs_and_coverage_showcase.webm</span>
+              </div>
+            </div>
+
+            <div class="cs-video-stage">
+              <video
+                controls
+                loop
+                muted
+                playsinline
+                preload="metadata"
+                class="cs-video-player"
+              >
+                <source src="showcase_videos/07_dora_bugs_and_coverage_showcase.webm" type="video/webm" />
+                Votre navigateur ne prend pas en charge la balise vidéo WebM.
+              </video>
+            </div>
+
+            <div class="cs-showcase-details">
+              <div class="cs-showcase-header-row">
+                <span class="cs-showcase-index">Module #07 • Métriques DORA &amp; Delivery</span>
+                <h3 class="cs-showcase-heading">Pilotage des DORA Metrics, Escape Rate &amp; Répartition par Epic</h3>
+                <p class="cs-showcase-summary">
+                  Mesure scientifique de la performance de livraison logicielle : Mean Time to Restore (MTTR), Taux d'échappement des anomalies (Escape Rate Dev vs Prod) et donut de couverture par Epic Jira.
+                </p>
+              </div>
+
+              <div class="cs-showcase-columns four-cols">
+                <div class="cs-showcase-col gain-time">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">⚡</span>
+                    <span>Gain de Temps</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Génération instantanée des KPI de gouvernance pour les revues de sprint et comités de direction, remplaçant des heures d'extraction manuelle de tickets Jira et de logs CI.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-analysis">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">🔬</span>
+                    <span>Gain d'Analyse</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Démontre scientifiquement la baisse du taux d'échappement de bugs vers la production et identifie immédiatement les Epics métier les moins couvertes nécessitant des tests complémentaires.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-perf">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">🚀</span>
+                    <span>Gain de Performance</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Accélération drastique du MTTR (&lt; 2h) : les équipes détectent et corrigent les anomalies dès le pipeline CI avant que le moindre correctif d'urgence en production ne soit nécessaire.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-integration">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon" style="display: inline-flex; align-items: center; gap: 4px;">
+                      <img src="icons/gitlab.svg" class="cs-inline-tool-logo" alt="GitLab" />
+                      <img src="icons/jira.svg" class="cs-inline-tool-logo" alt="Jira" />
+                    </span>
+                    <span>GitLab &amp; Jira API</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Croisement automatisé des webhooks de déploiement <strong>GitLab CI</strong> et des tickets d'anomalies de l'API REST <strong>Jira</strong>.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- -------------------------------------------------------------
+               SHOWCASE 8: PAUSE QAFE
+               ------------------------------------------------------------- -->
+          <article class="cs-showcase-item" id="video-08">
+            <div class="cs-mockup-header">
+              <div class="cs-mockup-dots">
+                <span class="cs-mockup-dot red"></span>
+                <span class="cs-mockup-dot yellow"></span>
+                <span class="cs-mockup-dot green"></span>
+              </div>
+              <div class="cs-mockup-title-wrapper">
+                <span class="cs-mockup-title">QA Dashboard — Pause QAfé &amp; Chasse aux Bugs Gamifiée</span>
+                <span class="cs-mockup-badge">Showcase #08</span>
+              </div>
+              <div class="cs-mockup-actions">
+                <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);">08_pause_qafe_showcase.webm</span>
+              </div>
+            </div>
+
+            <div class="cs-video-stage">
+              <video
+                controls
+                loop
+                muted
+                playsinline
+                preload="metadata"
+                class="cs-video-player"
+              >
+                <source src="showcase_videos/08_pause_qafe_showcase.webm" type="video/webm" />
+                Votre navigateur ne prend pas en charge la balise vidéo WebM.
+              </video>
+            </div>
+
+            <div class="cs-showcase-details">
+              <div class="cs-showcase-header-row">
+                <span class="cs-showcase-index">Module #08 • Culture Qualité &amp; Gamification</span>
+                <h3 class="cs-showcase-heading">"Pause QAfé" : Sensibilisation Gamifiée &amp; Éradication des Bugs Réels</h3>
+                <p class="cs-showcase-summary">
+                  Une approche ludique innovante : pendant les pauses café, développeurs et testeurs peuvent écraser les bugs qui apparaissent à l'écran. Au clic et au survol, chaque bug révèle sa véritable carte d'identité issue d'un test défaillant ou flaky dans le run en cours !
+                </p>
+              </div>
+
+              <div class="cs-showcase-columns four-cols">
+                <div class="cs-showcase-col gain-time">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">⚡</span>
+                    <span>Gain de Temps</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Transforme la corvée d'analyse des tests instables en une activité collective rapide et engageante durant les temps informels de l'équipe.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-analysis">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">🔬</span>
+                    <span>Gain d'Analyse</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Désamorce la frustration liée aux tests défaillants en exposant visuellement leurs métadonnées réelles (stacktrace, composant, date d'apparition) de façon pédagogique.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-perf">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon">🚀</span>
+                    <span>Gain de Performance</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Stimule une dynamique collective d'éradication de la flakiness : l'équipe vise un score de "zéro bug à l'écran", contribuant activement à la propreté du pipeline CI.
+                  </div>
+                </div>
+
+                <div class="cs-showcase-col gain-integration">
+                  <div class="cs-showcase-col-title">
+                    <span class="icon" style="display: inline-flex; align-items: center; gap: 4px;">
+                      <img src="icons/playwright.svg" class="cs-inline-tool-logo" alt="Playwright" />
+                      <img src="icons/jira.svg" class="cs-inline-tool-logo" alt="Jira" />
+                    </span>
+                    <span>Flux Événements TMS</span>
+                  </div>
+                  <div class="cs-showcase-col-content">
+                    Générateur d'entités temps réel branché sur le flux des derniers runs Playwright et les anomalies extraites de Jira.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SECTION 6: SYNTHÈSE DES GAINS CONSOLIDÉS
+           ========================================================================= -->
+      <section class="cs-section" id="gains-synthese">
+        <div class="cs-section-header">
+          <span class="cs-section-num">Chapitre 06</span>
+          <h2 class="cs-section-title">Synthèse des Gains : Temps, Analyse &amp; Performance</h2>
+          <p class="cs-section-desc">
+            Mesure concrète de l'impact de la plateforme sur la vélocité de l'équipe et la qualité du produit livré.
+          </p>
+        </div>
+
+        <!-- Before / After Comparison Grid -->
+        <div class="cs-table-wrapper">
+          <table class="cs-table">
+            <thead>
+              <tr>
+                <th>Axe de Valeur</th>
+                <th>Avant (Monolithe Playwright Isolé)</th>
+                <th>Après (Plateforme TMS &amp; Cockpit Qualité)</th>
+                <th>Gain Mesuré &amp; Bénéfice</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>⚡ Temps de Diagnostic</strong></td>
+                <td>Téléchargement manuel des logs CI de 2 000 lignes et reproduction en local (~30 min par incident).</td>
+                <td>Étape Gherkin surlignée en rouge, vidéo rejouable et capture en un clic sur le dashboard.</td>
+                <td><span class="pill-tag pill-green">Temps divisé par 6 (&lt; 5 min)</span></td>
+              </tr>
+              <tr>
+                <td><strong>⚡ Analyse de Régression</strong></td>
+                <td>Comparaison mentale entre deux exécutions sans historique consolidé.</td>
+                <td>Comparateur de Runs N-1 vs N affichant instantanément la matrice des deltas.</td>
+                <td><span class="pill-tag pill-green">Isolation immédiate de la MR en faute</span></td>
+              </tr>
+              <tr>
+                <td><strong>🔬 Collaboration PO / Métier</strong></td>
+                <td>Code TypeScript impératif illisible pour le Produit ; documentation Jira obsolète.</td>
+                <td>Living Documentation en français (# language: fr) synchronisée en direct avec Git.</td>
+                <td><span class="pill-tag pill-green">100% de compréhension partagée</span></td>
+              </tr>
+              <tr>
+                <td><strong>🚀 Résilience aux Refontes</strong></td>
+                <td>Casse systématique des sélecteurs lors des migrations graphiques (Vue 2 ➔ Vue 3).</td>
+                <td>Locators polymorphes <code>.or()</code> absorbant les 3 états graphiques sans duplication de test.</td>
+                <td><span class="pill-tag pill-green">Zéro refactor de test lors de la bascule Tailwind 4</span></td>
+              </tr>
+              <tr>
+                <td><strong>🚀 Stabilité &amp; Flakiness</strong></td>
+                <td>Échecs aléatoires fréquents dus aux micro-animations et skeleton loaders CSS.</td>
+                <td>Synchronisation déterministe <code>waitForNoLoadersAndNoBlur</code> et veille gamifiée "Pause QAfé".</td>
+                <td><span class="pill-tag pill-green">0% de flakiness résiduelle en CI</span></td>
+              </tr>
+              <tr>
+                <td><strong>📊 Pilotage de Livraison</strong></td>
+                <td>Statistiques globales de build CI sans corrélation métier ni suivi d'incidents.</td>
+                <td>Cockpit DORA complet (MTTR, Escape Rate &lt; 2%, couverture d'Epics Jira).</td>
+                <td><span class="pill-tag pill-green">Gouvernance data-driven pour le Management</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SECTION 7: BILAN & ENSEIGNEMENTS
+           ========================================================================= -->
+      <section class="cs-section" id="bilan">
+        <div class="cs-section-header">
+          <span class="cs-section-num">Chapitre 07</span>
+          <h2 class="cs-section-title">Bilan Consolidé &amp; Enseignements d'Architecture</h2>
+          <p class="cs-section-desc">
+            Retour d'expérience sur la posture de l'ingénieur SDET moderne : du simple scripteur de tests au bâtisseur de plateformes de qualité.
+          </p>
+        </div>
+
+        <div class="cs-prose">
+          <p>
+            Ce projet illustre une mutation profonde dans l'ingénierie qualité logicielle moderne.
+            Le rôle d'un Lead SDET ne se limite plus à automatiser des scénarios en bout de chaîne :
+            il consiste à <strong>concevoir des écosystèmes d'ingénierie résilients et collaboratifs</strong> :
+          </p>
+
+          <ul>
+            <li>
+              <strong>Rapprocher la Tech et le Produit :</strong> En faisant des fichiers Gherkin la source unique de vérité, la spécification devient le test et le test devient la documentation vivante.
+            </li>
+            <li>
+              <strong>Sécuriser les transitions technologiques :</strong> Les locators polymorphes et le chaînage de baselines A/B ont permis à l'équipe de développement de migrer son front-end vers Vue 3 et Tailwind 4 en toute sérénité, sans régression en production.
+            </li>
+            <li>
+              <strong>Fournir une visibilité de niveau entreprise :</strong> En connectant Playwright, GitLab CI, Jira et SonarQube au sein d'un cockpit centralisé, chaque acteur (Développeur, QA Lead, PO, Engineering Manager) dispose en permanence des indicateurs pertinents pour décider et livrer en confiance.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           CALL TO ACTION & FOOTER
+           ========================================================================= -->
+      <footer style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-medium); display: flex; flex-direction: column; gap: 1.5rem;">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <a href="/projects" class="cs-mockup-btn" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+              <span>← Voir tous les autres projets</span>
+            </a>
+            <a href="/formations" class="cs-mockup-btn" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+              <span>🎓 Découvrir les formations vidéo</span>
+            </a>
+          </div>
+
+          <a href="#top" class="cs-mockup-btn" style="padding: 0.5rem 0.85rem; font-size: 0.85rem;" title="Retour en haut de page">
+            <span>↑ Haut de page</span>
+          </a>
+        </div>
+
+        <div style="text-align: center; color: var(--text-muted); font-size: 0.8125rem; padding-top: 1rem;">
+          &copy; <span data-current-year>2026</span> Anass Asrir — Étude de cas réalisée dans le cadre de projets d'architecture SDET &amp; Quality Engineering.
+        </div>
+      </footer>
+    </main>
+
+    <!-- Command Palette Modal -->
+    <div id="cmdPalette" class="cmd-palette-backdrop">
+      <div class="cmd-palette-modal">
+        <div class="cmd-search-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input
+            type="text"
+            id="cmdSearchInput"
+            class="cmd-search-input"
+            placeholder="Rechercher une page, un projet ou une action..."
+            autocomplete="off"
+          />
+          <span class="cmd-kbd-badge">ESC</span>
+        </div>
+
+        <div class="cmd-palette-body" id="cmdResultsList">
+          <div class="cmd-group-label">Navigation &amp; Pages</div>
+          <a href="/" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">🏠</span>
+              <div>
+                <span class="cmd-item-title">Accueil (Linktree)</span>
+                <span class="cmd-item-subtitle">Vue d'ensemble et réseaux</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Aller ↵</span>
+          </a>
+
+          <a href="/about" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">📊</span>
+              <div>
+                <span class="cmd-item-title">Parcours &amp; Chiffres Clés</span>
+                <span class="cmd-item-subtitle">Expérience, métriques et certifications</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Aller ↵</span>
+          </a>
+
+          <a href="/projects" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">⚡</span>
+              <div>
+                <span class="cmd-item-title">Projets Personnels &amp; Dev</span>
+                <span class="cmd-item-subtitle">Frameworks QA, outils et apps web</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Aller ↵</span>
+          </a>
+
+          <a href="/tms-case-study" class="cmd-item selected">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">🚀</span>
+              <div>
+                <span class="cmd-item-title">Case Study : Plateforme TMS &amp; Cockpit Qualité</span>
+                <span class="cmd-item-subtitle">Architecture Playwright-BDD, Visual Testing &amp; 8 Showcases Vidéo</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Actuel</span>
+          </a>
+
+          <a href="/formations" class="cmd-item">
+            <div class="cmd-item-left">
+              <span class="cmd-item-icon">🎓</span>
+              <div>
+                <span class="cmd-item-title">Espace Formations Vidéo</span>
+                <span class="cmd-item-subtitle">16 vidéos et tutoriels pas-à-pas sur l'automatisation BDD</span>
+              </div>
+            </div>
+            <span class="cmd-item-action">Aller ↵</span>
+          </a>
+        </div>
+
+        <div class="cmd-footer">
+          <span>Navigation : flèches ↑ / ↓</span>
+          <div class="cmd-footer-keys">
+            <span class="cmd-footer-key"><span class="cmd-kbd-badge">↵</span> Sélectionner</span>
+            <span class="cmd-footer-key"><span class="cmd-kbd-badge">ESC</span> Fermer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Copy Toast -->
+    <div id="toast" class="toast-notice" role="status" aria-live="polite">
+      <span>✓</span>
+      <span id="toastMsg">Code copié dans le presse-papier !</span>
+    </div>
+
+    <!-- Active TOC Spy Script -->
+    <script>
+      // Active TOC Spy on Scroll
+      const tocLinks = document.querySelectorAll('.cs-toc-link');
+      const sections = document.querySelectorAll('.cs-section');
+
+      function updateActiveToc() {
+        let currentSectionId = '';
+        const scrollY = window.scrollY + 120;
+
+        sections.forEach((sec) => {
+          const top = sec.offsetTop;
+          const height = sec.offsetHeight;
+          if (scrollY >= top && scrollY < top + height) {
+            currentSectionId = sec.getAttribute('id');
+          }
+        });
+
+        if (currentSectionId) {
+          tocLinks.forEach((link) => {
+            if (link.getAttribute('href') === '#' + currentSectionId) {
+              link.classList.add('active');
+              link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            } else {
+              link.classList.remove('active');
+            }
+          });
+        }
+      }
+
+      window.addEventListener('scroll', updateActiveToc, { passive: true });
+
+      // Code copy button function
+      function copyCode(btn) {
+        const codeBox = btn.closest('.cs-code-box');
+        if (!codeBox) return;
+        const code = codeBox.querySelector('code').innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          const originalText = btn.innerText;
+          btn.innerText = 'Copié !';
+          btn.style.color = '#34d399';
+          setTimeout(() => {
+            btn.innerText = originalText;
+            btn.style.color = '';
+          }, 2000);
+        });
+      }
+    </script>
+
+    <!-- Core Shared Utilities (Command Palette, Spotlight, Toast, Dates) -->
+    <script src="shared.js"></script>
+  </body>
+</html>

@@ -77,6 +77,24 @@ const SEARCH_INDEX = [
     ]
   },
   {
+    id: "nav-tms-case-study",
+    title: "Case Study : Plateforme TMS & Cockpit Qualité",
+    subtitle: "Architecture Playwright-BDD, régression visuelle A/B et 8 vidéos showcases",
+    url: "/tms-case-study",
+    category: "Projets Phares",
+    icon: "🚀",
+    action: "Explorer ↵",
+    content: "Conception et déploiement d'une plateforme de Test Management System (TMS) moderne : Playwright-BDD, Living Documentation en français, régression visuelle A/B (Vue 2 vers Vue 3 Tailwind 4), DORA metrics (MTTR, Escape Rate) et 8 démonstrations vidéo. 151+ scénarios BDD, 194 snapshots visuels, 0% flakiness, >99% gain d'effort d'ingénierie.",
+    keywords: [
+      "tms", "test management system", "case study", "etude de cas", "cockpit", "qualite",
+      "playwright", "playwright-bdd", "bdd", "gherkin", "living documentation", "showcase",
+      "video", "videos", "showcase videos", "dashboard", "comparateur", "runs", "diff",
+      "visual testing", "snapshots", "regression visuelle", "dora", "dora metrics", "mttr",
+      "escape rate", "vue 3", "tailwind 4", "pause qafe", "bug hunter", "gamification",
+      "cloudflare access", "zero trust", "gitlab ci", "jira", "sonarqube", "qa dashboard"
+    ]
+  },
+  {
     id: "nav-formations",
     title: "Espace Formations Vidéo",
     subtitle: "Lecteur vidéo intégré et programme complet BDD (Cucumber / Selenium)",
@@ -109,17 +127,35 @@ const SEARCH_INDEX = [
   // 2. Postes & Entreprises (Deep-links directs /about#...)
   // =========================================================================
   {
-    id: "exp-kodehyve",
-    title: "kodehyve — QA Manager / SDET Architect",
-    subtitle: "Shift-Left, Cypress TypeScript, GitHub Actions & Postgres (Depuis 07/2023)",
-    url: "/about#kodehyve",
+    id: "exp-anatec",
+    title: "Anatec / WeSave — Lead SDET Architect",
+    subtitle: "Playwright-BDD, Cockpit Qualité TMS, GitLab CI, Jira & DORA (Depuis 01/2026)",
+    url: "/about#anatec",
     category: "Expériences & Postes",
     icon: "🚀",
+    action: "Voir poste ↵",
+    content: "Plateforme TMS & Cockpit Qualité : Conception et architecture d'un Test Management System sur-mesure interconnecté à GitLab CI, Jira et SonarQube. Tableaux de bord de suivi en temps réel, analyses différentielles (Run N-1 vs Run N) et pilotage des métriques DORA. Socle Playwright-BDD & Living Documentation : Refonte et migration vers une suite 100% BDD en Gherkin français (# language: fr), reliant directement les critères d'acceptation métier des US Jira aux tests automatisés (151+ scénarios). Locators Polymorphes & Refonte Vue 3 Tailwind 4 : Stratégie de sélecteurs résilients locator().or() absorbant la cohabitation Vue 2 / Vuetify, Design System et Vue 3 Tailwind 4. Sécurisation Zero Trust & Stabilité : Middleware d'injection de Service Tokens Cloudflare Access et neutralisation déterministe des micro-animations.",
+    keywords: [
+      "anatec", "wesave", "lead sdet", "sdet architect", "lead qa", "responsable qa", "architecte sdet",
+      "poste actuel", "actuel", "present", "2026", "janvier 2026", "fintech", "banque", "patrimoine",
+      "tms", "test management system", "cockpit qualite", "dashboard", "dora", "mttr", "escape rate",
+      "playwright", "playwright-bdd", "bdd", "gherkin", "living documentation",
+      "gitlab", "gitlab ci", "jira", "sonarqube", "cloudflare", "zero trust",
+      "vue 3", "tailwind 4", "locators polymorphes", "resilience", "experience", "historique"
+    ]
+  },
+  {
+    id: "exp-kodehyve",
+    title: "kodehyve — QA Manager / SDET Architect",
+    subtitle: "Shift-Left, Cypress TypeScript, GitHub Actions & Postgres (07/2023 – 01/2026)",
+    url: "/about#kodehyve",
+    category: "Expériences & Postes",
+    icon: "🏢",
     action: "Voir poste ↵",
     content: "Socle Qualité : Définition et déploiement du processus global de qualité logicielle (Shift-Left), garantissant la robustesse des livrables de la plateforme. Architecture d'Automatisation : Conception d'un framework Cypress / TypeScript intégré au processus de Pull Request pour une validation immédiate. Intégration Continue : Industrialisation des workflows GitHub Actions pour raccourcir les boucles de rétroaction (-90% de temps sur les tests critiques). Données de Test : Automatisation de la génération et du nettoyage des jeux de données API via SQL / PostgreSQL.",
     keywords: [
       "kodehyve", "qa manager", "responsable qa", "sdet architect", "architecte sdet",
-      "poste actuel", "actuel", "present", "2023", "2024", "2025", "2026", "juillet 2023",
+      "2023", "2024", "2025", "2026", "juillet 2023", "janvier 2026",
       "shift-left", "shift left", "processus qualite", "qualite logicielle", "robustesse",
       "cypress", "typescript", "javascript", "pull request", "pr", "validation pr",
       "ci/cd", "ci", "cd", "github actions", "workflows", "retroaction", "tests critiques",
@@ -1611,7 +1647,7 @@ function initStackHunter() {
       timing: "4+ ans • Production",
       role: "Architecture E2E TypeScript & validation des Pull Requests",
       experiences: [
-        { company: "Kodehyve (Depuis 2023)", metric: "Processus PR Shift-Left & retour sous 5 min (-90% temps)" },
+        { company: "Kodehyve (2023 – 2026)", metric: "Processus PR Shift-Left & retour sous 5 min (-90% temps)" },
         { company: "Raja (2021 – 2023)", metric: "Tunnels d'achat & parcours de paiement critiques" }
       ],
       link: "/about#kodehyve"
@@ -1621,12 +1657,13 @@ function initStackHunter() {
       name: "Playwright",
       icon: "icons/playwright.svg",
       category: "AUTOMATION E2E",
-      timing: "Moderne & Rapide",
-      role: "Framework E2E nouvelle génération multi-navigateurs & API mocks",
+      timing: "Production FinTech",
+      role: "Architecture Playwright-BDD, Living Documentation & Cockpit Qualité TMS",
       experiences: [
+        { company: "Anatec / WeSave (Depuis 2026)", metric: "Architecture 100% Playwright-BDD, TMS & 151+ scénarios" },
         { company: "Projets Perso & R&D", metric: "Suites de tests résilientes, traces interactives & isolation" }
       ],
-      link: "/projects"
+      link: "/about#anatec"
     },
     {
       id: "selenium",
@@ -2349,7 +2386,7 @@ function initInteractiveTimeline() {
     const focalY = windowH * 0.42;
 
     // Détermination de la carte en cours de lecture
-    let activeItem = items[0]; // Par défaut, 2023 (Kodehyve)
+    let activeItem = items[0]; // Par défaut, 2026 (Anatec / WeSave)
 
     items.forEach((item) => {
       const card = item.querySelector(".timeline-card");
