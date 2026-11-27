@@ -128,15 +128,16 @@ const SEARCH_INDEX = [
   // =========================================================================
   {
     id: "exp-anatec",
-    title: "Anatec / WeSave — QA Lead / Responsable Automatisation des Tests",
-    subtitle: "Playwright-BDD, 0 Flakiness, DORA Metrics, Visual Testing, Infisical & Cloudflare (Depuis 01/2026)",
+    title: "Anatec / WeSave — Head of QA / Lead SDET Architect (Rattaché CTO — 4 Squads)",
+    subtitle: "Unique référent QA rattaché CTO, 4 squads, Playwright-BDD, DORA (Depuis 01/2026)",
     url: "/about#anatec",
     category: "Expériences & Postes",
     icon: "🚀",
     action: "Voir poste ↵",
-    content: "Rupture avec l'Ancien Socle & 0% Flakiness : Remplacement d'une suite historique de 6 à 8h d'exécution quotidienne par une suite Playwright-BDD parallélisée en quelques minutes avec 0% de flakiness. Détection Massive d'Anomalies : Interception précoce de dizaines de bugs bloquants en MR sur les parcours d'adhésion, simulations et flux financiers. Conformité DORA : Réduction spectaculaire du MTTR de 59j à 9.5j, Bug Escape Rate chutant de 69% à 8% (en amélioration continue) et couverture par Epic Jira. Visual Testing : 194 snapshots A/B sécurisant la migration Vue 2 vers Vue 3 Tailwind 4. Architecture Multi-Projets : Platform TMS sur-mesure centralisant portails, espaces conseillers et simulateurs. Sécurité CI/CD : GitLab CI, Cloudflare Access Zero Trust et gestion des secrets avec Infisical.",
+    content: "Gouvernance QA (Rattaché CTO) : Unique référent qualité logicielle sous la direction directe du CTO, pilotage transverse de la stratégie et de l'outillage pour 4 squads d'ingénierie. Rupture avec l'Ancien Socle & 0% Flakiness : Remplacement d'une suite historique de 6 à 8h d'exécution quotidienne par une suite Playwright-BDD parallélisée en quelques minutes avec 0% de flakiness. Détection Massive d'Anomalies : Interception précoce de dizaines de bugs bloquants en MR sur les parcours d'adhésion, simulations et flux financiers. Conformité DORA : Réduction spectaculaire du MTTR de 59j à 9.5j, Bug Escape Rate chutant de 69% à 8% (en amélioration continue) et couverture par Epic Jira. Visual Testing : 194 snapshots A/B sécurisant la migration Vue 2 vers Vue 3 Tailwind 4. Architecture Multi-Projets : Platform TMS sur-mesure centralisant portails, espaces conseillers et simulateurs. Sécurité CI/CD : GitLab CI, Cloudflare Access Zero Trust et gestion des secrets avec Infisical.",
     keywords: [
-      "anatec", "wesave", "qa lead", "lead qa", "responsable automatisation", "responsable qa", "lead sdet", "sdet architect", "architecte sdet",
+      "anatec", "wesave", "head of qa", "lead sdet", "sdet architect", "lead qa", "responsable qa", "architecte sdet",
+      "cto", "report cto", "rattache cto", "direction technique", "4 squads", "gouvernance", "transverse",
       "poste actuel", "actuel", "present", "2026", "janvier 2026", "fintech", "banque", "patrimoine",
       "0 flakiness", "flakiness zero", "zero flaky", "stabilite", "6h", "8h", "performance",
       "tms", "test management system", "cockpit qualite", "dashboard", "dora", "mttr", "escape rate", "rentabilite",
