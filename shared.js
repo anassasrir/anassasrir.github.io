@@ -366,24 +366,24 @@ const SEARCH_INDEX = [
   {
     id: "action-download-cv-fr",
     title: "Télécharger mon CV en Français (PDF)",
-    subtitle: "Curriculum Vitae complet en français (3 pages) — Anass Asrir",
-    url: "cv-anass-asrir-fr.pdf",
+    subtitle: "Curriculum Vitae officiel en français — Anass Asrir",
+    url: "CV_ANASS_ASRIR.pdf",
     category: "Contact & Actions",
     icon: "🇫🇷",
     action: "Télécharger ↵",
-    content: "Télécharger le CV officiel en français d'Anass Asrir au format PDF. Expériences Kodehyve, Mangopay, Raja, Enablon, Byron Group, Capgemini, compétences Cypress, Selenium, BDD, CI/CD, certifications ISTQB et CSM.",
-    keywords: ["cv fr", "cv francais", "cv", "resume", "curriculum", "vitae", "pdf", "telecharger", "francais", "french"]
+    content: "Télécharger le CV officiel en français d'Anass Asrir au format PDF. Expériences Kodehyve, Raja, Enablon, Capgemini, compétences Playwright, Cypress, Selenium, IA Agentique, CI/CD, certifications ISTQB et CSM.",
+    keywords: ["cv fr", "cv francais", "cv", "resume", "curriculum", "vitae", "pdf", "telecharger", "francais", "french", "cv_anass_asrir"]
   },
   {
     id: "action-download-cv-en",
     title: "Download Resume in English (PDF)",
-    subtitle: "Full English resume (3 pages) — Anass Asrir",
-    url: "cv-anass-asrir-en.pdf",
+    subtitle: "Official English resume — Anass Asrir",
+    url: "RESUME_ANASS_ASRIR.pdf",
     category: "Contact & Actions",
     icon: "🇬🇧",
     action: "Download ↵",
-    content: "Download official English resume of Anass Asrir in PDF format. SDET background, Kodehyve, Mangopay, Raja, Enablon, Byron Group, Capgemini, Cypress, Selenium, Cucumber BDD, CI/CD, ISTQB and CSM certifications.",
-    keywords: ["cv en", "resume english", "english", "anglais", "cv anglais", "resume", "curriculum", "download", "pdf"]
+    content: "Download official English resume of Anass Asrir in PDF format. QA Lead & SDET background, Kodehyve, Raja, Enablon, Capgemini, Cypress, Selenium, Cucumber BDD, CI/CD, ISTQB and CSM certifications.",
+    keywords: ["cv en", "resume english", "english", "anglais", "cv anglais", "resume", "curriculum", "download", "pdf", "resume_anass_asrir"]
   },
   {
     id: "action-catch-my-stack",
@@ -2093,8 +2093,8 @@ function initCvDropdown() {
     if (langBadge) {
       e.stopPropagation();
       const lang = langBadge.getAttribute("data-dl-lang");
-      const file = lang === "en" ? "cv-anass-asrir-en.pdf" : "cv-anass-asrir-fr.pdf";
-      const filename = lang === "en" ? "CV-Anass-Asrir-EN.pdf" : "CV-Anass-Asrir-FR.pdf";
+      const file = lang === "en" ? "RESUME_ANASS_ASRIR.pdf" : "CV_ANASS_ASRIR.pdf";
+      const filename = lang === "en" ? "RESUME_ANASS_ASRIR.pdf" : "CV_ANASS_ASRIR.pdf";
       const a = document.createElement("a");
       a.href = file;
       a.download = filename;
